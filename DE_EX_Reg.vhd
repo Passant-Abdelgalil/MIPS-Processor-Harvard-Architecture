@@ -48,13 +48,13 @@ BEGIN
 	PROCESS (clk, rst) IS
 	BEGIN
 		IF (rst = '1') THEN
-			INDATA_E <= "0";
-			PC_E <= "0";
-			src1_E <= "0";
-			src2_E <= "0";
-			offset_E <= "0";
-			dst_E <= "0";
-			ALU_op_E <= "0";
+			INDATA_E <= (others=>'0');
+			PC_E <= (others=>'0');
+			src1_E <= (others=>'0');
+			src2_E <= (others=>'0');
+			offset_E <= (others=>'0');
+			dst_E <= (others=>'0');
+			ALU_op_E <= (others=>'0');
 			IN_en_E <= '0';
 			OUT_en_E <= '0';
 			ALU_en_E <= '0';

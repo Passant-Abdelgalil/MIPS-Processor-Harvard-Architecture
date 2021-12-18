@@ -55,6 +55,8 @@ SIGNAL MemRead, MemRead_D_E, MemRead_E_M: std_logic;
 SIGNAL MemWrite, MemWrite_D_E, MemWrite_E_M: std_logic;
 -- wires to hold writeback signal through stages [execute, memory, writeback]
 SIGNAL WriteBack, WriteBack_D_E, WriteBack_E_M, WriteBack_M_W: std_logic;
+-- wires to hold write32 signal through stages [execute, memory]
+SIGNAL Write32, Write32_D_E, Write32_E_M: std_logic;
 -- wires to hold memory to reg signal through stages [execute, memory, writeback]
 SIGNAL MemToReg, MemToReg_D_E, MemToReg_E_M, MemToReg_M_W: std_logic;
 -- wires to hold stack pointer reg enable through stages [execute, memory]
@@ -77,13 +79,17 @@ SIGNAL RTI_flag, RTI_flag_D_E, RTI_flag_E_M: std_logic;
 SIGNAL src1_sel, src2_sel: std_logic_vector(1 DOWNTO 0); 
 -- wires to hold memory output 
 SIGNAL Mem_res, Mem_res_M_W: std_logic_vector(31 DOWNTO 0);
-
+-- wire to hold memory input
+SIGNAL Mem_in: std_logic_vector(31 DOWNTO 0);
+-- wire to hold memory address
+SIGNAL Mem_Addr: std_logic_vector(31 DOWNTO 0);
 BEGIN
 
 -- PC register
 
 -- Instruction Memory
-
+instructionMem: entity work.ram PORT MAP(clk => clk, we => '0', write32 => '0', re => '1', address => PC,
+ datain => (others=>'0'), dataout => instruction);
 -- Fetch/Decode intermmediate buffer
 
 -- Register File module instance
@@ -144,6 +150,10 @@ EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>E_M_en, 
 				Call_flag_E=>Call_flag_D_E, Call_flag_M=>Call_flag_E_M, INT_flag_E=>INT_flag_D_E, INT_flag_M=>INT_flag_E_M,
 				RTI_flag_E=>RTI_flag_D_E, RTI_flag_M=>RTI_flag_E_M --Branch_flag_E=>Branch_flag_D_E, Branch_flag_M=>Branch_flag_E_M
 				);
+
+-- data memory
+dataMem: entity work.ram PORT MAP(clk => clk, we => MemWrite_E_M, write32 => Write32_E_M, re => MemRead_E_M,
+				 address => Mem_Addr, datain => Mem_in, dataout => Mem_res);
 
 
 END processor1;

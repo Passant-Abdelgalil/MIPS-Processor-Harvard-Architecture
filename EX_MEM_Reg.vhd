@@ -55,14 +55,14 @@ BEGIN
 	PROCESS (clk, rst) IS
 	BEGIN
 		IF (rst = '1') THEN
-			INDATA_M <= "0";
-			PC_M <= "0";
---			src1_M <= "0";
---			src2_M <= "0";
-			offset_M <= "0";
-			ALU_res_M <= "0";
-			dst_M <= "0";
---			ALU_op_M <= "0";
+			INDATA_M <= (others=>'0');
+			PC_M <= (others=>'0');
+--			src1_M <= (others=>'0');
+--			src2_M <= (others=>'0');
+			offset_M <= (others=>'0');
+			ALU_res_M <= (others=>'0');
+			dst_M <= (others=>'0');
+--			ALU_op_M <= (others=>'0');
 			IN_en_M <= '0';
 			OUT_en_M <= '0';
 --			ALU_en_M <= '0';
