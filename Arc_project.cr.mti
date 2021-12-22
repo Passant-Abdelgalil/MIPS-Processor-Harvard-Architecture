@@ -56,6 +56,23 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity MUX_2_4
 -- Compiling architecture mux_2_4 of MUX_2_4
 
+} {} {}} D:/temp_arc/processor.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/temp_arc/processor.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity processor
+-- Compiling architecture processor1 of processor
+-- Loading entity ram
+-- Loading entity Register_File
+-- Loading entity control_unit
+-- Loading entity DE_EX_Reg
+-- Loading entity ForwardingUnit
+-- Loading entity MUX_2_4
+-- Loading entity MUX_1_2
+-- Loading entity EX_MEM_Reg
+
 } {} {}} D:/temp_arc/EX_MEM_Reg.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/temp_arc/EX_MEM_Reg.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
