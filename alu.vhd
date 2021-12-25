@@ -2,7 +2,7 @@ Library ieee;
 use ieee.std_logic_1164.all;
 
 entity alu is
-GENERIC (n : integer := 32);
+GENERIC (n : integer := 16);
 port(
 		a,b : in std_logic_vector(n-1 downto 0);
 		op_code : in std_logic_vector (2 downto 0);

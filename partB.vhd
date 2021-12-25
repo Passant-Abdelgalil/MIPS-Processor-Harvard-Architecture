@@ -4,7 +4,7 @@ use IEEE.STD_LOGIC_ARITH.all;
 use IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity partB is 
-	GENERIC (n : integer := 32);
+	GENERIC (n : integer := 16);
 	port(
 		a,b : in std_logic_vector(n-1 downto 0);
 		op_code : in std_logic_vector (2 downto 0);

@@ -8,7 +8,8 @@ ENTITY DE_EX_Reg IS
 		clk: IN std_logic;
 		rst: IN std_logic;
 	-- input data
-		INDATA_D, PC_D: IN std_logic_vector(31 DOWNTO 0);
+		INDATA_D: IN std_logic_vector(15 DOWNTO 0);
+		PC_D: IN std_logic_vector(31 DOWNTO 0);
 		src1_D, src2_D, offset_D: IN std_logic_vector(15 DOWNTO 0);
 		dst_D, src1_D_addr, src2_D_addr: IN std_logic_vector(2 DOWNTO 0);
 		-- control signals	
@@ -24,7 +25,8 @@ ENTITY DE_EX_Reg IS
 		Call_flag_D, INT_flag_D, Branch_flag_D,
 		RTI_flag_D: IN std_logic;
 	-- output data
-		INDATA_E, PC_E: OUT std_logic_vector(31 DOWNTO 0);
+		INDATA_E:OUT std_logic_vector(15 DOWNTO 0);
+		PC_E: OUT std_logic_vector(31 DOWNTO 0);
 		src1_E, src2_E, offset_E: OUT std_logic_vector(15 DOWNTO 0);
 		dst_E, src1_E_addr, src2_E_addr: OUT std_logic_vector(2 DOWNTO 0);
 		-- control signals	

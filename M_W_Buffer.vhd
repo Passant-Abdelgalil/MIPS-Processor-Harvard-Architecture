@@ -4,28 +4,28 @@ use ieee.std_logic_1164.all;
 ENTITY M_W_Buffer IS
 	PORT(
 		en,clk,rst: IN std_logic;
-		INDATA_M, PC_M,Mem_out_M: IN std_logic_vector(31 DOWNTO 0);
+		INDATA_M: IN std_logic_vector(15 DOWNTO 0);
+		PC_M,Mem_out_M: IN std_logic_vector(31 DOWNTO 0);
 		offset_M: IN std_logic_vector(15 DOWNTO 0);
 		ALU_res_M: IN std_logic_vector(15 DOWNTO 0);
 		dst_M: IN std_logic_vector(2 DOWNTO 0);
 		IN_en_M, OUT_en_M,
 		MemRead_M, MemWrite_M,
 		WriteBack_M, MemToReg_M,
-		EX_en_M,
 		SP_en_M, SP_op_M,
 		STD_flag_M,
 		Call_flag_M, INT_flag_M,
 		RTI_flag_M: IN std_logic;
 
 
-		INDATA_W, PC_W,Mem_out_W: OUT std_logic_vector(31 DOWNTO 0);
+		INDATA_W: OUT std_logic_vector(15 DOWNTO 0);
+		PC_W,Mem_out_W: OUT std_logic_vector(31 DOWNTO 0);
 		offset_W: OUT std_logic_vector(15 DOWNTO 0);
 		ALU_res_W: OUT std_logic_vector(15 DOWNTO 0);
 		dst_W: OUT std_logic_vector(2 DOWNTO 0);
 		IN_en_W, OUT_en_W,
 		MemRead_W, MemWrite_W,
 		WriteBack_W, MemToReg_W,
-		EX_en_W,
 		SP_en_W, SP_op_W,
 		STD_flag_W,
 		Call_flag_W, INT_flag_W,
@@ -53,7 +53,6 @@ BEGIN
 			MemToReg_W <= '0';
 			SP_en_W <= '0';
 			SP_op_W <= '0';
-			Ex_en_W<='0';
 			STD_flag_W <= '0';
 			Call_flag_W <= '0';
 			INT_flag_W <= '0';
@@ -73,7 +72,6 @@ BEGIN
 			MemToReg_W<= MemToReg_M;
 			SP_en_W <= SP_en_M;
 			SP_op_W <= SP_op_M;
-			Ex_en_W<=Ex_en_M;
 			STD_flag_W <= STD_flag_M;
 			Call_flag_W<= Call_flag_M;
 			INT_flag_W<= INT_flag_M;

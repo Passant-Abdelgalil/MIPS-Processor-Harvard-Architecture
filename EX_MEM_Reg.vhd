@@ -10,7 +10,8 @@ ENTITY EX_MEM_Reg IS
 		clk: IN std_logic;
 		rst: IN std_logic;
 	-- input data
-		INDATA_E, PC_E: IN std_logic_vector(31 DOWNTO 0);
+		INDATA_E: IN std_logic_vector(15 DOWNTO 0);
+		PC_E: IN std_logic_vector(31 DOWNTO 0);
 --		src1_E, src2_E, offset_E: IN std_logic_vector(15 DOWNTO 0);
 		offset_E: IN std_logic_vector(15 DOWNTO 0);
 		ALU_res_E: IN std_logic_vector(15 DOWNTO 0);
@@ -29,7 +30,8 @@ ENTITY EX_MEM_Reg IS
 -- 		Branch_flag_E,
 		RTI_flag_E: IN std_logic;
 	-- output data
-		INDATA_M, PC_M: OUT std_logic_vector(31 DOWNTO 0);
+		INDATA_M: OUT std_logic_vector(15 DOWNTO 0);
+		PC_M: OUT std_logic_vector(31 DOWNTO 0);
 --		src1_M, src2_M, offset_M: OUT std_logic_vector(15 DOWNTO 0);
 		offset_M: OUT std_logic_vector(15 DOWNTO 0);
 		ALU_res_M: OUT std_logic_vector(15 DOWNTO 0);
