@@ -1,4 +1,3 @@
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -93,7 +92,9 @@ SIGNAL Jump_Addr: std_logic_vector(31 DOWNTO 0);
 SIGNAL jump_flag: std_logic;
 -- wire to hold exception flag
 SIGNAL exception_flag: std_logic;
-
+--signals from writeBack buffer 
+SIGNAL write_data:std_logic_vector(15 DOWNTO 0);
+SIGNAL Write_Address:std_logic_vector(2 DOWNTO 0);
 BEGIN
 
 -- select between new_PC value and jump address and exception handler address
@@ -113,6 +114,9 @@ increase_PC: entity work.PC_INCREMENT PORT MAP(old_PC => PC, selector => instruc
 -- Fetch/Decode intermmediate buffer
 
 -- Register File module instance
+RegisterFile:entity work.Register_File PORT MAP(Read_Address_1=>src1_addr,Read_Address_2=>src2_addr,
+Write_Address=>Write_Address,write_data=>write_data,Clk=>clk,Rst=>rst,WB_enable=>WriteBack_M_W,Src1_data=>src1,Src2_data=>src1);
+
 
 -- Control Unit module instance
 controlUnit: entity work.control_unit PORT MAP(opCode => instruction(31 DOWNTO 27), IN_en => IN_en, OUT_en => OUT_en,
