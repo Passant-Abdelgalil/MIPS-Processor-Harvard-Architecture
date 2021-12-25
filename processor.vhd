@@ -18,6 +18,10 @@ ARCHITECTURE processor1 OF processor IS
 SIGNAL PC, PC_F_D, PC_D_E, PC_E_M: std_logic_vector(31 DOWNTO 0);
 -- wires to hold pc enable value through stages []
 SIGNAL PC_en, PC_en_D_E, PC_en_E_M: std_logic;
+-- wire to hold new PC
+SIGNAL new_PC: std_logic_vector(31 DOWNTO 0);
+-- wire to hold PC reg in data
+SIGNAL PC_in: std_logic_vector(31 DOWNTO 0);
 -- wires to hold instruction through stages [fetch]
 SIGNAL instruction: std_logic_vector(31 DOWNTO 0);
 -- wires to hold offset value through stages [decode, execute]
@@ -77,21 +81,36 @@ SIGNAL RTI_flag, RTI_flag_D_E, RTI_flag_E_M: std_logic;
 -- wires to hold ALU sources selectors
 SIGNAL src1_sel, src2_sel: std_logic_vector(1 DOWNTO 0); 
 -- wires to hold memory output 
-SIGNAL Mem_res, Mem_res_M_W: std_logic_vector(31 DOWNTO 0);
+SIGNAL Mem_res, Mem_res_M_W, Mem_res_WB: std_logic_vector(31 DOWNTO 0);
 -- wire to hold memory input
 SIGNAL Mem_in: std_logic_vector(31 DOWNTO 0);
 -- wire to hold memory address
 SIGNAL Mem_Addr: std_logic_vector(31 DOWNTO 0);
+-- wire to hold jump address
+SIGNAL Jump_Addr: std_logic_vector(31 DOWNTO 0);
+-- wire to hold jump flag
+SIGNAL jump_flag: std_logic;
+-- wire to hold exception flag
+SIGNAL exception_flag: std_logic;
 --signals from writeBack buffer 
 SIGNAL write_data:std_logic_vector(15 DOWNTO 0);
 SIGNAL Write_Address:std_logic_vector(2 DOWNTO 0);
 BEGIN
 
+-- select between new_PC value and jump address and exception handler address
+PC_mux: entity work.MUX_2_4 PORT MAP(In1 => new_PC, In2 => Mem_res_WB, In3 => Jump_Addr, In4 => new_PC, sel1 => jump_flag, sel2 => jump_flag, out_data => PC_in);
+
 -- PC register
+PC_reg: entity work.REG PORT MAP(rst => rst, clk => clk, en => PC_en, datain => new_PC, rstData => Mem_res, dataout => PC);
 
 -- Instruction Memory
 instructionMem: entity work.ram PORT MAP(clk => clk, we => '0', write32 => '0', re => '1', address => PC,
  datain => (others=>'0'), dataout => instruction);
+
+-- PC selection Module
+increase_PC: entity work.PC_INCREMENT PORT MAP(old_PC => PC, selector => instruction(17), new_PC => new_PC);
+
+
 -- Fetch/Decode intermmediate buffer
 
 -- Register File module instance
@@ -128,15 +147,22 @@ forwardUnit: entity work.ForwardingUnit PORT MAP(EXMem_WriteBack=>WriteBack_E_M,
 				src1Selectors=>src1_sel, src2Selectors=>src2_sel
 				);
 -- ALU sources mux/s
+-- mux to choose between src1 from instruction and forwarded data
 src1Mux: entity work.MUX_2_4 PORT MAP(In1 => src1_D_E, In2 => ALU_res_E_M, In3 => Mem_res_M_W(31 DOWNTO 16),
-				 In4 => src1_D_E, out_data => src1_selected, sel => src1_sel);
+				 In4 => src1_D_E, out_data => src1_selected, sel1 => src1_sel(1), sel2 => src1_sel(0));
+
+				 -- mux to choose between src2 from instruction and forwarded data
 src2Mux: entity work.MUX_2_4 PORT MAP(In1 => src2_D_E, In2 => ALU_res_E_M, In3 => Mem_res_M_W(31 DOWNTO 16),
-				 In4 => src2_D_E, out_data => src2_selected, sel => src2_sel);
+				 In4 => src2_D_E, out_data => src2_selected, sel1 => src2_sel(1), sel2 => src2_sel(0));
 -- choose between selected src1 and src2 in case of STD
 operand1Mux: entity work.MUX_1_2 PORT MAP(In1 => src1_selected, In2 => src2_D_E, sel => STD_flag_D_E, out_data => ALU_op1);
 -- choose between selected src2 and offset in case of STD
 operand2Mux: entity work.MUX_1_2 PORT MAP(In1 => src2_selected, In2 => offset_D_E, sel => STD_flag_D_E, out_data => ALU_op2);
 
+-- 	TODO: mux to choose between data from execute stage and in_data
+-- 	TODO: mux to choose between data from memory stage and in_data
+--  TODO: flag registers with 'Store flag register'
+ 
 -- ALU module instance
 
 -- Execute/Memory intermmediate buffer
