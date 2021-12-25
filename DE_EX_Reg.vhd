@@ -19,7 +19,7 @@ ENTITY DE_EX_Reg IS
 		WriteBack_D, MemToReg_D,
 		SP_en_D, SP_op_D,
 		--PC_en_D,
-		Flags_en_D,
+		C_Flag_en_D,Z_Flag_en_D,N_Flag_en_D,
 		STD_flag_D,
 		Call_flag_D, INT_flag_D, Branch_flag_D,
 		RTI_flag_D: IN std_logic;
@@ -35,7 +35,7 @@ ENTITY DE_EX_Reg IS
 		WriteBack_E, MemToReg_E,
 		SP_en_E, SP_op_E,
 		--PC_en_E,
-		Flags_en_E,
+		C_Flag_en_E,Z_Flag_en_E,N_Flag_en_E,
 		STD_flag_E,
 		Call_flag_E, INT_flag_E, Branch_flag_E,
 		RTI_flag_E: OUT std_logic
@@ -66,7 +66,9 @@ BEGIN
 			SP_en_E <= '0';
 			SP_op_E <= '0';
 			--PC_en_E <= '0';
-			Flags_en_E <= '0';
+			C_Flag_en_E <= '0';
+			Z_Flag_en_E <= '0';
+			N_Flag_en_E <= '0';
 			STD_flag_E <= '0';
 			Call_flag_E <= '0';
 			INT_flag_E <= '0';
@@ -91,7 +93,9 @@ BEGIN
 			SP_en_E <= SP_en_D;
 			SP_op_E <= SP_op_D;
 			--PC_en_E <= PC_en_D;
-			Flags_en_E <= Flags_en_D;
+			C_Flag_en_E <= C_Flag_en_D;
+			Z_Flag_en_E <= Z_Flag_en_D;
+			N_Flag_en_E <= N_Flag_en_D;
 			STD_flag_E <= STD_flag_D;
 			Call_flag_E <= Call_flag_D;
 			INT_flag_E <= INT_flag_D;

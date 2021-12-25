@@ -1,7 +1,5 @@
-
 library ieee;
 use ieee.std_logic_1164.all;
-
 ENTITY REG IS 
 	PORT (
 		rst, clk, en: IN std_logic;
@@ -10,8 +8,6 @@ ENTITY REG IS
 		dataout: OUT std_logic_vector(31 DOWNTO 0)
 	);
 END REG;
-
-
 ARCHITECTURE reg OF REG IS
 BEGIN
 	PROCESS (clk, rst) IS
