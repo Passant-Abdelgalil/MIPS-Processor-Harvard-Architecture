@@ -1,8 +1,6 @@
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.all;
 USE IEEE.numeric_std.all;
-
-
 ENTITY PC_INCREMENT IS
 PORT(
 	old_PC: IN std_logic_vector(31 DOWNTO 0);
