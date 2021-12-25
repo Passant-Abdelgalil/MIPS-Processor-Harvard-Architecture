@@ -67,7 +67,7 @@ SIGNAL SP_en, SP_en_D_E, SP_en_E_M: std_logic;
 -- wires to hold stack pointer operation through stages [execute, memory]
 SIGNAL SP_op, SP_op_D_E, SP_op_E_M: std_logic;
 -- wires to hold flags enable through stages [decode]
-SIGNAL flags_en, flags_en_D_E: std_logic;
+SIGNAL c_flag_en,n_flag_en,z_flag_en, c_flag_en_D_E,z_flag_en_D_E,n_flag_en_D_E: std_logic;
 -- wires to hold std flag signal through stages [execute, memory]
 SIGNAL STD_flag, STD_flag_D_E, STD_flag_E_M: std_logic;
 -- wires to hold call flag signal through stages [execute, memory]
