@@ -18,7 +18,7 @@ ENTITY control_unit IS
         SP_op, -- Stack Pointer operation - +1 or -1?
         PC_en, -- Program Counter enable
         ALU_src, -- ALU source - 
-        CF_en,ZF_en,NF_en -- Flags enable - to change flags
+        CF_en,ZF_en,NF_en, -- Flags enable - to change flags
         STD_FLAG, -- store flag - @opSTD - it is muxes' input to choose ALU src1, src2, offset
         -- ADD SIGNALS HERE
 	-- write32 => singal to indicate whether to read 32 or 16 from memory
@@ -202,7 +202,7 @@ BEGIN
         opCode = opINC OR
         opCode = opSUB OR
         opCode = opADD OR
-        opCode = opIADD OR
+        opCode = opIADD 
         ELSE
         '0';
 
@@ -212,7 +212,7 @@ BEGIN
         opCode = opAND OR
         opCode = opSUB OR
         opCode = opADD OR
-        opCode = opIADD O OR 
+        opCode = opIADD
         ELSE
         '0';
 
@@ -222,7 +222,7 @@ BEGIN
         opCode = opAND OR
         opCode = opSUB OR
         opCode = opADD OR
-        opCode = opIADD OR
+        opCode = opIADD
         ELSE
         '0';
 
