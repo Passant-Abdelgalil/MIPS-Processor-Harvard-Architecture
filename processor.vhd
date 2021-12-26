@@ -126,7 +126,8 @@ FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => rst, clk => clk, en => F_D
 -- Register File module instance
 RegisterFile:entity work.Register_File PORT MAP(Read_Address_1=>src1_addr,Read_Address_2=>src2_addr,
 Write_Address=>Write_Address,write_data=>write_data,Clk=>clk,Rst=>rst,WB_enable=>WriteBack_M_W,Src1_data=>src1,Src2_data=>src1);
-
+-- Docoder Mux select for write data
+Decoder_Mux:entity work.Decoder_Mux  port map(OUT_DATA,indata_M_WB,write_data,IN_en_M_W);
 
 -- Control Unit module instance
 controlUnit: entity work.control_unit PORT MAP(opCode => instruction(31 DOWNTO 27), IN_en => IN_en, OUT_en => OUT_en,
