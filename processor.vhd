@@ -107,7 +107,7 @@ BEGIN
 PC_mux: entity work.MUX_2_4 PORT MAP(In1 => new_PC, In2 => Mem_res_WB, In3 => Jump_Addr, In4 => new_PC, sel1 => jump_flag, sel2 => jump_flag, out_data => PC_in);
 
 -- PC register
-PC_reg: entity work.REG PORT MAP(rst => rst, clk => clk, en => PC_en, datain => new_PC, rstData => Mem_res, dataout => PC);
+PC_reg: entity work.REG PORT MAP(rst => rst, clk => clk, en => PC_en, datain => new_PC, rstData => (others=>'0'), dataout => PC);
 
 -- Instruction Memory
 instructionMem: entity work.ram PORT MAP(clk => clk, we => '0', write32 => '0', re => '1', address => PC,
@@ -118,7 +118,7 @@ increase_PC: entity work.PC_INCREMENT PORT MAP(old_PC => PC, selector => instruc
 
 
 -- Fetch/Decode intermmediate buffer
-FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => rst, clk => clk, en => F_D_en,
+FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => rst, clk => clk, en => '1',
 						PC_F=>PC ,PC_D=>PC_F_D,
 						Inst_F=>instruction,Inst_D=>Inst_F_D,
 						INDATA_F=>INPORT,INDATA_D=>indata_F_D);
@@ -137,7 +137,7 @@ controlUnit: entity work.control_unit PORT MAP(opCode => instruction(31 DOWNTO 2
 				RTI_i=>RTI_flag, ALU_op=>ALU_op
 				);
 -- decode/execute intermmediate buffer
-DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>D_E_en, INDATA_D=>indata_F_D, INDATA_E=>indata_D_E, 
+DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA_D=>indata_F_D, INDATA_E=>indata_D_E, 
 				PC_D=>PC_F_D, PC_E=>PC_D_E, src1_D=>src1_F_D, src2_D=>src2_F_D,
 				src1_E=>src1_D_E, src2_E=>src2_D_E, offset_D=>offset_F_D, offset_E=>offset_D_E,
 				dst_D=>dest_F_D, dst_E=>dest_D_E, ALU_op_D=>ALU_op, ALU_op_E=>ALU_op_D_E,
@@ -186,7 +186,7 @@ operand2Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src2_se
 ALU: entity work.alu PORT MAP(ALU_op1,ALU_op2,ALU_op_D_E,ALU_res,CF,ZF,NF,c_flag_en_D_E,z_flag_en_D_E,n_flag_en_D_E,ALU_en_D_E);
 
 -- Execute/Memory intermmediate buffer
-EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>E_M_en, INDATA_E=>indata_D_E, INDATA_M=>indata_E_M, 
+EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>'1', INDATA_E=>indata_D_E, INDATA_M=>indata_E_M, 
 				PC_E=>PC_D_E, PC_M=>PC_E_M, --src1_E=>src1_D_E, src2_E=>src2_D_E,
 				--src1_M=>src1_E_M, src2_M=>src2_E_M,
 				offset_E=>offset_D_E, offset_M=>offset_E_M, ALU_res_E => ALU_res, ALU_res_M => ALU_res_E_M,
@@ -208,7 +208,7 @@ dataMem: entity work.ram PORT MAP(clk => clk, we => MemWrite_E_M, write32 => Wri
 
 
 MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
-				clk=>clk, en=>M_W_en,
+				clk=>clk, en=>'1',
 				INDATA_M=>indata_E_M, INDATA_W=>indata_M_WB, 
 				PC_M=>PC_E_M, PC_W=>PC_M_W, 
 				Mem_out_M=>Mem_res,Mem_out_W=>Mem_res_M_W,

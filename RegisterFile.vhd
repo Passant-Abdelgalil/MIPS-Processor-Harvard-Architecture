@@ -24,13 +24,14 @@ q:out std_logic_vector(15 downto 0)
 );
 end  component;
 begin
-PROCESS (Clk,Read_Address_1,Read_Address_2,Write_Address,WB_enable,write_data)
+PROCESS (Clk,rst,Read_Address_1,Read_Address_2,Write_Address,WB_enable,write_data)
 begin
-  
-enable(to_integer(unsigned(Read_Address_1)))<='1';
-enable(to_integer(unsigned(Read_Address_2)))<='1';
+if(rst ='0' )then  
+--enable(to_integer(unsigned(Read_Address_1)))<='1';
+--enable(to_integer(unsigned(Read_Address_2)))<='1';
 if(WB_enable='1') then
 enable(to_integer(unsigned(Write_Address)))<='1';
+end if;
 end if;
 end process;
 

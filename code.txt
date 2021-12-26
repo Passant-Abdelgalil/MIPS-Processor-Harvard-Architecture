@@ -1,1 +1,8 @@
 NOP
+SETC
+NOT r0
+INC r0
+NOT r1
+OUT r1
+IN r2
+OUT r2
