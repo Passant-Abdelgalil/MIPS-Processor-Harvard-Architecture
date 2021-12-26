@@ -7,8 +7,8 @@ ENTITY processor IS
 PORT(
 rst : IN std_logic;
 clk: IN std_logic;
-INPORT: IN std_logic_vector(31 DOWNTO 0);
-OUTPORT: OUT std_logic_vector(31 DOWNTO 0)
+INPORT: IN std_logic_vector(15 DOWNTO 0);
+OUTPORT: OUT std_logic_vector(15 DOWNTO 0)
 );
 
 END processor;
@@ -98,7 +98,10 @@ SIGNAL Write_Address:std_logic_vector(2 DOWNTO 0);
 SIGNAL inDataMuxOut1, inDataMuxOut2: std_logic_vector(15 downto 0);
 
 SIGNAL CF,ZF,NF: std_logic;
+SIGNAL Inst_F_D: std_logic_vector (31 downto 0);
+SIGNAL OUT_DATA, OUT_DATA_M_W: std_logic_vector( 15 downto 0);
 BEGIN
+
 
 -- select between new_PC value and jump address and exception handler address
 PC_mux: entity work.MUX_2_4 PORT MAP(In1 => new_PC, In2 => Mem_res_WB, In3 => Jump_Addr, In4 => new_PC, sel1 => jump_flag, sel2 => jump_flag, out_data => PC_in);
@@ -115,6 +118,10 @@ increase_PC: entity work.PC_INCREMENT PORT MAP(old_PC => PC, selector => instruc
 
 
 -- Fetch/Decode intermmediate buffer
+FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => rst, clk => clk, en => F_D_en,
+						PC_F=>PC ,PC_D=>PC_F_D,
+						Inst_F=>instruction,Inst_D=>Inst_F_D,
+						INDATA_F=>INPORT,INDATA_D=>indata_F_D);
 
 -- Register File module instance
 RegisterFile:entity work.Register_File PORT MAP(Read_Address_1=>src1_addr,Read_Address_2=>src2_addr,
@@ -220,5 +227,8 @@ MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 				INT_flag_M=>INT_flag_E_M, INT_flag_W=>INT_flag_M_W,
 				RTI_flag_M=>RTI_flag_E_M, RTI_flag_W=>RTI_flag_M_W
 				);
+
+Out_Port_Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => ALU_res_M_W, In2 => Mem_res_M_W(31 downto 16), sel => MemToReg_M_W, out_data => OUT_DATA_M_W);
+Out_Port: entity work. r_Register PORT MAP (clk,rst,OUT_en_M_W,OUT_DATA_M_W,OUT_DATA);
 
 END processor1;
