@@ -1,5 +1,5 @@
 vsim -gui work.processor
-mem load -i {D:/Mariam/College/Computer Architecture/Project ALU/inst_memory.mem} /processor/instructionMem/ram
+mem load -i {D:\GitHub\ArchProject/inst_memory.mem} /processor/instructionMem/ram
 add wave -position insertpoint sim:/processor/*
 add wave -position insertpoint sim:/processor/controlUnit/*
 add wave -position insertpoint sim:/processor/RegisterFile/*
@@ -9,4 +9,16 @@ force -freeze sim:/processor/rst 1
 run
 force -freeze sim:/processor/rst 0
 noforce sim:/processor/PC
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
 run

@@ -27,7 +27,9 @@ ENTITY control_unit IS
         INT_i, -- INT instruction - @opINT
         BRANCH_i, -- Branching instruction @opJMP, opJN, opJZ, opJC
         MEM_REG, -- Memory to Register @opLDD, opLDM, OPO?????????????
-        RTI_i -- RTI instruction @opRTI
+        RTI_i, -- RTI instruction @opRTI
+	write32,-- flag to write 32 bit into memory or 16
+	read32	-- flag to read 32 bit into memory or 16
 
         : OUT STD_LOGIC;
 
@@ -91,7 +93,16 @@ BEGIN
 
     OUT_en <= '1' WHEN opCode = opOUT ELSE
         '0';
-
+    write32 <= '1' WHEN
+	opCode = opCALL OR
+	opCode = opINT
+	ELSE
+	'0';
+    read32 <= '1' WHEN
+	opCode = opRET OR
+	opCode = opRTI
+	ELSE
+	'0';
     ALU_en <= '1' WHEN
         opCode = opSETC OR
         opCode = opNOT OR

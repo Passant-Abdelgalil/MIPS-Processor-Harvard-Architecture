@@ -23,6 +23,7 @@ ENTITY EX_MEM_Reg IS
 		MemRead_E, MemWrite_E,
 		WriteBack_E, MemToReg_E,
 		SP_en_E, SP_op_E,
+		write32_E, read32_E,
 --		PC_en_E,
 --		Flags_en_E,
 		STD_flag_E,
@@ -43,6 +44,7 @@ ENTITY EX_MEM_Reg IS
 		MemRead_M, MemWrite_M,
 		WriteBack_M, MemToReg_M,
 		SP_en_M, SP_op_M,
+		write32_M, read32_M,
 --		PC_en_M,
 --		Flags_en_M,
 		STD_flag_M,
@@ -74,6 +76,10 @@ BEGIN
 			MemWrite_M <= '0';
 			WriteBack_M <= '0';
 			MemToReg_M <= '0';
+			write32_M <= '0';
+			--src1_M_addr <= "000";
+			--src2_M_addr <= "000";
+			read32_M <= '0';
 			SP_en_M <= '0';
 			SP_op_M <= '0';
 --			PC_en_M <= '0';
@@ -97,9 +103,13 @@ BEGIN
 --			ALU_en_M <= ALU_en_E;
 --			ALU_src_M <= ALU_src_E;
 			MemRead_M <= MemRead_E;
+			--src1_M_addr <= src1_E_addr;
+			--src2_M_addr <= src2_E_addr;
 			MemWrite_M <= MemWrite_E;
 			WriteBack_M <= WriteBack_E;
 			MemToReg_M <= MemToReg_E;
+			write32_M <= write32_E;
+			read32_M <= read32_E;
 			SP_en_M <= SP_en_E;
 			SP_op_M <= SP_op_E;
 --			PC_en_M <= PC_en_E;

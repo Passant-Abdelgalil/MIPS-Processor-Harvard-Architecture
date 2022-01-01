@@ -17,7 +17,7 @@ SIGNAL ram : ram_type ;
 BEGIN
 		PROCESS(clk) IS
 		BEGIN
-				IF falling_edge(clk) THEN
+				IF rising_edge(clk) THEN
 					IF (we = '1') THEN
 						ram(to_integer(unsigned(address))) <= datain(31 DOWNTO 16);
 					END IF;
