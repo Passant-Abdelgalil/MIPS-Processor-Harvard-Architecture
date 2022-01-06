@@ -63,13 +63,13 @@ BEGIN
         PUSH_i = '1'
         ELSE
         STD_LOGIC_VECTOR(unsigned(SP_output) + 1)
-        WHEN POP_i = '1'
+        WHEN POP_i = '1' AND (unsigned(SP_output) /= x"000fffff")
         ELSE
         STD_LOGIC_VECTOR(unsigned(SP_output) - 1) WHEN -- @ram: write32:let d = passed address:data is written in d and d+1 
         INT_i = '1' OR CALL_i = '1'
         ELSE
         STD_LOGIC_VECTOR(unsigned(SP_output) + 1)
-        WHEN RET_i = '1' OR RTI_i = '1'
+        WHEN (RET_i = '1' OR RTI_i = '1') AND (unsigned(SP_output) /= x"000ffffe")
         ELSE
         SP_output -- should not be chosen & should not reach this else
         ;
