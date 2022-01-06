@@ -14,16 +14,44 @@ OUTPORT: OUT std_logic_vector(15 DOWNTO 0)
 END processor;
 
 ARCHITECTURE processor1 OF processor IS
--- wires to hold pc value through stages [decode, execute, memory]
-SIGNAL PC, PC_F_D, PC_D_E, PC_E_M, PC_M_W: std_logic_vector(31 DOWNTO 0);
--- wires to hold pc enable value through stages []
-SIGNAL PC_en, PC_en_D_E, PC_en_E_M,PC_en_M_W: std_logic;
+--  ########################## FETCH STAGE SIGNALS DEFINITION#####################
+
+-- wire to hold pc value
+SIGNAL PC: std_logic_vector(31 DOWNTO 0);
+-- wire to hold pc enable
+SIGNAL PC_en: std_logic;
 -- wire to hold new PC
 SIGNAL new_PC: std_logic_vector(31 DOWNTO 0);
+-- wire to hold instruction value
+SIGNAL instruction: std_logic_vector(31 DOWNTO 0);
 -- wire to hold PC reg in data
 SIGNAL PC_in: std_logic_vector(31 DOWNTO 0);
+-- wire to hold interrupt address
+SIGNAL interrupt_address: std_logic_vector(31 DOWNTO 0);
+-- wire to hold exception1_interrupts_mux output
+SIGNAL execption_one_or_interrupt: std_logic_vector(31 DOWNTO 0);
+-- wire to hold exception2_interrupts_mux output
+SIGNAL exception_interrupt_address: std_logic_vector(31 DOWNTO 0);
+-- signal to hold selector value for the mux that chooses between pc and exception/interrupt address
+SIGNAL pc_excp_interr_MUX_sel: std_logic;
+-- signal to hold exception_interrupt_or_PC_mux output
+SIGNAL pc_or_exception_interrupt: std_logic_vector(31 DOWNTO 0);
+-- signal to hold instruction address to be fed into memory address input signal
+SIGNAL INST_ADDR: std_logic_vector(31 DOWNTO 0);
+-- signal to hold PC_EXCP_INTERR_mux output
+SIGNAL PC_withoutJump: std_logic_vector(31 DOWNTO 0);
+-- signal to hold final PC value
+SIGNAL final_PC: std_logic_vector(31 DOWNTO 0);
+
+--####################### END FETCH STAGE SIGNALS DEFINITION ###############################
+
+-- wires to hold pc value through stages [decode, execute, memory]
+SIGNAL PC_F_D, PC_D_E, PC_E_M, PC_M_W: std_logic_vector(31 DOWNTO 0);
+-- wires to hold pc enable value through stages []
+SIGNAL PC_en_D_E, PC_en_E_M,PC_en_M_W: std_logic;
+
 -- wires to hold instruction through stages [fetch]
-SIGNAL instruction, Inst_F_D: std_logic_vector(31 DOWNTO 0);
+SIGNAL Inst_F_D: std_logic_vector(31 DOWNTO 0);
 -- wires to hold offset value through stages [decode, execute]
 SIGNAL offset_D_E, offset_E_M,offset_M_W: std_logic_vector(15 DOWNTO 0);
 -- wires to hold source register value through stages[decode, execute]
@@ -102,27 +130,51 @@ SIGNAL inDataMuxOut1, inDataMuxOut2: std_logic_vector(15 downto 0);
 SIGNAL CF,ZF,NF: std_logic;
 
 SIGNAL OUT_DATA, OUT_DATA_M_W: std_logic_vector( 15 downto 0);
+
+SIGNAL exception_one, exception_two: std_logic;
+
 BEGIN
 
+--  ################### FETCH STAGE #####################
 
--- select between new_PC value and jump address and exception handler address
-PC_mux: entity work.MUX_2_4 PORT MAP(In1 => new_PC, In2 => Mem_res_WB, In3 => Jump_Addr, In4 => new_PC, sel1 => jump_flag, sel2 => jump_flag, out_data => PC_in);
+-- mux to choose between exception 1 handler and interrupts
+exception1_interrupts_mux: entity work.MUX_1_2 PORT MAP(In1 => std_logic_vector(to_unsigned(2, 32)), In2 => interrupt_address, sel => exception_one, out_data => execption_one_or_interrupt);
+
+-- mux to choose between exception 2 handler and exception1_interrupts_mux output
+exception2_interrupts_mux: entity work.MUX_1_2 PORT MAP(In1 => std_logic_vector(to_unsigned(4,32)), In2 => execption_one_or_interrupt, sel => exception_two, out_data => exception_interrupt_address);
+
+-- set selector for pc_excp_interr_MUX
+pc_excp_interr_MUX_sel <= ((exception_one or exception_two) or INT_flag);
+
+-- mux to choose between exception/interrupt address and PC value
+exception_interrupt_or_PC_mux: entity work.MUX_1_2 PORT MAP(In1 => PC, In2 => exception_interrupt_address, sel => pc_excp_interr_MUX_sel, out_data => pc_or_exception_interrupt);
+
+-- mux to choose between expected instruction address and reset address for intial PC value
+instruction_address: entity work.MUX_1_2 PORT MAP(In1 => pc_or_exception_interrupt, In2 => (others=>'0'), sel => rst, out_data => INST_ADDR);
+
+-- mux to choose between new PC value and exception/interrupts handler address
+PC_EXCP_INTERR_mux: entity work.MUX_1_2 PORT MAP(In1 => new_PC, In2 => instruction, sel => pc_excp_interr_MUX_sel, out_data => PC_withoutJump);
+
+-- mux to choose between exepcted PC value and jump address
+PC_JUMP_mux: entity work.MUX_1_2 PORT MAP(In1 => PC_withoutJump, IN2 => Jump_Addr, sel => jump_flag, out_data => final_PC);
 
 -- PC register
-PC_reg: entity work.REG PORT MAP(rst => rst, clk => clk, en => PC_en, datain => new_PC, rstData => (others=>'0'), dataout => PC);
+PC_reg: entity work.REG PORT MAP(rst => rst, clk => clk, en => PC_en, datain => final_PC, rstData => instruction, dataout => PC);
 
 -- Instruction Memory
-instructionMem: entity work.instructionRam PORT MAP(address => PC, dataout => instruction);
+instructionMem: entity work.instructionRam PORT MAP(address => INST_ADDR, dataout => instruction);
 
 -- PC selection Module
 increase_PC: entity work.PC_INCREMENT PORT MAP(old_PC => PC, selector => instruction(17), new_PC => new_PC);
 
+--  ################### FETCH STAGE END #####################
 
 -- Fetch/Decode intermmediate buffer
 FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => rst, clk => clk, en => '1',
 						PC_F=>PC ,PC_D=>PC_F_D,
 						Inst_F=>instruction,Inst_D=>Inst_F_D,
 						INDATA_F=>INPORT,INDATA_D=>indata_F_D);
+--  ################### DECODE STAGE #####################
 
 -- Docoder Mux select for write data
 Decoder_Mux:entity work.Decoder_Mux  port map(OUT_DATA_M_W,indata_M_WB,write_data,IN_en_M_W);
