@@ -11,8 +11,8 @@ def read_instrcution_memory_file(filename):
 
 def replace_memory_cell_value(index, new_value, write32):
     global instruction_memory
-    print("index is ", index)
-    print("new value is ", new_value)
+    #print("index is ", index)
+    #print("new value is ", new_value)
     int_index = int(index, 16)
 
     if write32:
@@ -84,7 +84,7 @@ def parse_code_file(file):
             line = line.strip()
             pattern = re.compile(r"^\w+$")
             if pattern.search(line):
-                print("org line is ", line)
+                #print("org line is ", line)
                 new_value = f'{int(line, 16):032b}'
                 replace_memory_cell_value(
                     index=index, new_value=new_value, write32=True)
@@ -259,7 +259,7 @@ def parse_code_file(file):
             decoded_instruction = offset_val + decoded_instruction
         instruction_index = instruction_number + code_start_index
         instruction_number += 1
-        print("decoded instruction is ", decoded_instruction)
+        #print("decoded instruction is ", decoded_instruction)
         replace_memory_cell_value(
             index=hex(instruction_index)[2:], new_value=decoded_instruction, write32=with_offset)
         line = file.readline()
