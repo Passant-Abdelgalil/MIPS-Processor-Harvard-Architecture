@@ -30,9 +30,11 @@ def regenrate_instruction_memory_file(filename, lines):
 
 
 def parse_register_name(regName):
+
     if regName is None:
         raise Exception("invalid register name")
     regName = regName.strip().lower()
+
     if regName == "r0":
         return "000"
     if regName == "r1":
@@ -51,13 +53,11 @@ def parse_register_name(regName):
         return "111"
     return "-111"
 
-
 def if_skip_line(line):
     if line is None:
         raise Exception("invalid instruction set")
     line = line.strip()
     return len(line) == 0 or line[0] == '#'
-
 
 def parse_code_file(file):
     global instruction_memory
@@ -66,6 +66,7 @@ def parse_code_file(file):
     code_start_index = ""
     instruction_number = 0
     while line:
+
         # skip comments or empty lines
         if if_skip_line(line):
             line = file.readline()
@@ -254,6 +255,7 @@ def parse_code_file(file):
             rsrc2 = rdst
 
 # ================== Write decoded instruction ==============
+
         decoded_instruction = f'{opcode}{rsrc1}{rsrc2}{rdst}00'
         if with_offset:
             decoded_instruction = offset_val + decoded_instruction
@@ -262,6 +264,7 @@ def parse_code_file(file):
         #print("decoded instruction is ", decoded_instruction)
         replace_memory_cell_value(
             index=hex(instruction_index)[2:], new_value=decoded_instruction, write32=with_offset)
+
         line = file.readline()
 
     file.close()
@@ -279,3 +282,4 @@ if __name__ == "__main__":
 
     regenrate_instruction_memory_file(
         filename='./instruction_memory2.mem', lines=instruction_memory)
+
