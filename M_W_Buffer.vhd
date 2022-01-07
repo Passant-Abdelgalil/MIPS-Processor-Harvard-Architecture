@@ -5,9 +5,8 @@ ENTITY M_W_Buffer IS
 	PORT(
 		en,clk,rst: IN std_logic;
 		INDATA_M: IN std_logic_vector(15 DOWNTO 0);
-		PC_M,Mem_out_M: IN std_logic_vector(31 DOWNTO 0);
+		PC_M: IN std_logic_vector(31 DOWNTO 0);
 		offset_M: IN std_logic_vector(15 DOWNTO 0);
-		ALU_res_M: IN std_logic_vector(15 DOWNTO 0);
 		dst_M: IN std_logic_vector(2 DOWNTO 0);
 		IN_en_M, OUT_en_M,
 		MemRead_M, MemWrite_M,
@@ -16,12 +15,12 @@ ENTITY M_W_Buffer IS
 		STD_flag_M,
 		Call_flag_M, INT_flag_M,
 		RTI_flag_M: IN std_logic;
-
-
+		final_writeData_M: IN std_logic_vector(15 DOWNTO 0);
+		
 		INDATA_W: OUT std_logic_vector(15 DOWNTO 0);
-		PC_W,Mem_out_W: OUT std_logic_vector(31 DOWNTO 0);
+		PC_W: OUT std_logic_vector(31 DOWNTO 0);
 		offset_W: OUT std_logic_vector(15 DOWNTO 0);
-		ALU_res_W: OUT std_logic_vector(15 DOWNTO 0);
+		final_writeData_W: OUT std_logic_vector(15 DOWNTO 0);
 		dst_W: OUT std_logic_vector(2 DOWNTO 0);
 		IN_en_W, OUT_en_W,
 		MemRead_W, MemWrite_W,
@@ -41,9 +40,8 @@ BEGIN
 		IF (rst = '1') THEN
 			INDATA_W <= (others=>'0');
 			PC_W <= (others=>'0');
-			Mem_out_W<=(others=>'0');
 			offset_W <= (others=>'0');
-			ALU_res_W <= (others=>'0');
+			final_writeData_W <= (others=>'0');
 			dst_W <= (others=>'0');
 			IN_en_W <= '0';
 			OUT_en_W <= '0';
@@ -60,9 +58,8 @@ BEGIN
 		ELSIF (rising_edge(clk) and en = '1') THEN
 			INDATA_W <= INDATA_M;
 			PC_W <= PC_M;
-			Mem_out_W<=Mem_out_M;
 			offset_W<= offset_M;
-			ALU_res_W <= ALU_res_M;
+			final_writeData_W <= final_writeData_M;
 			dst_W <= dst_M;
 			IN_en_W <= IN_en_M;
 			OUT_en_W <= OUT_en_M;

@@ -75,7 +75,7 @@ SIGNAL src1_selected, src2_selected: std_logic_vector(15 DOWNTO 0);
 -- wires to hold ALU operands
 SIGNAL ALU_op1, ALU_op2: std_logic_vector(15 DOWNTO 0);
 -- wires to hold ALU result through stages [execute, memory, writeback]
-SIGNAL ALU_res, ALU_res_E_M, ALU_res_M_W: std_logic_vector(15 DOWNTO 0);
+SIGNAL ALU_res, ALU_res_E_M: std_logic_vector(15 DOWNTO 0);
 -- wires to hold IN_en signal through stages [execute, memory, writeback]
 SIGNAL IN_en, IN_en_D_E, IN_en_E_M, IN_en_M_W: std_logic;
 -- wires to hold OUT_en signal through stages [execute, memory, writeback]
@@ -113,7 +113,9 @@ SIGNAL RET_flag, RET_flag_D_E, RET_flag_E_M, RET_flag_M_W: STD_LOGIC;
 -- wires to hold ALU sources selectors
 SIGNAL src1_sel, src2_sel: std_logic_vector(1 DOWNTO 0); 
 -- wires to hold memory output 
-SIGNAL Mem_res, Mem_res_M_W, Mem_res_WB: std_logic_vector(31 DOWNTO 0);
+SIGNAL Mem_res: std_logic_vector(31 DOWNTO 0);
+-- wire to hold final data to be written
+SIGNAL final_write_data, final_write_data_W: std_logic_vector(15 DOWNTO 0);
 -- wire to hold memory input
 SIGNAL Mem_in: std_logic_vector(31 DOWNTO 0);
 -- wire to hold memory address
@@ -136,6 +138,7 @@ SIGNAL OUT_DATA, OUT_DATA_M_W: std_logic_vector( 15 downto 0);
 
 SIGNAL exception_one, exception_two: std_logic;
 
+SIGNAL offset_or_register: std_logic;
 BEGIN
 
 --  ################### FETCH STAGE #####################
@@ -170,7 +173,7 @@ instructionMem: entity work.instructionRam PORT MAP(address => INST_ADDR, dataou
 -- PC selection Module
 increase_PC: entity work.PC_INCREMENT PORT MAP(old_PC => PC, selector => instruction(17), new_PC => new_PC);
 
---  ################### FETCH STAGE END #####################
+--  ################### END #####################
 
 -- Fetch/Decode intermmediate buffer
 FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => rst, clk => clk, en => '1',
@@ -180,7 +183,7 @@ FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => rst, clk => clk, en => '1'
 --  ################### DECODE STAGE #####################
 
 -- Docoder Mux select for write data
-Decoder_Mux:entity work.Decoder_Mux  port map(OUT_DATA_M_W,indata_M_WB,write_data,IN_en_M_W);
+Decoder_Mux:entity work.Decoder_Mux  port map(final_write_data_W,indata_M_WB,write_data,IN_en_M_W);
 -- Register File module instance
 RegisterFile:entity work.Register_File PORT MAP(Read_Address_1=>Inst_F_D(26 DOWNTO 24),Read_Address_2=>Inst_F_D(23 DOWNTO 21),
 Write_Address=>dest_M_W,write_data=>write_data,Clk=>clk,Rst=>rst,WB_enable=>WriteBack_M_W,Src1_data=>src1,Src2_data=>src2);
@@ -223,7 +226,7 @@ inData1Mux:entity work.MUX_1_2 generic map (n   => 16)
 PORT MAP(In2 => indata_E_M(15 downto 0), In1 => ALU_res_E_M, sel => IN_en_E_M, out_data => inDataMuxOut1);
 
 inData2Mux:entity work.MUX_1_2 generic map (n   => 16)
-PORT MAP(In2 => indata_M_WB(15 downto 0), In1 => Mem_res_M_W(31 DOWNTO 16), sel => IN_en_M_W, out_data => inDataMuxOut2); 
+PORT MAP(In2 => indata_M_WB(15 downto 0), In1 => final_write_data_W, sel => IN_en_M_W, out_data => inDataMuxOut2); 
 
 src1Mux: entity work.MUX_2_4 generic map (n   => 16) PORT MAP(In1 => src1_D_E, In2 => inDataMuxOut1, In3 => inDataMuxOut2,
 				 In4 => src1_D_E, out_data => src1_selected, sel1 => src1_sel(1), sel2 => src1_sel(0));
@@ -233,8 +236,10 @@ src2Mux: entity work.MUX_2_4 generic map (n   => 16) PORT MAP(In1 => src2_D_E, I
 				 In4 => src2_D_E, out_data => src2_selected, sel1 => src2_sel(1), sel2 => src2_sel(0));
 -- choose between selected src1 and src2 in case of STD
 operand1Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src1_selected, In2 => src2_D_E, sel => STD_flag_D_E, out_data => ALU_op1);
+-- choose between offset and register value to enter as operand 2 to ALU
+offset_or_register <= STD_flag_D_E or ALU_src_D_E;
 -- choose between selected src2 and offset in case of STD
-operand2Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src2_selected, In2 => offset_D_E, sel => STD_flag_D_E, out_data => ALU_op2);
+operand2Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src2_selected, In2 => offset_D_E, sel => offset_or_register, out_data => ALU_op2);
 
  
 -- ALU module instance
@@ -272,13 +277,13 @@ memoryStage: ENTITY work.MemoryStage PORT MAP(
 		
 		exception_flag <= exception1_flag OR exception2_flag;
 		
+final_write_data_mux: entity work.MUX_1_2 generic map (n => 16) PORT MAP(In1 => ALU_res_E_M, In2 => Mem_res(31 DOWNTO 16), sel => MemToReg_E_M, out_data => final_write_data);
 MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 				clk=>clk, en=>'1',
 				INDATA_M=>indata_E_M, INDATA_W=>indata_M_WB, 
 				PC_M=>PC_E_M, PC_W=>PC_M_W, 
-				Mem_out_M=>Mem_res,Mem_out_W=>Mem_res_M_W,
 				offset_M=>offset_E_M, offset_W=>offset_M_W,
-				ALU_res_M => ALU_res_E_M, ALU_res_W => ALU_res_M_W,
+				final_writeData_M => final_write_data, final_writeData_W => final_write_data_W,
 				dst_M=>dest_E_M, dst_W=>dest_M_W,
 				IN_en_M=>IN_en_E_M, IN_en_W=>IN_en_M_W, 
 				OUT_en_M=>OUT_en_E_M, OUT_en_W=>OUT_en_M_W,
@@ -294,7 +299,7 @@ MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 				RTI_flag_M=>RTI_flag_E_M, RTI_flag_W=>RTI_flag_M_W
 				);
 
-Out_Port_Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => ALU_res_M_W, In2 => Mem_res_M_W(31 downto 16), sel => MemToReg_M_W, out_data => OUT_DATA_M_W);
-Out_Port: entity work.r_Register PORT MAP (clk,rst,OUT_en_M_W,OUT_DATA_M_W,OUTPORT);
+--Out_Port_Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => ALU_res_M_W, In2 => Mem_res_M_W(31 downto 16), sel => MemToReg_M_W, out_data => OUT_DATA_M_W);
+Out_Port: entity work.r_Register PORT MAP (clk,rst,OUT_en_M_W,final_write_data_W,OUTPORT);
 
 END processor1;

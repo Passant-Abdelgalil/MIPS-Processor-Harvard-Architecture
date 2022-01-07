@@ -118,15 +118,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity n_adder
 -- Compiling architecture nAdder of n_adder
 
-} {} {}} D:/GitHub/ArchProject/PC_increment.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/PC_increment.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity PC_INCREMENT
--- Compiling architecture PC_increment of PC_INCREMENT
-
 } {} {}} D:/GitHub/ArchProject/SP_Address_Unit.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/SP_Address_Unit.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -137,15 +128,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling architecture instance of SP_Address_Unit
 -- Loading entity SP_entity
 
-} {} {}} D:/GitHub/ArchProject/partA.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/partA.vhd
+} {} {}} D:/GitHub/ArchProject/PC_increment.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/PC_increment.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity partA
--- Compiling architecture partA_Arch of partA
+-- Loading package NUMERIC_STD
+-- Compiling entity PC_INCREMENT
+-- Compiling architecture PC_increment of PC_INCREMENT
 
 } {} {}} D:/GitHub/ArchProject/control_unit.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/control_unit.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -165,15 +155,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity memo_data_mux
 -- Compiling architecture instance of memo_data_mux
 
-} {} {}} D:/GitHub/ArchProject/partB.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/partB.vhd
+} {} {}} D:/GitHub/ArchProject/partA.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/partA.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity partB
--- Compiling architecture partB_Arch of partB
+-- Compiling entity partA
+-- Compiling architecture partA_Arch of partA
 
 } {} {}} D:/GitHub/ArchProject/instruction_ram.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/instruction_ram.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -184,29 +174,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity instructionRam
 -- Compiling architecture instructionMem of instructionRam
 
-} {} {}} D:/GitHub/ArchProject/register32.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/register32.vhd
+} {} {}} D:/GitHub/ArchProject/partB.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/partB.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Compiling entity REG
--- Compiling architecture reg of REG
-
-} {} {}} D:/GitHub/ArchProject/F_D_Buffer.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/F_D_Buffer.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity F_D_Buffer
--- Compiling architecture F_D_Buffer_Arch of F_D_Buffer
-
-} {} {}} D:/GitHub/ArchProject/alu.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/alu.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity alu
--- Compiling architecture alu_arch of alu
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity partB
+-- Compiling architecture partB_Arch of partB
 
 } {} {}} D:/GitHub/ArchProject/DE_EX_Reg.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/DE_EX_Reg.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -216,21 +192,29 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity DE_EX_Reg
 -- Compiling architecture DeExReg of DE_EX_Reg
 
-} {} {}} D:/GitHub/ArchProject/MUX_1_2.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/MUX_1_2.vhd
+} {} {}} D:/GitHub/ArchProject/alu.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/alu.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Compiling entity MUX_1_2
--- Compiling architecture mux_1_2 of MUX_1_2
+-- Compiling entity alu
+-- Compiling architecture alu_arch of alu
 
-} {} {}} D:/GitHub/ArchProject/ForwardingUnit.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/ForwardingUnit.vhd
+} {} {}} D:/GitHub/ArchProject/F_D_Buffer.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/F_D_Buffer.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Compiling entity ForwardingUnit
--- Compiling architecture FUnit of ForwardingUnit
+-- Compiling entity F_D_Buffer
+-- Compiling architecture F_D_Buffer_Arch of F_D_Buffer
+
+} {} {}} D:/GitHub/ArchProject/register32.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/register32.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity REG
+-- Compiling architecture reg of REG
 
 } {} {}} D:/GitHub/ArchProject/SP.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/SP.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -240,6 +224,22 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package NUMERIC_STD
 -- Compiling entity SP_entity
 -- Compiling architecture SP_instance of SP_entity
+
+} {} {}} D:/GitHub/ArchProject/ForwardingUnit.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/ForwardingUnit.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity ForwardingUnit
+-- Compiling architecture FUnit of ForwardingUnit
+
+} {} {}} D:/GitHub/ArchProject/MUX_1_2.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/MUX_1_2.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity MUX_1_2
+-- Compiling architecture mux_1_2 of MUX_1_2
 
 } {} {}} D:/GitHub/ArchProject/Memo_Address_mux.vhd {1 {vcom -work work -2002 -explicit -stats=none D:/GitHub/ArchProject/Memo_Address_mux.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020

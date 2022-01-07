@@ -16,6 +16,7 @@ def replace_memory_cell_value(index, new_value, write32):
     int_index = int(index, 16)
 
     if write32:
+        print('index in write 32 is ',index)
         instruction_memory[int_index+3] = f'    {index}: {new_value[:16]}\n'
         instruction_memory[int_index +
                            4] = f'    {hex(int_index+1)[2:]}: {new_value[16:]}\n'
@@ -169,6 +170,7 @@ def parse_code_file(file):
             rsrc1 = parse_register_name(parts[2])
             rsrc2 = rsrc1
             offset_val = parts[3]
+            print(offset_val)
 # ======= Memory Operations========================================
         elif parts[0] is not None and parts[0].lower() == "push":
             opcode = "10000"
@@ -248,10 +250,12 @@ def parse_code_file(file):
 
 # ================== Write decoded instruction ==============
 
-        decoded_instruction = f'{opcode}{rsrc1}{rsrc2}{rdst}00'
+        decoded_instruction = f'{opcode}{rsrc1}{rsrc2}{rdst}{1 if with_offset else 0}0'
+        instruction_index = instruction_number + code_start_index
         if with_offset:
             decoded_instruction += f'{int(offset_val, 16):016b}'
-        instruction_index = instruction_number + code_start_index
+            print('decoded instruction is ', decoded_instruction)
+            instruction_number += 1
         instruction_number += 1
         #print("decoded instruction is ", decoded_instruction)
         replace_memory_cell_value(
