@@ -53,8 +53,8 @@ SIGNAL PC_en_D_E, PC_en_E_M,PC_en_M_W: std_logic;
 SIGNAL Inst_F_D: std_logic_vector(31 DOWNTO 0);
 -- wires to hold offset value through stages [decode, execute]
 SIGNAL offset_D_E, offset_E_M,offset_M_W: std_logic_vector(15 DOWNTO 0);
--- wires to hold source register value through stages[decode, execute]
-SIGNAL src1, src2, src1_D_E, src2_D_E: std_logic_vector(15 DOWNTO 0);
+-- wires to hold source register value through stages[decode, execute, memory]
+SIGNAL src1, src2, src1_D_E, src2_D_E, src1_E_M: std_logic_vector(15 DOWNTO 0);
 -- wires to hold source registers address through stages [decode, execute]
 --src1_addr_E_M, src2_addr_E_M
 SIGNAL src1_addr_D_E, src2_addr_D_E: std_logic_vector(2 DOWNTO 0);
@@ -108,6 +108,8 @@ SIGNAL INT_flag, INT_flag_D_E, INT_flag_E_M,INT_flag_M_W: std_logic;
 SIGNAL Branch_flag, Branch_flag_D_E, Branch_flag_E_M: std_logic;
 -- wires to hold return  flag signal through stages [execute, memory]
 SIGNAL RTI_flag, RTI_flag_D_E, RTI_flag_E_M,RTI_flag_M_W: std_logic;
+-- wires to hold RET flag signal through stages [execute, memory]
+SIGNAL RET_flag, RET_flag_D_E, RET_flag_E_M, RET_flag_M_W: STD_LOGIC;
 -- wires to hold ALU sources selectors
 SIGNAL src1_sel, src2_sel: std_logic_vector(1 DOWNTO 0); 
 -- wires to hold memory output 
@@ -122,6 +124,8 @@ SIGNAL Jump_Addr: std_logic_vector(31 DOWNTO 0);
 SIGNAL jump_flag: std_logic;
 -- wire to hold exception flag
 SIGNAL exception_flag: std_logic;
+-- wires to hold exception1 and exception2 flags
+SIGNAL exception1_flag, exception2_flag: STD_LOGIC;
 --signals from writeBack buffer 
 SIGNAL write_data:std_logic_vector(15 DOWNTO 0);
 SIGNAL inDataMuxOut1, inDataMuxOut2: std_logic_vector(15 downto 0);
@@ -187,7 +191,7 @@ controlUnit: entity work.control_unit PORT MAP(opCode => Inst_F_D(31 DOWNTO 27),
 				ALU_en => ALU_en, MR => MemRead, MW => MemWrite, WB => WriteBack, MEM_REG => MemToReg, read32 => Read32,
 				SP_en => SP_en, SP_op => SP_op, PC_en => PC_en, ALU_src=>ALU_src, CF_en=>c_flag_en, ZF_en=>z_flag_en,NF_en=>n_flag_en,
 				STD_FLAG=>STD_flag, CALL_i=>Call_flag, INT_i=>INT_flag, BRANCH_i=>Branch_flag,
-				RTI_i=>RTI_flag, ALU_op=>ALU_op
+				RTI_i=>RTI_flag, RET_i=>RET_flag, ALU_op=>ALU_op
 				);
 -- decode/execute intermmediate buffer
 DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA_D=>indata_F_D, INDATA_E=>indata_D_E, 
@@ -205,7 +209,8 @@ DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA
 				C_Flag_en_E=>c_flag_en_D_E, N_Flag_en_E=>n_flag_en_D_E, Z_Flag_en_E=>z_flag_en_D_E, 
 				STD_flag_D=>STD_flag, STD_flag_E=>STD_flag_D_E,
 				Call_flag_D=>Call_flag, Call_flag_E=>Call_flag_D_E, INT_flag_D=>INT_flag, INT_flag_E=>INT_flag_D_E,
-				Branch_flag_D=>Branch_flag, Branch_flag_E=>Branch_flag_D_E, RTI_flag_D=>RTI_flag, RTI_flag_E=>RTI_flag_D_E
+				Branch_flag_D=>Branch_flag, Branch_flag_E=>Branch_flag_D_E, RTI_flag_D=>RTI_flag, RTI_flag_E=>RTI_flag_D_E,
+				RET_flag_D=>RET_flag, RET_flag_E=>RET_flag_D_E
 				);
 -- forwarding unit module instance
 forwardUnit: entity work.ForwardingUnit PORT MAP(EXMem_WriteBack=>WriteBack_E_M, MemWB_WtiteBack=>WriteBack_M_W, EXMem_destAddress=>dest_E_M,
@@ -238,8 +243,8 @@ ALU: entity work.alu PORT MAP(ALU_op1,ALU_op2,ALU_op_D_E,ALU_res,CF,ZF,NF,c_flag
 
 -- Execute/Memory intermmediate buffer
 EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>'1', INDATA_E=>indata_D_E, INDATA_M=>indata_E_M, 
-				PC_E=>PC_D_E, PC_M=>PC_E_M, write32_E=>Write32_D_E, read32_E => Read32_D_E, --src1_E=>src1_D_E, src2_E=>src2_D_E,
-				--src1_M=>src1_E_M, src2_M=>src2_E_M,
+				PC_E=>PC_D_E, PC_M=>PC_E_M, write32_E=>Write32_D_E, read32_E => Read32_D_E, src1_E=>src1_D_E,-- src2_E=>src2_D_E,
+				src1_M=>src1_E_M, --src2_M=>src2_E_M,
 				offset_E=>offset_D_E, offset_M=>offset_E_M, ALU_res_E => ALU_res, ALU_res_M => ALU_res_E_M,
 				dst_E=>dest_D_E, dst_M=>dest_E_M,-- ALU_op_E=>ALU_op_D_E, ALU_op_M=>ALU_op_E_M,
 				IN_en_E=>IN_en_D_E, IN_en_M=>IN_en_E_M, OUT_en_E=>OUT_en_D_E, OUT_en_M=>OUT_en_E_M,
@@ -250,14 +255,23 @@ EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>'1', IND
 				-- Flags_en_E=>flags_en_D_E, Flags_en_M=>flags_en_E_M,
 				STD_flag_E=>STD_flag_D_E, STD_flag_M=>STD_flag_E_M, read32_M => Read32_E_M,
 				Call_flag_E=>Call_flag_D_E, Call_flag_M=>Call_flag_E_M, INT_flag_E=>INT_flag_D_E, INT_flag_M=>INT_flag_E_M,
-				RTI_flag_E=>RTI_flag_D_E, RTI_flag_M=>RTI_flag_E_M --Branch_flag_E=>Branch_flag_D_E, Branch_flag_M=>Branch_flag_E_M
+				RTI_flag_E=>RTI_flag_D_E, RTI_flag_M=>RTI_flag_E_M, --Branch_flag_E=>Branch_flag_D_E, Branch_flag_M=>Branch_flag_E_M
+				RET_flag_E=>RET_flag_D_E, RET_flag_M=>RET_flag_E_M
 				);
 
--- data memory
-dataMem: entity work.ram PORT MAP(clk => clk, we => MemWrite_E_M, write32 => Write32_E_M, re => MemRead_E_M,
-				 address => Mem_Addr, datain => Mem_in, dataout => Mem_res);
-
-
+-- Memory Stage
+-- dataMem: entity work.ram PORT MAP(clk => clk, we => MemWrite_E_M, write32 => Write32_E_M, re => MemRead_E_M,
+-- 				 address => Mem_Addr, datain => Mem_in, dataout => Mem_res);
+memoryStage: ENTITY work.MemoryStage PORT MAP(
+			clk=>clk, rst=>rst, CALL_i=>Call_flag_E_M, RET_i=>RET_flag_E_M, INT_i=>INT_flag_E_M, 
+			RTI_i=>RTI_flag_E_M, SP_en=>SP_en_E_M, write32=>Write32_E_M, read32=>Read32_E_M,
+			MW=>MemWrite_E_M, MR=>MemRead_E_M,
+			Rsrc1=>src1_E_M, PC=>PC_E_M, ALU_res=>ALU_res_E_M,
+			exception1=>exception1_flag, exception2=>exception2_flag ,dataout=>Mem_res
+		);
+		
+		exception_flag <= exception1_flag OR exception2_flag;
+		
 MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 				clk=>clk, en=>'1',
 				INDATA_M=>indata_E_M, INDATA_W=>indata_M_WB, 

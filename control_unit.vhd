@@ -18,19 +18,19 @@ ENTITY control_unit IS
         SP_op, -- Stack Pointer operation - +1 or -1?
         PC_en, -- Program Counter enable
         ALU_src, -- ALU source - 
-        CF_en,ZF_en,NF_en, -- Flags enable - to change flags
+        CF_en, ZF_en, NF_en, -- Flags enable - to change flags
         STD_FLAG, -- store flag - @opSTD - it is muxes' input to choose ALU src1, src2, offset
         -- ADD SIGNALS HERE
-	-- write32 => singal to indicate whether to read 32 or 16 from memory
+        -- write32 => singal to indicate whether to read 32 or 16 from memory
         -- ???????????
         CALL_i, -- CALL instruction - @opCALL
         INT_i, -- INT instruction - @opINT
         BRANCH_i, -- Branching instruction @opJMP, opJN, opJZ, opJC
         MEM_REG, -- Memory to Register @opLDD, opLDM, OPO?????????????
         RTI_i, -- RTI instruction @opRTI
-	write32,-- flag to write 32 bit into memory or 16
-	read32	-- flag to read 32 bit into memory or 16
-
+        write32, -- flag to write 32 bit into memory or 16
+        read32, -- flag to read 32 bit into memory or 16
+        RET_i -- RET instruction @opRET
         : OUT STD_LOGIC;
 
         ALU_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0) -- ALU operation bits 
@@ -94,15 +94,15 @@ BEGIN
     OUT_en <= '1' WHEN opCode = opOUT ELSE
         '0';
     write32 <= '1' WHEN
-	opCode = opCALL OR
-	opCode = opINT
-	ELSE
-	'0';
+        opCode = opCALL OR
+        opCode = opINT
+        ELSE
+        '0';
     read32 <= '1' WHEN
-	opCode = opRET OR
-	opCode = opRTI
-	ELSE
-	'0';
+        opCode = opRET OR
+        opCode = opRTI
+        ELSE
+        '0';
     ALU_en <= '1' WHEN
         opCode = opSETC OR
         opCode = opNOT OR
@@ -207,13 +207,13 @@ BEGIN
         opCode = opLDM -- ??????????? offset is ALU's src1???
         ELSE
         ALU_NONE; -- 000
- 
+
     CF_en <= '1' WHEN
         opCode = opSETC OR
         opCode = opINC OR
         opCode = opSUB OR
         opCode = opADD OR
-        opCode = opIADD 
+        opCode = opIADD
         ELSE
         '0';
 
@@ -241,7 +241,7 @@ BEGIN
         opCode = opSTD
         ELSE
         '0';
-        
+
     -- ADD TO TABLE
     CALL_i <= '1' WHEN opCode = opCALL
         ELSE
@@ -268,6 +268,11 @@ BEGIN
 
     RTI_i <= '1' WHEN
         opCode = opRTI
+        ELSE
+        '0';
+
+    RET_i <= '1' WHEN
+        opCode = opRET
         ELSE
         '0';
 END instance;
