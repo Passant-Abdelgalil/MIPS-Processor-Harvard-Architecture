@@ -166,7 +166,8 @@ BEGIN
 
     ALU_src <= '1' WHEN
         opCode = opLDD OR
-        opCode = opSTD
+        opCode = opSTD OR
+	opCode = opIADD
         ELSE
         '0';
 
