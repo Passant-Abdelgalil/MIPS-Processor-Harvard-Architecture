@@ -1,4 +1,3 @@
-
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.all;
 ENTITY r_Register is
@@ -15,7 +14,7 @@ PROCESS (Clk,Rst)
 begin
 IF Rst='1' THEN
 q<=(OTHERS =>'0'); 
-ELSIF rising_edge(Clk) and enable='1'  THEN
+ELSIF falling_edge(Clk) and enable='1'  THEN
 q <= d;
 END IF;
 

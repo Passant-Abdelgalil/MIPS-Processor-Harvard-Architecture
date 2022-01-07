@@ -5,8 +5,36 @@ def read_code_file(filename):
     return open(file=filename, mode="r")
 
 
+def read_instrcution_memory_file(filename):
+    return open(file=filename, mode="r").readlines()
+
+
+def replace_memory_cell_value(index, new_value, write32):
+    global instruction_memory
+    #print("index is ", index)
+    #print("new value is ", new_value)
+    int_index = int(index, 16)
+
+    if write32:
+        instruction_memory[int_index+3] = f'    {index}: {new_value[16:]}\n'
+        instruction_memory[int_index +
+                           4] = f'    {hex(int_index+1)[2:]}: {new_value[:16]}\n'
+    else:
+        instruction_memory[int_index+3] = f'    {index}: {new_value}\n'
+
+
+def regenrate_instruction_memory_file(filename, lines):
+    instruction_memory_file = open(file=filename, mode="w")
+    instruction_memory_file.writelines(lines)
+    instruction_memory_file.close()
+
+
 def parse_register_name(regName):
-    regName = regName.strip()
+
+    if regName is None:
+        raise Exception("invalid register name")
+    regName = regName.strip().lower()
+
     if regName == "r0":
         return "000"
     if regName == "r1":
@@ -25,12 +53,47 @@ def parse_register_name(regName):
         return "111"
     return "-111"
 
+def if_skip_line(line):
+    if line is None:
+        raise Exception("invalid instruction set")
+    line = line.strip()
+    return len(line) == 0 or line[0] == '#'
 
 def parse_code_file(file):
+    global instruction_memory
     write_file = open("instruction_memory.txt", "w+")
     line = file.readline()
-
+    code_start_index = ""
+    instruction_number = 0
     while line:
+
+        # skip comments or empty lines
+        if if_skip_line(line):
+            line = file.readline()
+            continue
+        line = line.strip()
+        # check org instruction
+        if ".org" in line.lower():
+            index = line.split(" ")[1]
+            # get next line containing value to insert in memory
+            line = file.readline()
+
+            while if_skip_line(line):
+                line = file.readline()
+
+            # check validty of line value
+            line = line.strip()
+            pattern = re.compile(r"^\w+$")
+            if pattern.search(line):
+                #print("org line is ", line)
+                new_value = f'{int(line, 16):032b}'
+                replace_memory_cell_value(
+                    index=index, new_value=new_value, write32=True)
+                line = file.readline()
+                continue
+            else:
+                code_start_index = int(index, 16)
+
         with_offset = False
         offset_val = ""
         opcode = ""
@@ -192,14 +255,31 @@ def parse_code_file(file):
             rsrc2 = rdst
 
 # ================== Write decoded instruction ==============
-        write_file.write(opcode + rsrc1 + rsrc2 + rdst + "00\n")
+
+        decoded_instruction = f'{opcode}{rsrc1}{rsrc2}{rdst}00'
         if with_offset:
-            write_file.write(offset_val)
+            decoded_instruction = offset_val + decoded_instruction
+        instruction_index = instruction_number + code_start_index
+        instruction_number += 1
+        #print("decoded instruction is ", decoded_instruction)
+        replace_memory_cell_value(
+            index=hex(instruction_index)[2:], new_value=decoded_instruction, write32=with_offset)
+
         line = file.readline()
+
     file.close()
     write_file.close()
 
 
 if __name__ == "__main__":
-    file = read_code_file("./code.txt")
+
+    instruction_memory = read_instrcution_memory_file(
+        filename='./instruction_memory.mem')
+
+    file = read_code_file(filename="./code.txt")
+
     parse_code_file(file)
+
+    regenrate_instruction_memory_file(
+        filename='./instruction_memory2.mem', lines=instruction_memory)
+

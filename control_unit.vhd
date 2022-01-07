@@ -18,7 +18,7 @@ ENTITY control_unit IS
         SP_op, -- Stack Pointer operation - +1 or -1?
         PC_en, -- Program Counter enable
         ALU_src, -- ALU source - 
-        F_en, -- Flags enable - to change flags
+        CF_en,ZF_en,NF_en, -- Flags enable - to change flags
         STD_FLAG, -- store flag - @opSTD - it is muxes' input to choose ALU src1, src2, offset
         -- ADD SIGNALS HERE
 	-- write32 => singal to indicate whether to read 32 or 16 from memory
@@ -27,7 +27,9 @@ ENTITY control_unit IS
         INT_i, -- INT instruction - @opINT
         BRANCH_i, -- Branching instruction @opJMP, opJN, opJZ, opJC
         MEM_REG, -- Memory to Register @opLDD, opLDM, OPO?????????????
-        RTI_i -- RTI instruction @opRTI
+        RTI_i, -- RTI instruction @opRTI
+	write32,-- flag to write 32 bit into memory or 16
+	read32	-- flag to read 32 bit into memory or 16
 
         : OUT STD_LOGIC;
 
@@ -91,7 +93,16 @@ BEGIN
 
     OUT_en <= '1' WHEN opCode = opOUT ELSE
         '0';
-
+    write32 <= '1' WHEN
+	opCode = opCALL OR
+	opCode = opINT
+	ELSE
+	'0';
+    read32 <= '1' WHEN
+	opCode = opRET OR
+	opCode = opRTI
+	ELSE
+	'0';
     ALU_en <= '1' WHEN
         opCode = opSETC OR
         opCode = opNOT OR
@@ -197,18 +208,32 @@ BEGIN
         ELSE
         ALU_NONE; -- 000
  
-    F_en <= '1' WHEN
+    CF_en <= '1' WHEN
         opCode = opSETC OR
+        opCode = opINC OR
+        opCode = opSUB OR
+        opCode = opADD OR
+        opCode = opIADD 
+        ELSE
+        '0';
+
+    ZF_en <= '1' WHEN
         opCode = opNOT OR
         opCode = opINC OR
         opCode = opAND OR
         opCode = opSUB OR
         opCode = opADD OR
-        opCode = opIADD OR
-        opCode = opJMP OR
-        opCode = opJN OR
-        opCode = opJC OR
-        opCode = opJZ
+        opCode = opIADD
+        ELSE
+        '0';
+
+    NF_en <= '1' WHEN
+        opCode = opNOT OR
+        opCode = opINC OR
+        opCode = opAND OR
+        opCode = opSUB OR
+        opCode = opADD OR
+        opCode = opIADD
         ELSE
         '0';
 
