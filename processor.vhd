@@ -24,8 +24,6 @@ SIGNAL PC_en: std_logic;
 SIGNAL new_PC: std_logic_vector(31 DOWNTO 0);
 -- wire to hold instruction value
 SIGNAL instruction: std_logic_vector(31 DOWNTO 0);
--- wire to hold PC reg in data
-SIGNAL PC_in: std_logic_vector(31 DOWNTO 0);
 -- wire to hold interrupt address
 SIGNAL interrupt_address: std_logic_vector(31 DOWNTO 0);
 -- wire to hold exception1_interrupts_mux output
@@ -42,7 +40,8 @@ SIGNAL INST_ADDR: std_logic_vector(31 DOWNTO 0);
 SIGNAL PC_withoutJump: std_logic_vector(31 DOWNTO 0);
 -- signal to hold final PC value
 SIGNAL final_PC: std_logic_vector(31 DOWNTO 0);
-
+-- signal to select between expected PC and exception/interrupts/rst data
+SIGNAL pc_or_rst_exception_interrupt: std_logic;
 --####################### END FETCH STAGE SIGNALS DEFINITION ###############################
 
 -- wires to hold pc value through stages [decode, execute, memory]
@@ -143,8 +142,8 @@ exception1_interrupts_mux: entity work.MUX_1_2 PORT MAP(In1 => std_logic_vector(
 -- mux to choose between exception 2 handler and exception1_interrupts_mux output
 exception2_interrupts_mux: entity work.MUX_1_2 PORT MAP(In1 => std_logic_vector(to_unsigned(4,32)), In2 => execption_one_or_interrupt, sel => exception_two, out_data => exception_interrupt_address);
 
--- set selector for pc_excp_interr_MUX
-pc_excp_interr_MUX_sel <= ((exception_one or exception_two) or INT_flag);
+-- set selector for pc_excp_interr_MUX TODO: replace '0' with commented line
+pc_excp_interr_MUX_sel <= '0'; --((exception_one or exception_two) or INT_flag);
 
 -- mux to choose between exception/interrupt address and PC value
 exception_interrupt_or_PC_mux: entity work.MUX_1_2 PORT MAP(In1 => PC, In2 => exception_interrupt_address, sel => pc_excp_interr_MUX_sel, out_data => pc_or_exception_interrupt);
@@ -152,14 +151,14 @@ exception_interrupt_or_PC_mux: entity work.MUX_1_2 PORT MAP(In1 => PC, In2 => ex
 -- mux to choose between expected instruction address and reset address for intial PC value
 instruction_address: entity work.MUX_1_2 PORT MAP(In1 => pc_or_exception_interrupt, In2 => (others=>'0'), sel => rst, out_data => INST_ADDR);
 
--- mux to choose between new PC value and exception/interrupts handler address
-PC_EXCP_INTERR_mux: entity work.MUX_1_2 PORT MAP(In1 => new_PC, In2 => instruction, sel => pc_excp_interr_MUX_sel, out_data => PC_withoutJump);
+-- mux to choose between new PC value and exception/interrupts handler address, TODO: replace selector with pc_excp_interr_MUX_sel
+PC_EXCP_INTERR_mux: entity work.MUX_1_2 PORT MAP(In1 => new_PC, In2 => instruction, sel => rst, out_data => PC_withoutJump);
 
--- mux to choose between exepcted PC value and jump address
-PC_JUMP_mux: entity work.MUX_1_2 PORT MAP(In1 => PC_withoutJump, IN2 => Jump_Addr, sel => jump_flag, out_data => final_PC);
+-- mux to choose between exepcted PC value and jump address TODO:(replace '0' with jump flag)
+PC_JUMP_mux: entity work.MUX_1_2 PORT MAP(In1 => PC_withoutJump, IN2 => Jump_Addr, sel => '0', out_data => final_PC);
 
 -- PC register
-PC_reg: entity work.REG PORT MAP(rst => rst, clk => clk, en => PC_en, datain => final_PC, rstData => instruction, dataout => PC);
+PC_reg: entity work.REG PORT MAP(clk => clk, en => PC_en, datain => final_PC, dataout => PC);
 
 -- Instruction Memory
 instructionMem: entity work.instructionRam PORT MAP(address => INST_ADDR, dataout => instruction);

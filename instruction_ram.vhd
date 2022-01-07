@@ -12,6 +12,6 @@ ARCHITECTURE instructionMem OF instructionRam IS
 TYPE ram_type IS ARRAY(0 TO 1048575) OF std_logic_vector(15 DOWNTO 0);
 SIGNAL ram : ram_type ;
 BEGIN
-	dataout(31 DOWNTO 16) <= ram(to_integer(unsigned(address)));
-	dataout(15 DOWNTO 0) <= ram(to_integer(unsigned(address)+1));
+	dataout(15 DOWNTO 0) <= ram(to_integer(unsigned(address)));
+	dataout(31 DOWNTO 16) <= ram(to_integer(unsigned(address)+1));
 END instructionMem;

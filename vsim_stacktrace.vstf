@@ -27,3 +27,117 @@
 # End of Stack Trace
 
 
+# Current time Thu Jan 06 20:57:56 2022
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+# Signature = 4a3706afe29a2b87def93ebd4f2693fa
+# 0    0x01064272: '<unknown (@0x1064272)>'
+# 1    0x01061aa3: '<unknown (@0x1061aa3)>'
+# 2    0x006583f3: '<unknown (@0x6583f3)>'
+# 3    0x0065fe57: '<unknown (@0x65fe57)>'
+# 4    0x00656a38: '<unknown (@0x656a38)>'
+# 5    0x00656a93: '<unknown (@0x656a93)>'
+# 6    0x008f107d: '<unknown (@0x8f107d)>'
+# 7    0x008ebbf1: '<unknown (@0x8ebbf1)>'
+# 8    0x008eb472: '<unknown (@0x8eb472)>'
+# 9    0x008e8386: '<unknown (@0x8e8386)>'
+# 10   0x00a35ef0: '<unknown (@0xa35ef0)>'
+# 11   0x00989c2b: '<unknown (@0x989c2b)>'
+# 12   0x012f95c0: '<unknown (@0x12f95c0)>'
+# 13   0x00cc9deb: '<unknown (@0xcc9deb)>'
+# 14   0x00cd6639: '<unknown (@0xcd6639)>'
+# 15   0x00cdb4d5: '<unknown (@0xcdb4d5)>'
+# 16   0x00cdd01e: '<unknown (@0xcdd01e)>'
+# 17   0x00d41a29: '<unknown (@0xd41a29)>'
+# End of Stack Trace
+
+
+# Current time Thu Jan 06 23:20:49 2022
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+# Signature = 4a3706afe29a2b87def93ebd4f2693fa
+# 0    0x008eed9e: '<unknown (@0x8eed9e)>'
+# 1    0x008e32bb: '<unknown (@0x8e32bb)>'
+# End of Stack Trace
+
+
+# Current time Thu Jan 06 23:22:25 2022
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+# Signature = 4a3706afe29a2b87def93ebd4f2693fa
+# 0    0x01064272: '<unknown (@0x1064272)>'
+# 1    0x01061aa3: '<unknown (@0x1061aa3)>'
+# 2    0x0064cb33: '<unknown (@0x64cb33)>'
+# 3    0x0064c8fb: '<unknown (@0x64c8fb)>'
+# 4    0x0065fe74: '<unknown (@0x65fe74)>'
+# 5    0x00656a38: '<unknown (@0x656a38)>'
+# 6    0x00656a93: '<unknown (@0x656a93)>'
+# 7    0x008f107d: '<unknown (@0x8f107d)>'
+# 8    0x008ebbf1: '<unknown (@0x8ebbf1)>'
+# 9    0x008eb472: '<unknown (@0x8eb472)>'
+# 10   0x008e8386: '<unknown (@0x8e8386)>'
+# 11   0x00a35ef0: '<unknown (@0xa35ef0)>'
+# 12   0x00989c2b: '<unknown (@0x989c2b)>'
+# 13   0x012f95c0: '<unknown (@0x12f95c0)>'
+# 14   0x00cc9deb: '<unknown (@0xcc9deb)>'
+# 15   0x00cd6639: '<unknown (@0xcd6639)>'
+# 16   0x00cdb4d5: '<unknown (@0xcdb4d5)>'
+# 17   0x00cdd01e: '<unknown (@0xcdd01e)>'
+# 18   0x00d41a29: '<unknown (@0xd41a29)>'
+# End of Stack Trace
+
+
+# Current time Thu Jan 06 23:36:53 2022
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+# Signature = 4a3706afe29a2b87def93ebd4f2693fa
+# 0    0x008eed9e: '<unknown (@0x8eed9e)>'
+# 1    0x008e32bb: '<unknown (@0x8e32bb)>'
+# End of Stack Trace
+
+
+# Current time Fri Jan 07 12:39:02 2022
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+# Signature = 4a3706afe29a2b87def93ebd4f2693fa
+# 0    0x01064272: '<unknown (@0x1064272)>'
+# 1    0x01061aa3: '<unknown (@0x1061aa3)>'
+# 2    0x006583f3: '<unknown (@0x6583f3)>'
+# 3    0x0065fe57: '<unknown (@0x65fe57)>'
+# 4    0x00656a38: '<unknown (@0x656a38)>'
+# 5    0x00656a93: '<unknown (@0x656a93)>'
+# 6    0x008f107d: '<unknown (@0x8f107d)>'
+# 7    0x008ebbf1: '<unknown (@0x8ebbf1)>'
+# 8    0x008eb472: '<unknown (@0x8eb472)>'
+# 9    0x008e8386: '<unknown (@0x8e8386)>'
+# 10   0x00a35ef0: '<unknown (@0xa35ef0)>'
+# 11   0x00989c2b: '<unknown (@0x989c2b)>'
+# 12   0x012f95c0: '<unknown (@0x12f95c0)>'
+# 13   0x00cc9deb: '<unknown (@0xcc9deb)>'
+# 14   0x00cd6639: '<unknown (@0xcd6639)>'
+# 15   0x00cdb4d5: '<unknown (@0xcdb4d5)>'
+# 16   0x00cdd01e: '<unknown (@0xcdd01e)>'
+# 17   0x00d41a29: '<unknown (@0xd41a29)>'
+# End of Stack Trace
+
+
