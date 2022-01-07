@@ -16,9 +16,9 @@ def replace_memory_cell_value(index, new_value, write32):
     int_index = int(index, 16)
 
     if write32:
-        instruction_memory[int_index+3] = f'    {index}: {new_value[16:]}\n'
+        instruction_memory[int_index+3] = f'    {index}: {new_value[:16]}\n'
         instruction_memory[int_index +
-                           4] = f'    {hex(int_index+1)[2:]}: {new_value[:16]}\n'
+                           4] = f'    {hex(int_index+1)[2:]}: {new_value[16:]}\n'
     else:
         instruction_memory[int_index+3] = f'    {index}: {new_value}\n'
 
@@ -34,7 +34,7 @@ def parse_register_name(regName):
     if regName is None:
         raise Exception("invalid register name")
     regName = regName.strip().lower()
-
+    print('reg name is ', regName)
     if regName == "r0":
         return "000"
     if regName == "r1":
@@ -53,11 +53,13 @@ def parse_register_name(regName):
         return "111"
     return "-111"
 
+
 def if_skip_line(line):
     if line is None:
         raise Exception("invalid instruction set")
     line = line.strip()
     return len(line) == 0 or line[0] == '#'
+
 
 def parse_code_file(file):
     global instruction_memory
@@ -72,9 +74,11 @@ def parse_code_file(file):
             line = file.readline()
             continue
         line = line.strip()
+        parts = re.split(r'[-,\s]\s*', line)
+
         # check org instruction
-        if ".org" in line.lower():
-            index = line.split(" ")[1]
+        if parts[0] is not None and parts[0].lower() == ".org":
+            index = parts[1]
             # get next line containing value to insert in memory
             line = file.readline()
 
@@ -93,6 +97,7 @@ def parse_code_file(file):
                 continue
             else:
                 code_start_index = int(index, 16)
+                continue
 
         with_offset = False
         offset_val = ""
@@ -101,108 +106,95 @@ def parse_code_file(file):
         rsrc2 = ""
         rdst = ""
         # offest = ""
-        if "nop" in line.lower():
+        if parts[0] is not None and parts[0].lower() == "nop":
             opcode = "00000"
             rsrc1 = "000"
             rsrc2 = "000"
             rdst = "000"
-        elif "hlt" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "hlt":
             opcode = "00001"
             rsrc1 = "000"
             rsrc2 = "000"
             rdst = "000"
-        elif "setc" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "setc":
             opcode = "00010"
             rsrc1 = "000"
             rsrc2 = "000"
             rdst = "000"
-        elif "not" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "not":
             opcode = "00011"
-            reg = line.split(" ")[1]
-            rsrc1 = parse_register_name(reg)
+            rsrc1 = parse_register_name(parts[1])
             rsrc2 = rsrc1
             rdst = rsrc2
-        elif "inc" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "inc":
             opcode = "00100"
-            reg = line.split(" ")[1]
-            rsrc1 = parse_register_name(reg)
+            rsrc1 = parse_register_name(parts[1])
             rsrc2 = rsrc1
             rdst = rsrc1
-        elif "out" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "out":
             opcode = "00101"
-            reg = line.split(" ")[1]
-            rsrc1 = parse_register_name(reg)
+            rsrc1 = parse_register_name(parts[1])
             rsrc2 = rsrc1
             rdst = rsrc1
-        elif "in" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "in":
             opcode = "00110"
-            reg = line.split(" ")[1]
-            rdst = parse_register_name(reg)
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
 # ======= Two Operands========================================
-        elif "mov" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "mov":
             opcode = "01000"
-            regs = line.split(" ")
-            rsrc1 = parse_register_name(regs[1][:-2])
+            rsrc1 = parse_register_name(parts[1])
             rsrc2 = rsrc1
-            rdst = parse_register_name(regs[2].strip())
-        elif "add" in line.lower():
+            rdst = parse_register_name(parts[2])
+        elif parts[0] is not None and parts[0].lower() == "add":
             opcode = "01001"
-            regs = line.split(" ")
-            rdst = parse_register_name(regs[1][:-2])
-            rsrc1 = parse_register_name(regs[2][:-2])
-            rsrc2 = parse_register_name(regs[3])
-        elif "sub" in line.lower():
+            rdst = parse_register_name(parts[1])
+            rsrc1 = parse_register_name(parts[2])
+            rsrc2 = parse_register_name(parts[3])
+        elif parts[0] is not None and parts[0].lower() == "sub":
             opcode = "01010"
-            regs = line.split(" ")
-            rdst = parse_register_name(regs[1][:-2])
-            rsrc1 = parse_register_name(regs[2][:-2])
-            rsrc2 = parse_register_name(regs[3])
-        elif "and" in line.lower():
+            rdst = parse_register_name(parts[1])
+            rsrc1 = parse_register_name(parts[2])
+            rsrc2 = parse_register_name(parts[3])
+        elif parts[0] is not None and parts[0].lower() == "and":
             opcode = "01011"
-            regs = line.split(" ")
-            rdst = parse_register_name(regs[1][:-2])
-            rsrc1 = parse_register_name(regs[2][:-2])
-            rsrc2 = parse_register_name(regs[3])
-        elif "iadd" in line.lower():
+            rdst = parse_register_name(parts[1])
+            rsrc1 = parse_register_name(parts[2])
+            rsrc2 = parse_register_name(parts[3])
+        elif parts[0] is not None and parts[0].lower() == "iadd":
             opcode = "01100"
-            wih_offset = True
-            regs = line.split(" ")
-            rdst = parse_register_name(regs[1][:-2])
-            rsrc1 = parse_register_name(regs[2][:-2])
+            with_offset = True
+            rdst = parse_register_name(parts[1])
+            rsrc1 = parse_register_name(parts[2])
             rsrc2 = rsrc1
-            offset_val = regs[3][1:]
+            offset_val = parts[3]
 # ======= Memory Operations========================================
-        elif "push" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "push":
             opcode = "10000"
-            reg = line.split(" ")[1]
-            rsrc1 = parse_register_name(reg)
+            rsrc1 = parse_register_name(parts[1])
             rsrc2 = rsrc1
             rdst = rsrc1
-        elif "pop" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "pop":
             opcode = "10001"
-            reg = line.split(" ")[1]
-            rsrc1 = parse_register_name(reg)
+            rsrc1 = parse_register_name(parts[1])
             rsrc2 = rsrc1
             rdst = rsrc1
-        elif "ldm" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "ldm":
             opcode = "10010"
             with_offset = True
-            regs = line.split(" ")
-            offset_val = regs[2]
-            rdst = parse_register_name(regs[1][:-2])
+            offset_val = parts[2]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
-        elif "ldd" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "ldd":
             opcode = "10011"
             with_offset = True
-            regs = line.split(" ")
-            rdst = parse_register_name(regs[1][:-2])
+            rdst = parse_register_name(parts[1])
             offset_val = regs[2].split("(")[0]
             rsrc1 = regs[2].split("(")[1][:-2]
             rsrc2 = rsrc1
-        elif "std" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "std":
             opcode = "10100"
             with_offset = True
             regs = line.split(" ")
@@ -211,44 +203,44 @@ def parse_code_file(file):
             offset_val = regs[2].split("(")[0]
             rsrc2 = regs[2].split("(")[1][:-2]
 # ======= Branch and Change of Control Operations========================================
-        elif "jz" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "jz":
             opcode = "11000"
             rdst = line.split(" ")[1]
             rsrc1 = rdst
             rsrc2 = rdst
-        elif "jn" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "jn":
             opcode = "11001"
             rdst = line.split(" ")[1]
             rsrc1 = rdst
             rsrc2 = rdst
-        elif "jc" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "jc":
             opcode = "11010"
             rdst = line.split(" ")[1]
             rsrc1 = rdst
             rsrc2 = rdst
-        elif "jmp" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "jmp":
             opcode = "11011"
             rdst = line.split(" ")[1]
             rsrc1 = rdst
             rsrc2 = rdst
-        elif "call" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "call":
             opcode = "11100"
             rdst = line.split(" ")[1]
             rsrc1 = rdst
             rsrc2 = rdst
-        elif "ret" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "ret":
             opcode = "11101"
             rdst = "000"
             rsrc1 = rdst
             rsrc2 = rdst
-        elif "int" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "int":
             opcode = "11110"
             with_offset = True
             offset_val = line.split(" ")[1]
             rdst = "000"
             rsrc1 = rdst
             rsrc2 = rdst
-        elif "rti" in line.lower():
+        elif parts[0] is not None and parts[0].lower() == "rti":
             opcode = "11111"
             rdst = "000"
             rsrc1 = rdst
@@ -258,7 +250,7 @@ def parse_code_file(file):
 
         decoded_instruction = f'{opcode}{rsrc1}{rsrc2}{rdst}00'
         if with_offset:
-            decoded_instruction = offset_val + decoded_instruction
+            decoded_instruction += f'{int(offset_val, 16):016b}'
         instruction_index = instruction_number + code_start_index
         instruction_number += 1
         #print("decoded instruction is ", decoded_instruction)
@@ -282,4 +274,3 @@ if __name__ == "__main__":
 
     regenrate_instruction_memory_file(
         filename='./instruction_memory2.mem', lines=instruction_memory)
-
