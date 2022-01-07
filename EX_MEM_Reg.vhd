@@ -13,6 +13,7 @@ ENTITY EX_MEM_Reg IS
 		INDATA_E: IN std_logic_vector(15 DOWNTO 0);
 		PC_E: IN std_logic_vector(31 DOWNTO 0);
 --		src1_E, src2_E, offset_E: IN std_logic_vector(15 DOWNTO 0);
+		src1_E: IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		offset_E: IN std_logic_vector(15 DOWNTO 0);
 		ALU_res_E: IN std_logic_vector(15 DOWNTO 0);
 		dst_E: IN std_logic_vector(2 DOWNTO 0);
@@ -29,11 +30,13 @@ ENTITY EX_MEM_Reg IS
 		STD_flag_E,
 		Call_flag_E, INT_flag_E,
 -- 		Branch_flag_E,
-		RTI_flag_E: IN std_logic;
+		RTI_flag_E,
+		RET_flag_E : IN std_logic;
 	-- output data
 		INDATA_M: OUT std_logic_vector(15 DOWNTO 0);
 		PC_M: OUT std_logic_vector(31 DOWNTO 0);
 --		src1_M, src2_M, offset_M: OUT std_logic_vector(15 DOWNTO 0);
+		src1_M: OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
 		offset_M: OUT std_logic_vector(15 DOWNTO 0);
 		ALU_res_M: OUT std_logic_vector(15 DOWNTO 0);
 		dst_M: OUT std_logic_vector(2 DOWNTO 0);
@@ -50,7 +53,8 @@ ENTITY EX_MEM_Reg IS
 		STD_flag_M,
 		Call_flag_M, INT_flag_M,
 --		Branch_flag_M,
-		RTI_flag_M: OUT std_logic
+		RTI_flag_M,
+		RET_flag_M: OUT std_logic
 	);
 END EX_MEM_Reg;
 
@@ -62,7 +66,7 @@ BEGIN
 		IF (rst = '1') THEN
 			INDATA_M <= (others=>'0');
 			PC_M <= (others=>'0');
---			src1_M <= (others=>'0');
+			src1_M <= (others=>'0');
 --			src2_M <= (others=>'0');
 			offset_M <= (others=>'0');
 			ALU_res_M <= (others=>'0');
@@ -89,10 +93,11 @@ BEGIN
 			INT_flag_M <= '0';
 --			Branch_flag_M <= '0';
 			RTI_flag_M <= '0';
+			RET_flag_M <= '0';
 		ELSIF (rising_edge(clk) and en = '1') THEN
 			INDATA_M <= INDATA_E;
 			PC_M <= PC_E;
---			src1_M <= src1_E;
+			src1_M <= src1_E;
 --			src2_M <= src2_E;
 			offset_M <= offset_E;
 			ALU_res_M <= ALU_res_E;
@@ -119,6 +124,7 @@ BEGIN
 			INT_flag_M <= INT_flag_E;
 --			Branch_flag_M <= Branch_flag_E;
 			RTI_flag_M <= RTI_flag_E;
+			RET_flag_M <= RET_flag_E;
 		END IF;
 
 	END PROCESS;
