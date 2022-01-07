@@ -8,7 +8,8 @@ ENTITY DE_EX_Reg IS
 		clk: IN std_logic;
 		rst: IN std_logic;
 	-- input data
-		INDATA_D, PC_D: IN std_logic_vector(31 DOWNTO 0);
+		INDATA_D: IN std_logic_vector(15 DOWNTO 0);
+		PC_D: IN std_logic_vector(31 DOWNTO 0);
 		src1_D, src2_D, offset_D: IN std_logic_vector(15 DOWNTO 0);
 		dst_D, src1_D_addr, src2_D_addr: IN std_logic_vector(2 DOWNTO 0);
 		-- control signals	
@@ -19,12 +20,14 @@ ENTITY DE_EX_Reg IS
 		WriteBack_D, MemToReg_D,
 		SP_en_D, SP_op_D,
 		--PC_en_D,
-		Flags_en_D,
+		write32_D, read32_D,
+		C_Flag_en_D,Z_Flag_en_D,N_Flag_en_D,
 		STD_flag_D,
 		Call_flag_D, INT_flag_D, Branch_flag_D,
 		RTI_flag_D: IN std_logic;
 	-- output data
-		INDATA_E, PC_E: OUT std_logic_vector(31 DOWNTO 0);
+		INDATA_E:OUT std_logic_vector(15 DOWNTO 0);
+		PC_E: OUT std_logic_vector(31 DOWNTO 0);
 		src1_E, src2_E, offset_E: OUT std_logic_vector(15 DOWNTO 0);
 		dst_E, src1_E_addr, src2_E_addr: OUT std_logic_vector(2 DOWNTO 0);
 		-- control signals	
@@ -35,7 +38,8 @@ ENTITY DE_EX_Reg IS
 		WriteBack_E, MemToReg_E,
 		SP_en_E, SP_op_E,
 		--PC_en_E,
-		Flags_en_E,
+		write32_E, read32_E,
+		C_Flag_en_E,Z_Flag_en_E,N_Flag_en_E,
 		STD_flag_E,
 		Call_flag_E, INT_flag_E, Branch_flag_E,
 		RTI_flag_E: OUT std_logic
@@ -66,12 +70,18 @@ BEGIN
 			SP_en_E <= '0';
 			SP_op_E <= '0';
 			--PC_en_E <= '0';
-			Flags_en_E <= '0';
+			write32_E <= '0';
+			read32_E <= '0';
+			C_Flag_en_E <= '0';
+			Z_Flag_en_E <= '0';
+			N_Flag_en_E <= '0';
 			STD_flag_E <= '0';
 			Call_flag_E <= '0';
 			INT_flag_E <= '0';
 			Branch_flag_E <= '0';
 			RTI_flag_E <= '0';
+			src1_E_addr <= "000";
+			src2_E_addr <= "000";
 		ELSIF (rising_edge(clk) and en = '1') THEN
 			INDATA_E <= INDATA_D;
 			PC_E <= PC_D;
@@ -91,12 +101,18 @@ BEGIN
 			SP_en_E <= SP_en_D;
 			SP_op_E <= SP_op_D;
 			--PC_en_E <= PC_en_D;
-			Flags_en_E <= Flags_en_D;
+			write32_E <= write32_D;
+			read32_E <= read32_D;
+			C_Flag_en_E <= C_Flag_en_D;
+			Z_Flag_en_E <= Z_Flag_en_D;
+			N_Flag_en_E <= N_Flag_en_D;
 			STD_flag_E <= STD_flag_D;
 			Call_flag_E <= Call_flag_D;
 			INT_flag_E <= INT_flag_D;
 			Branch_flag_E <= Branch_flag_D;
 			RTI_flag_E <= RTI_flag_D;
+			src1_E_addr <= src1_D_addr;
+			src2_E_addr <= src2_D_addr;
 		END IF;
 
 	END PROCESS;

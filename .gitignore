@@ -2,3 +2,5 @@
 *.bak
 work/
 *.swp
+wlf*
+*.vstf
