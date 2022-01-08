@@ -1,4 +1,26 @@
-{D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/RegisterFile.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/RegisterFile.vhd}
+{D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/Memo_Address_mux.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/Memo_Address_mux.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity memo_address_mux
+-- Compiling architecture instance of memo_address_mux
+
+} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/MemoryStage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/MemoryStage.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity MemoryStage
+-- Compiling architecture instance of MemoryStage
+-- Loading entity SP_Address_Unit
+-- Loading entity memo_data_mux
+-- Loading entity memo_address_mux
+-- Loading entity ram
+
+} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/RegisterFile.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/RegisterFile.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -22,6 +44,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package std_logic_1164
 -- Compiling entity n_adder
 -- Compiling architecture nAdder of n_adder
+
+} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/SP_Address_Unit.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/SP_Address_Unit.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity SP_Address_Unit
+-- Compiling architecture instance of SP_Address_Unit
+-- Loading entity SP_entity
 
 } {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/partA.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/partA.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -101,6 +133,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity MUX_2_4
 -- Compiling architecture mux_2_4 of MUX_2_4
 
+} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/Decoder_Mux.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/Decoder_Mux.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity Decoder_Mux
+-- Compiling architecture Structure of Decoder_Mux
+
 } {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/PC_increment.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/PC_increment.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -110,14 +150,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity PC_INCREMENT
 -- Compiling architecture PC_increment of PC_INCREMENT
 
-} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/Decoder_Mux.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/Decoder_Mux.vhd}
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity Decoder_Mux
--- Compiling architecture Structure of Decoder_Mux
-
 } {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/jmp_detect.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/jmp_detect.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -125,6 +157,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package std_logic_1164
 -- Compiling entity JMP_DETECT
 -- Compiling architecture JMP_DETECT_ARCH of JMP_DETECT
+
+} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/adder.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/adder.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity adder
+-- Compiling architecture modelAdder of adder
 
 } {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/ram.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/ram.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -135,13 +175,13 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity ram
 -- Compiling architecture syncrama of ram
 
-} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/adder.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/adder.vhd}
+} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/F_D_Buffer.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/F_D_Buffer.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Compiling entity adder
--- Compiling architecture modelAdder of adder
+-- Compiling entity F_D_Buffer
+-- Compiling architecture F_D_Buffer_Arch of F_D_Buffer
 
 } {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/register32.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/register32.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -151,13 +191,13 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity REG
 -- Compiling architecture reg of REG
 
-} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/F_D_Buffer.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/F_D_Buffer.vhd}
+} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/ForwardingUnit.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/ForwardingUnit.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Compiling entity F_D_Buffer
--- Compiling architecture F_D_Buffer_Arch of F_D_Buffer
+-- Compiling entity ForwardingUnit
+-- Compiling architecture FUnit of ForwardingUnit
 
 } {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/SP.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/SP.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -167,13 +207,5 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package NUMERIC_STD
 -- Compiling entity SP_entity
 -- Compiling architecture SP_instance of SP_entity
-
-} {} {}} {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/ForwardingUnit.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/ForwardingUnit.vhd}
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity ForwardingUnit
--- Compiling architecture FUnit of ForwardingUnit
 
 } {} {}}
