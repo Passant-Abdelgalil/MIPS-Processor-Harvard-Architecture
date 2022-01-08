@@ -127,7 +127,9 @@ SIGNAL jump_flag: std_logic;
 -- wire to hold exception flag
 SIGNAL exception_flag: std_logic;
 -- wires to hold exception1 and exception2 flags
-SIGNAL exception1_flag, exception2_flag: STD_LOGIC;
+-- SIGNAL exception1_flag, exception2_flag: STD_LOGIC;
+-- value of instruction address where the exception happened
+SIGNAL ExceptionPC: STD_LOGIC_VECTOR(31 DOWNTO 0);
 --signals from writeBack buffer 
 SIGNAL write_data:std_logic_vector(15 DOWNTO 0);
 SIGNAL inDataMuxOut1, inDataMuxOut2: std_logic_vector(15 downto 0);
@@ -274,11 +276,13 @@ memoryStage: ENTITY work.MemoryStage PORT MAP(
 			RTI_i=>RTI_flag_E_M, SP_en=>SP_en_E_M, write32=>Write32_E_M, read32=>Read32_E_M,
 			MW=>MemWrite_E_M, MR=>MemRead_E_M,
 			Rsrc1=>src1_E_M, PC=>PC_E_M, ALU_res=>ALU_res_E_M,
-			exception1=>exception1_flag, exception2=>exception2_flag ,dataout=>Mem_res
+			exception1=>exception_one, exception2=>exception_two ,dataout=>Mem_res
 		);
 		
-		exception_flag <= exception1_flag OR exception2_flag;
-		
+		exception_flag <= exception_one OR exception_two;
+		-- TODO make exception2 happen async???
+		exception_PC: entity work.REG PORT MAP(clk => clk, en => exception_flag, datain => PC_E_M, dataout => ExceptionPC);
+
 final_write_data_mux: entity work.MUX_1_2 generic map (n => 16) PORT MAP(In1 => ALU_res_E_M, In2 => Mem_res(31 DOWNTO 16), sel => MemToReg_E_M, out_data => final_write_data);
 MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 				clk=>clk, en=>'1',
