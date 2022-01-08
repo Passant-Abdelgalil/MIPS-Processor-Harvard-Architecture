@@ -75,8 +75,8 @@ def parse_code_file(file):
             line = file.readline()
             continue
         line = line.strip()
-        parts = re.split(r'[-,\s]\s*', line)
-
+        parts = re.split(r'[-\(\),\s]\s*', line)
+        print(parts)
         # check org instruction
         if parts[0] is not None and parts[0].lower() == ".org":
             index = parts[1]
@@ -194,17 +194,16 @@ def parse_code_file(file):
             opcode = "10011"
             with_offset = True
             rdst = parse_register_name(parts[1])
-            offset_val = regs[2].split("(")[0]
-            rsrc1 = regs[2].split("(")[1][:-2]
+            offset_val = parts[2]
+            rsrc1 = parse_register_name(parts[3])
             rsrc2 = rsrc1
         elif parts[0] is not None and parts[0].lower() == "std":
             opcode = "10100"
             with_offset = True
-            regs = line.split(" ")
-            rsrc1 = parse_register_name(regs[1][:-2])
+            rsrc1 = parse_register_name(parts[1])
             rdst = rsrc1
-            offset_val = regs[2].split("(")[0]
-            rsrc2 = regs[2].split("(")[1][:-2]
+            offset_val = parts[2]
+            rsrc2 = parse_register_name(parts[3])
 # ======= Branch and Change of Control Operations========================================
         elif parts[0] is not None and parts[0].lower() == "jz":
             opcode = "11000"
