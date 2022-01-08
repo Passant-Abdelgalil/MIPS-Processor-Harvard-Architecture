@@ -139,6 +139,9 @@ SIGNAL OUT_DATA, OUT_DATA_M_W: std_logic_vector( 15 downto 0);
 SIGNAL exception_one, exception_two: std_logic;
 
 SIGNAL offset_or_register: std_logic;
+SIGNAL LOAD_USE_CASE_OUT:std_logic;
+----------------flushing signals--------------------------------
+SIGNAL D_E_flush: std_logic;
 BEGIN
 
 --  ################### FETCH STAGE #####################
@@ -301,5 +304,10 @@ MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 
 --Out_Port_Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => ALU_res_M_W, In2 => Mem_res_M_W(31 downto 16), sel => MemToReg_M_W, out_data => OUT_DATA_M_W);
 Out_Port: entity work.r_Register PORT MAP (clk,rst,OUT_en_M_W,final_write_data_W,OUTPORT);
-
+-----------------load use case
+load_use_case: entity work.LOAD_USE_CASE_DETECTOR port map (MemRead_D_E,Inst_F_D(26 DOWNTO 24),Inst_F_D(23 DOWNTO 21),dest_D_E,LOAD_USE_CASE_OUT);
+load_use_stall_flush: entity work.load_suse_case_flush_stalling port map(LOAD_USE_CASE_OUT,clk,PC_en, D_E_flush,F_D_en, D_E_en,PC_en, D_E_flush,F_D_en, D_E_en);
 END processor1;
+
+
+

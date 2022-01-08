@@ -11,8 +11,8 @@ def read_instrcution_memory_file(filename):
 
 def replace_memory_cell_value(index, new_value, write32):
     global instruction_memory
-    #print("index is ", index)
-    #print("new value is ", new_value)
+    print("index is ", index)
+    print("new value is ", new_value)
     int_index = int(index, 16)
 
     if write32:
@@ -35,7 +35,7 @@ def parse_register_name(regName):
     if regName is None:
         raise Exception("invalid register name")
     regName = regName.strip().lower()
-    print('reg name is ', regName)
+#    print('reg name is ', regName)
     if regName == "r0":
         return "000"
     if regName == "r1":
@@ -75,8 +75,8 @@ def parse_code_file(file):
             line = file.readline()
             continue
         line = line.strip()
-        parts = re.split(r'[-,\s]\s*', line)
-
+        parts = re.split(r'[-\(\),\s]\s*', line)
+        print(parts)
         # check org instruction
         if parts[0] is not None and parts[0].lower() == ".org":
             index = parts[1]
@@ -88,7 +88,7 @@ def parse_code_file(file):
 
             # check validty of line value
             line = line.strip()
-            pattern = re.compile(r"^\w+$")
+            pattern = re.compile(r"^[0-9]+$")
             if pattern.search(line):
                 #print("org line is ", line)
                 new_value = f'{int(line, 16):032b}'
@@ -98,6 +98,7 @@ def parse_code_file(file):
                 continue
             else:
                 code_start_index = int(index, 16)
+                instruction_number = 0
                 continue
 
         with_offset = False
@@ -193,41 +194,40 @@ def parse_code_file(file):
             opcode = "10011"
             with_offset = True
             rdst = parse_register_name(parts[1])
-            offset_val = regs[2].split("(")[0]
-            rsrc1 = regs[2].split("(")[1][:-2]
+            offset_val = parts[2]
+            rsrc1 = parse_register_name(parts[3])
             rsrc2 = rsrc1
         elif parts[0] is not None and parts[0].lower() == "std":
             opcode = "10100"
             with_offset = True
-            regs = line.split(" ")
-            rsrc1 = parse_register_name(regs[1][:-2])
+            rsrc1 = parse_register_name(parts[1])
             rdst = rsrc1
-            offset_val = regs[2].split("(")[0]
-            rsrc2 = regs[2].split("(")[1][:-2]
+            offset_val = parts[2]
+            rsrc2 = parse_register_name(parts[3])
 # ======= Branch and Change of Control Operations========================================
         elif parts[0] is not None and parts[0].lower() == "jz":
             opcode = "11000"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "jn":
             opcode = "11001"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "jc":
             opcode = "11010"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "jmp":
             opcode = "11011"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "call":
             opcode = "11100"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "ret":
@@ -238,7 +238,7 @@ def parse_code_file(file):
         elif parts[0] is not None and parts[0].lower() == "int":
             opcode = "11110"
             with_offset = True
-            offset_val = line.split(" ")[1]
+            offset_val = parts[1]
             rdst = "000"
             rsrc1 = rdst
             rsrc2 = rdst
@@ -257,7 +257,7 @@ def parse_code_file(file):
             print('decoded instruction is ', decoded_instruction)
             instruction_number += 1
         instruction_number += 1
-        #print("decoded instruction is ", decoded_instruction)
+        print("decoded instruction is ", decoded_instruction)
         replace_memory_cell_value(
             index=hex(instruction_index)[2:], new_value=decoded_instruction, write32=with_offset)
 
