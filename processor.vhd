@@ -244,7 +244,7 @@ operand2Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src2_se
  
 -- ALU module instance
 -- TODO: rst flags on 'rst' signal
-ALU: entity work.alu PORT MAP(ALU_op1,ALU_op2,ALU_op_D_E,ALU_res,CF,ZF,NF,c_flag_en_D_E,z_flag_en_D_E,n_flag_en_D_E,ALU_en_D_E);
+ALU: entity work.alu PORT MAP(ALU_op1,ALU_op2,ALU_op_D_E,ALU_res,CF,ZF,NF,c_flag_en_D_E,z_flag_en_D_E,n_flag_en_D_E,ALU_en_D_E,rst);
 
 -- Execute/Memory intermmediate buffer
 EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>'1', INDATA_E=>indata_D_E, INDATA_M=>indata_E_M, 
