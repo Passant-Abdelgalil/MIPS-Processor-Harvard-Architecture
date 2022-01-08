@@ -69,7 +69,7 @@ SIGNAL indata_F_D, indata_D_E, indata_E_M, indata_M_WB: std_logic_vector(15 DOWN
 -- wires to hold dest reg address through stages [decode, execute, memory]
 SIGNAL dest_D_E, dest_E_M, dest_M_W: std_logic_vector(2 DOWNTO 0);
 -- wires to hold ALU_op code through stages [execute]
-SIGNAL ALU_op, ALU_op_D_E: std_logic_vector(2 DOWNTO 0);
+SIGNAL ALU_op, ALU_op_D_E,JMP_op,JMP_op_D_E: std_logic_vector(2 DOWNTO 0);
 -- wires to hold selected sources for ALU
 SIGNAL src1_selected, src2_selected: std_logic_vector(15 DOWNTO 0);
 -- wires to hold ALU operands
@@ -194,7 +194,7 @@ controlUnit: entity work.control_unit PORT MAP(opCode => Inst_F_D(31 DOWNTO 27),
 				ALU_en => ALU_en, MR => MemRead, MW => MemWrite, WB => WriteBack, MEM_REG => MemToReg, read32 => Read32,
 				SP_en => SP_en, SP_op => SP_op, PC_en => PC_en, ALU_src=>ALU_src, CF_en=>c_flag_en, ZF_en=>z_flag_en,NF_en=>n_flag_en,
 				STD_FLAG=>STD_flag, CALL_i=>Call_flag, INT_i=>INT_flag, BRANCH_i=>Branch_flag,
-				RTI_i=>RTI_flag, RET_i=>RET_flag, ALU_op=>ALU_op
+				RTI_i=>RTI_flag, RET_i=>RET_flag, ALU_op=>ALU_op,JMP_op=>JMP_op
 				);
 -- decode/execute intermmediate buffer
 DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA_D=>indata_F_D, INDATA_E=>indata_D_E, 
@@ -213,7 +213,7 @@ DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA
 				STD_flag_D=>STD_flag, STD_flag_E=>STD_flag_D_E,
 				Call_flag_D=>Call_flag, Call_flag_E=>Call_flag_D_E, INT_flag_D=>INT_flag, INT_flag_E=>INT_flag_D_E,
 				Branch_flag_D=>Branch_flag, Branch_flag_E=>Branch_flag_D_E, RTI_flag_D=>RTI_flag, RTI_flag_E=>RTI_flag_D_E,
-				RET_flag_D=>RET_flag, RET_flag_E=>RET_flag_D_E
+				RET_flag_D=>RET_flag, RET_flag_E=>RET_flag_D_E, JMP_op_D=>JMP_op, JMP_op_E=>JMP_op_D_E
 				);
 -- forwarding unit module instance
 forwardUnit: entity work.ForwardingUnit PORT MAP(EXMem_WriteBack=>WriteBack_E_M, MemWB_WtiteBack=>WriteBack_M_W, EXMem_destAddress=>dest_E_M,
@@ -241,7 +241,7 @@ offset_or_register <= STD_flag_D_E or ALU_src_D_E;
 -- choose between selected src2 and offset in case of STD
 operand2Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src2_selected, In2 => offset_D_E, sel => offset_or_register, out_data => ALU_op2);
 
- 
+JMP: entity work.jmp_detect PORT MAP(Branch_flag_D_E,JMP_op_D_E,CF,NF,ZF,src1_D_E,PC_D_E);
 -- ALU module instance
 -- TODO: rst flags on 'rst' signal
 ALU: entity work.alu PORT MAP(ALU_op1,ALU_op2,ALU_op_D_E,ALU_res,CF,ZF,NF,c_flag_en_D_E,z_flag_en_D_E,n_flag_en_D_E,ALU_en_D_E,rst);

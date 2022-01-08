@@ -13,7 +13,7 @@ ENTITY DE_EX_Reg IS
 		src1_D, src2_D, offset_D: IN std_logic_vector(15 DOWNTO 0);
 		dst_D, src1_D_addr, src2_D_addr: IN std_logic_vector(2 DOWNTO 0);
 		-- control signals	
-		ALU_op_D: IN std_logic_vector(2 DOWNTO 0);
+		ALU_op_D,JMP_op_D: IN std_logic_vector(2 DOWNTO 0);
 		IN_en_D, OUT_en_D,
 		ALU_en_D, ALU_src_D,
 		MemRead_D, MemWrite_D,
@@ -32,7 +32,7 @@ ENTITY DE_EX_Reg IS
 		src1_E, src2_E, offset_E: OUT std_logic_vector(15 DOWNTO 0);
 		dst_E, src1_E_addr, src2_E_addr: OUT std_logic_vector(2 DOWNTO 0);
 		-- control signals	
-		ALU_op_E: OUT std_logic_vector(2 DOWNTO 0);
+		ALU_op_E,JMP_op_E: OUT std_logic_vector(2 DOWNTO 0);
 		IN_en_E, OUT_en_E,
 		ALU_en_E, ALU_src_E,
 		MemRead_E, MemWrite_E,
@@ -61,6 +61,7 @@ BEGIN
 			offset_E <= (others=>'0');
 			dst_E <= (others=>'0');
 			ALU_op_E <= (others=>'0');
+			JMP_op_E <= (others=>'0');
 			IN_en_E <= '0';
 			OUT_en_E <= '0';
 			ALU_en_E <= '0';
@@ -93,6 +94,7 @@ BEGIN
 			offset_E <= offset_D;
 			dst_E <= dst_D;
 			ALU_op_E <= ALU_op_D;
+			JMP_op_E <= JMP_op_D;
 			IN_en_E <= IN_en_D;
 			OUT_en_E <= OUT_en_D;
 			ALU_en_E <= ALU_en_D;

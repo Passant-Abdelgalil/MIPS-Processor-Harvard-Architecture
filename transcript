@@ -1,0 +1,72 @@
+# Compile of alu.vhd was successful.
+# Compile of jmp_detect.vhd failed with 1 errors.
+# Compile of jmp_detect.vhd was successful.
+# Compile of jmp_detect.vhd was successful.
+# Compile of jmp_detect.vhd was successful.
+vsim -gui work.jmp_detect
+# vsim -gui work.jmp_detect 
+# Start time: 15:39:54 on Jan 08,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.jmp_detect(jmp_detect_arch)
+add wave -position insertpoint sim:/jmp_detect/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Clavis-Intern  Hostname: CLAVIS-INTERN  ProcessID: 17024
+#           Attempting to use alternate WLF file "./wlftq1edm8".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftq1edm8
+force -freeze sim:/jmp_detect/branch_en 0 0
+add wave -position 7  -autoscale 1 -format Literal -height 17
+# Missing signal name or pattern.
+force -freeze sim:/jmp_detect/PC 16#AAAAAA
+force -freeze sim:/jmp_detect/address 16#BBBB
+run
+force -freeze sim:/jmp_detect/c_flag 1 0
+force -freeze sim:/jmp_detect/z_flag 1 0
+force -freeze sim:/jmp_detect/n_flag 1 0
+noforce sim:/jmp_detect/op_code
+force -freeze sim:/jmp_detect/op_code 000 0
+run
+force -freeze sim:/jmp_detect/branch_en 1 0
+run
+noforce sim:/jmp_detect/PC
+run
+quit -sim
+# End time: 15:50:25 on Jan 08,2022, Elapsed time: 0:10:31
+# Errors: 0, Warnings: 9
+# Compile of control_unit.vhd failed with 4 errors.
+# Compile of control_unit.vhd failed with 2 errors.
+# Compile of control_unit.vhd was successful.
+# Compile of control_unit.vhd was successful.
+# Compile of DE_EX_Reg.vhd was successful.
+# Compile of adder.vhd was successful.
+# Compile of alu.vhd was successful.
+# Compile of control_unit.vhd was successful.
+# Compile of DE_EX_Reg.vhd was successful.
+# Compile of Decoder_Mux.vhd was successful.
+# Compile of EX_MEM_Reg.vhd was successful.
+# Compile of F_D_Buffer.vhd was successful.
+# Compile of ForwardingUnit.vhd was successful.
+# Compile of instruction_ram.vhd was successful.
+# Compile of load_use_case_detector.vhd was successful.
+# Compile of M_W_Buffer.vhd was successful.
+# Compile of Memo_Address_mux.vhd was successful.
+# Compile of Memo_data_mux.vhd was successful.
+# Compile of MemoryStage.vhd was successful.
+# Compile of MUX_1_2.vhd was successful.
+# Compile of MUX_2_4.vhd was successful.
+# Compile of n_adder.vhd was successful.
+# Compile of partA.vhd was successful.
+# Compile of partB.vhd was successful.
+# Compile of PC_increment.vhd was successful.
+# Compile of processor.vhd failed with 1 errors.
+# Compile of ram.vhd was successful.
+# Compile of Register.vhd was successful.
+# Compile of register32.vhd was successful.
+# Compile of RegisterFile.vhd was successful.
+# Compile of SP.vhd was successful.
+# Compile of SP_Address_Unit.vhd was successful.
+# Compile of jmp_detect.vhd was successful.
+# 28 compiles, 1 failed with 1 error.
+# Compile of processor.vhd was successful.
