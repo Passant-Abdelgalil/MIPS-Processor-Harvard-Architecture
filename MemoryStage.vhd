@@ -7,7 +7,7 @@ ENTITY MemoryStage IS
         clk,
         rst,
         CALL_i,
-        RET_i, -- TODO add this to buffers
+        RET_i,
         INT_i,
         RTI_i,
         SP_en,
@@ -40,7 +40,7 @@ BEGIN
         POP_i, CALL_i, RET_i, INT_i, RTI_i, SP_used_Address,
         temp_exception2);
     Memo_data_mux : ENTITY work.Memo_data_mux PORT MAP(SP_en, PUSH_i,STD_i, Rsrc1, ALU_res, PC, memo_datain);
-    Memo_address_mux : ENTITY work.memo_address_mux PORT MAP(SP_en, temp_exception2, SP_used_Address, ALU_res, memo_address, exception1);
+    Memo_address_mux : ENTITY work.memo_address_mux PORT MAP(rst, SP_en, temp_exception2, SP_used_Address, ALU_res, memo_address, exception1);
     Ram : ENTITY work.ram PORT MAP(clk, MW, write32, MR, memo_address, memo_datain, dataout);
     exception2 <= temp_exception2;
 END instance;
