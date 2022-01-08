@@ -9,7 +9,7 @@ port(
 		f : out std_logic_vector(n-1 downto 0);
 		c_flag,z_flag,n_flag : inout std_logic;
 		c_flag_en,z_flag_en,n_flag_en: in std_logic;
-		alu_en: in std_logic
+		alu_en,rst: in std_logic
 );
 
 end entity;
@@ -44,15 +44,21 @@ begin
 u0:partA port map (a,op_code,x1,c1,z1,n1,c_flag_en,z_flag_en,n_flag_en,alu_en);
 u1:partB port map (a,b,op_code,x2,c2,z2,n2,c_flag_en,z_flag_en,n_flag_en,alu_en);
 
-f <= x1 WHEN (op_code(2)='0')
+
+
+f <= (others => '0') WHEN (rst='1') 
+ELSE x1 WHEN (op_code(2)='0')
 ELSE x2;
 
-c_flag<=c1 WHEN (op_code(2)='0')
+c_flag<= '0' WHEN (rst='1')
+ELSE c1 WHEN (op_code(2)='0')
 ELSE c2;
 
-z_flag<=z1 WHEN (op_code(2)='0')
+z_flag<= '0' WHEN (rst='1')
+ELSE z1 WHEN (op_code(2)='0')
 ELSE z2;
 
-n_flag<=n1 WHEN (op_code(2)='0')
+n_flag<=  '0' WHEN (rst='1')
+ELSE n1 WHEN (op_code(2)='0')
 ELSE n2;
 end Architecture;

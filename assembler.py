@@ -270,11 +270,11 @@ def parse_code_file(file):
 if __name__ == "__main__":
 
     instruction_memory = read_instrcution_memory_file(
-        filename='./instruction_memory.mem')
+        filename='instruction_memory.mem')
 
-    file = read_code_file(filename="./code.txt")
+    file = read_code_file(filename="OneOperand_code.txt")
 
     parse_code_file(file)
 
     regenrate_instruction_memory_file(
-        filename='./instruction_memory2.mem', lines=instruction_memory)
+        filename='instruction_memory2.mem', lines=instruction_memory)
