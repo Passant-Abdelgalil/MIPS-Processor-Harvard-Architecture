@@ -53,7 +53,7 @@ ARCHITECTURE DeExReg of DE_EX_Reg IS
 BEGIN
 	PROCESS (clk, rst) IS
 	BEGIN
-		IF (rst = '1') THEN
+		IF (rst = '1')  THEN
 			INDATA_E <= (others=>'0');
 			PC_E <= (others=>'0');
 			src1_E <= (others=>'0');

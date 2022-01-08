@@ -11,8 +11,8 @@ def read_instrcution_memory_file(filename):
 
 def replace_memory_cell_value(index, new_value, write32):
     global instruction_memory
-    #print("index is ", index)
-    #print("new value is ", new_value)
+    print("index is ", index)
+    print("new value is ", new_value)
     int_index = int(index, 16)
 
     if write32:
@@ -35,7 +35,7 @@ def parse_register_name(regName):
     if regName is None:
         raise Exception("invalid register name")
     regName = regName.strip().lower()
-    print('reg name is ', regName)
+#    print('reg name is ', regName)
     if regName == "r0":
         return "000"
     if regName == "r1":
@@ -88,7 +88,7 @@ def parse_code_file(file):
 
             # check validty of line value
             line = line.strip()
-            pattern = re.compile(r"^\w+$")
+            pattern = re.compile(r"^[0-9]+$")
             if pattern.search(line):
                 #print("org line is ", line)
                 new_value = f'{int(line, 16):032b}'
@@ -98,6 +98,7 @@ def parse_code_file(file):
                 continue
             else:
                 code_start_index = int(index, 16)
+                instruction_number = 0
                 continue
 
         with_offset = False
@@ -207,27 +208,27 @@ def parse_code_file(file):
 # ======= Branch and Change of Control Operations========================================
         elif parts[0] is not None and parts[0].lower() == "jz":
             opcode = "11000"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "jn":
             opcode = "11001"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "jc":
             opcode = "11010"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "jmp":
             opcode = "11011"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "call":
             opcode = "11100"
-            rdst = line.split(" ")[1]
+            rdst = parse_register_name(parts[1])
             rsrc1 = rdst
             rsrc2 = rdst
         elif parts[0] is not None and parts[0].lower() == "ret":
@@ -238,7 +239,7 @@ def parse_code_file(file):
         elif parts[0] is not None and parts[0].lower() == "int":
             opcode = "11110"
             with_offset = True
-            offset_val = line.split(" ")[1]
+            offset_val = parts[1]
             rdst = "000"
             rsrc1 = rdst
             rsrc2 = rdst
@@ -257,7 +258,7 @@ def parse_code_file(file):
             print('decoded instruction is ', decoded_instruction)
             instruction_number += 1
         instruction_number += 1
-        #print("decoded instruction is ", decoded_instruction)
+        print("decoded instruction is ", decoded_instruction)
         replace_memory_cell_value(
             index=hex(instruction_index)[2:], new_value=decoded_instruction, write32=with_offset)
 
@@ -270,11 +271,11 @@ def parse_code_file(file):
 if __name__ == "__main__":
 
     instruction_memory = read_instrcution_memory_file(
-        filename='instruction_memory.mem')
+        filename='./instruction_memory.mem')
 
-    file = read_code_file(filename="OneOperand_code.txt")
+    file = read_code_file(filename="./branch.txt")
 
     parse_code_file(file)
 
     regenrate_instruction_memory_file(
-        filename='instruction_memory2.mem', lines=instruction_memory)
+        filename='./instruction_memory2.mem', lines=instruction_memory)

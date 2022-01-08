@@ -9,7 +9,7 @@ port(
 		f : out std_logic_vector(n-1 downto 0);
 		c_flag,z_flag,n_flag : inout std_logic;
 		c_flag_en,z_flag_en,n_flag_en: in std_logic;
-		alu_en,rst: in std_logic
+		alu_en,rst,jz,jn,jc: in std_logic
 );
 
 end entity;
@@ -73,17 +73,17 @@ f <= (others => '0') WHEN (rst='1')
 ELSE x1 WHEN en1='1'
 ELSE x2;
 
-c_flag<= '0' WHEN (rst='1')
+c_flag<= '0' WHEN (rst='1') or (jc='1')
 ELSE c1 WHEN (en1='1') and (cen1='1')
 ELSE c2 WHEN (en2='1') and (cen2='1')
 ELSE c_flag;
 
-z_flag<= '0' WHEN (rst='1')
+z_flag<= '0' WHEN (rst='1') or (jz='1')
 ELSE z1 WHEN (en1='1') and (zen1='1')
 ELSE z2 WHEN (en2='1') and (zen2='1')
 ELSE z_flag;
 
-n_flag<='0' WHEN (rst='1')
+n_flag<='0' WHEN (rst='1') or (jn='0')
 ELSE n1 WHEN (en1='1') and (nen1='1')
 ELSE n2 WHEN (en2='1') and (nen2='1')
 ELSE n_flag;

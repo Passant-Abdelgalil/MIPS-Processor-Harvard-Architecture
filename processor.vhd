@@ -139,8 +139,9 @@ SIGNAL OUT_DATA, OUT_DATA_M_W: std_logic_vector( 15 downto 0);
 SIGNAL exception_one, exception_two: std_logic;
 
 SIGNAL offset_or_register: std_logic;
+SIGNAL JZ,JN,JC,flush: std_logic;
 BEGIN
-
+flush<=rst or jump_flag;
 --  ################### FETCH STAGE #####################
 
 -- mux to choose between exception 1 handler and interrupts
@@ -162,7 +163,7 @@ instruction_address: entity work.MUX_1_2 PORT MAP(In1 => pc_or_exception_interru
 PC_EXCP_INTERR_mux: entity work.MUX_1_2 PORT MAP(In1 => new_PC, In2 => instruction, sel => rst, out_data => PC_withoutJump);
 
 -- mux to choose between exepcted PC value and jump address TODO:(replace '0' with jump flag)
-PC_JUMP_mux: entity work.MUX_1_2 PORT MAP(In1 => PC_withoutJump, IN2 => Jump_Addr, sel => '0', out_data => final_PC);
+PC_JUMP_mux: entity work.MUX_1_2 PORT MAP(In1 => PC_withoutJump, IN2 => Jump_Addr, sel => jump_flag, out_data => final_PC);
 
 -- PC register
 PC_reg: entity work.REG PORT MAP(clk => clk, en => PC_en, datain => final_PC, dataout => PC);
@@ -176,7 +177,7 @@ increase_PC: entity work.PC_INCREMENT PORT MAP(old_PC => PC, selector => instruc
 --  ################### END #####################
 
 -- Fetch/Decode intermmediate buffer
-FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => rst, clk => clk, en => '1',
+FE_DE_Buffer: entity work.F_D_Buffer PORT MAP (rst => flush, clk => clk, en => '1',
 						PC_F=>PC ,PC_D=>PC_F_D,
 						Inst_F=>instruction,Inst_D=>Inst_F_D,
 						INDATA_F=>INPORT,INDATA_D=>indata_F_D);
@@ -241,11 +242,12 @@ offset_or_register <= STD_flag_D_E or ALU_src_D_E;
 -- choose between selected src2 and offset in case of STD
 operand2Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src2_selected, In2 => offset_D_E, sel => offset_or_register, out_data => ALU_op2);
 
-JMP: entity work.jmp_detect PORT MAP(Branch_flag_D_E,JMP_op_D_E,CF,NF,ZF,src1_D_E,PC_D_E);
+
 -- ALU module instance
 -- TODO: rst flags on 'rst' signal
-ALU: entity work.alu PORT MAP(ALU_op1,ALU_op2,ALU_op_D_E,ALU_res,CF,ZF,NF,c_flag_en_D_E,z_flag_en_D_E,n_flag_en_D_E,ALU_en_D_E,rst);
+ALU: entity work.alu PORT MAP(ALU_op1,ALU_op2,ALU_op_D_E,ALU_res,CF,ZF,NF,c_flag_en_D_E,z_flag_en_D_E,n_flag_en_D_E,ALU_en_D_E,rst,JZ,JN,JC);
 
+JMP: entity work.jmp_detect PORT MAP(Branch_flag_D_E,JMP_op_D_E,CF,ZF,NF,JC,JZ,JN,src1_D_E,Jump_Addr,jump_flag);
 -- Execute/Memory intermmediate buffer
 EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>'1', INDATA_E=>indata_D_E, INDATA_M=>indata_E_M, 
 				PC_E=>PC_D_E, PC_M=>PC_E_M, write32_E=>Write32_D_E, read32_E => Read32_D_E, src1_E=>src1_D_E,-- src2_E=>src2_D_E,
