@@ -54,6 +54,13 @@ def parse_register_name(regName):
         return "111"
     return "-111"
 
+def is_instruction(line):
+    if line is None:
+        raise Exception("invalid instruction")
+    line = line.strip().lower()
+    parts = re.split(r'[-\(\),\s]\s*', line)
+    instructions = ['nop', 'hlt', 'setc', 'not', 'inc', 'out', 'in', 'mov', 'add', 'sub', 'and', 'iadd', 'push','pop', 'ldm', 'ldd', 'std', 'jz', 'jn', 'jc', 'jmp', 'call', 'ret','int', 'rti']
+    return parts[0] in instructions
 
 def if_skip_line(line):
     if line is None:
@@ -88,8 +95,10 @@ def parse_code_file(file):
 
             # check validty of line value
             line = line.strip()
+
             pattern = re.compile(r"^[0-9]+$")
             if pattern.search(line):
+
                 #print("org line is ", line)
                 new_value = f'{int(line, 16):032b}'
                 replace_memory_cell_value(
@@ -272,7 +281,7 @@ if __name__ == "__main__":
     instruction_memory = read_instrcution_memory_file(
         filename='./instruction_memory.mem')
 
-    file = read_code_file(filename="./code.txt")
+    file = read_code_file(filename="./TwoOperand_code.txt")
 
     parse_code_file(file)
 

@@ -25,7 +25,8 @@ ENTITY DE_EX_Reg IS
 		STD_flag_D,
 		Call_flag_D, INT_flag_D, Branch_flag_D,
 		RTI_flag_D,
-		RET_flag_D: IN std_logic;
+		RET_flag_D,
+		LDM_flag_D: IN std_logic;
 	-- output data
 		INDATA_E:OUT std_logic_vector(15 DOWNTO 0);
 		PC_E: OUT std_logic_vector(31 DOWNTO 0);
@@ -44,7 +45,8 @@ ENTITY DE_EX_Reg IS
 		STD_flag_E,
 		Call_flag_E, INT_flag_E, Branch_flag_E,
 		RTI_flag_E,
-		RET_flag_E: OUT std_logic
+		RET_flag_E,
+		LDM_flag_E: OUT std_logic
 	);
 END DE_EX_Reg;
 
@@ -85,6 +87,7 @@ BEGIN
 			RET_flag_E <= '0';
 			src1_E_addr <= "000";
 			src2_E_addr <= "000";
+			LDM_flag_E<='0';
 		ELSIF (rising_edge(clk) and en = '1') THEN
 			INDATA_E <= INDATA_D;
 			PC_E <= PC_D;
@@ -117,6 +120,7 @@ BEGIN
 			RET_flag_E <= RET_flag_D;
 			src1_E_addr <= src1_D_addr;
 			src2_E_addr <= src2_D_addr;
+			LDM_flag_E<=LDM_flag_D;
 		END IF;
 
 	END PROCESS;

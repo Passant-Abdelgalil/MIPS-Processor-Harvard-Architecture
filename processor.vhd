@@ -127,7 +127,9 @@ SIGNAL jump_flag: std_logic;
 -- wire to hold exception flag
 SIGNAL exception_flag: std_logic;
 -- wires to hold exception1 and exception2 flags
-SIGNAL exception1_flag, exception2_flag: STD_LOGIC;
+-- SIGNAL exception1_flag, exception2_flag: STD_LOGIC;
+-- value of instruction address where the exception happened
+SIGNAL ExceptionPC: STD_LOGIC_VECTOR(31 DOWNTO 0);
 --signals from writeBack buffer 
 SIGNAL write_data:std_logic_vector(15 DOWNTO 0);
 SIGNAL inDataMuxOut1, inDataMuxOut2: std_logic_vector(15 downto 0);
@@ -139,9 +141,17 @@ SIGNAL OUT_DATA, OUT_DATA_M_W: std_logic_vector( 15 downto 0);
 SIGNAL exception_one, exception_two: std_logic;
 
 SIGNAL offset_or_register: std_logic;
+
 SIGNAL JZ,JN,JC,flush: std_logic;
 SIGNAL LOAD_USE_CASE_OUT:std_logic;
 ----------------flushing signals--------------------------------
+
+
+-- LDM
+SIGNAL LDM_flag, LDM_flag_D_E:std_logic;
+SIGNAL temp_ALU_op1: STD_LOGIC_VECTOR(15 DOWNTO 0);
+BEGIN
+
 
 SIGNAL D_E_flush: std_logic;
 BEGIN
@@ -199,7 +209,9 @@ controlUnit: entity work.control_unit PORT MAP(opCode => Inst_F_D(31 DOWNTO 27),
 				ALU_en => ALU_en, MR => MemRead, MW => MemWrite, WB => WriteBack, MEM_REG => MemToReg, read32 => Read32,
 				SP_en => SP_en, SP_op => SP_op, PC_en => pc_en_control, ALU_src=>ALU_src, CF_en=>c_flag_en, ZF_en=>z_flag_en,NF_en=>n_flag_en,
 				STD_FLAG=>STD_flag, CALL_i=>Call_flag, INT_i=>INT_flag, BRANCH_i=>Branch_flag,
-				RTI_i=>RTI_flag, RET_i=>RET_flag, ALU_op=>ALU_op,JMP_op=>JMP_op
+
+				RTI_i=>RTI_flag, RET_i=>RET_flag, ALU_op=>ALU_op, LDM_i=> LDM_flag,JMP_op=>JMP_op
+
 				);
 -- decode/execute intermmediate buffer
 DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA_D=>indata_F_D, INDATA_E=>indata_D_E, 
@@ -215,10 +227,13 @@ DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA
 				SP_en_D=>SP_en, SP_en_E=>SP_en_D_E, SP_op_D=>SP_op, SP_op_E=>SP_op_D_E,write32_E => Write32_D_E,
 				C_Flag_en_D=>c_flag_en,N_Flag_en_D=>n_flag_en,Z_Flag_en_D=>z_flag_en, read32_E => Read32_D_E,
 				C_Flag_en_E=>c_flag_en_D_E, N_Flag_en_E=>n_flag_en_D_E, Z_Flag_en_E=>z_flag_en_D_E, 
+				
 				STD_flag_D=>STD_flag, STD_flag_E=>STD_flag_D_E,
 				Call_flag_D=>Call_flag, Call_flag_E=>Call_flag_D_E, INT_flag_D=>INT_flag, INT_flag_E=>INT_flag_D_E,
 				Branch_flag_D=>Branch_flag, Branch_flag_E=>Branch_flag_D_E, RTI_flag_D=>RTI_flag, RTI_flag_E=>RTI_flag_D_E,
-				RET_flag_D=>RET_flag, RET_flag_E=>RET_flag_D_E, JMP_op_D=>JMP_op, JMP_op_E=>JMP_op_D_E
+
+				RET_flag_D=>RET_flag, RET_flag_E=>RET_flag_D_E, LDM_flag_D=>LDM_flag, LDM_flag_E=>LDM_flag_D_E, JMP_op_D=>JMP_op, JMP_op_E=>JMP_op_D_E
+
 				);
 -- forwarding unit module instance
 forwardUnit: entity work.ForwardingUnit PORT MAP(EXMem_WriteBack=>WriteBack_E_M, MemWB_WtiteBack=>WriteBack_M_W, EXMem_destAddress=>dest_E_M,
@@ -240,7 +255,16 @@ src1Mux: entity work.MUX_2_4 generic map (n   => 16) PORT MAP(In1 => src1_D_E, I
 src2Mux: entity work.MUX_2_4 generic map (n   => 16) PORT MAP(In1 => src2_D_E, In2 => inDataMuxOut1, In3 => inDataMuxOut2,
 				 In4 => src2_D_E, out_data => src2_selected, sel1 => src2_sel(1), sel2 => src2_sel(0));
 -- choose between selected src1 and src2 in case of STD
-operand1Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src1_selected, In2 => src2_D_E, sel => STD_flag_D_E, out_data => ALU_op1);
+-- Rsrc1 --
+--           --- temp_ALU_op1
+-- Rsrc2 --      ----      ALU_op1
+-- offset ------ 
+
+operand1Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src1_selected, In2 => src2_D_E, sel => STD_flag_D_E, out_data => temp_ALU_op1);
+
+-- in case of LDM, choose offset as operand 1
+operand1LDM_Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => temp_ALU_op1, In2 => offset_D_E, sel => LDM_flag_D_E, out_data => ALU_op1);
+
 -- choose between offset and register value to enter as operand 2 to ALU
 offset_or_register <= STD_flag_D_E or ALU_src_D_E;
 -- choose between selected src2 and offset in case of STD
@@ -278,11 +302,13 @@ memoryStage: ENTITY work.MemoryStage PORT MAP(
 			RTI_i=>RTI_flag_E_M, SP_en=>SP_en_E_M, write32=>Write32_E_M, read32=>Read32_E_M,
 			MW=>MemWrite_E_M, MR=>MemRead_E_M,
 			Rsrc1=>src1_E_M, PC=>PC_E_M, ALU_res=>ALU_res_E_M,
-			exception1=>exception1_flag, exception2=>exception2_flag ,dataout=>Mem_res
+			exception1=>exception_one, exception2=>exception_two ,dataout=>Mem_res
 		);
 		
-		exception_flag <= exception1_flag OR exception2_flag;
-		
+		exception_flag <= exception_one OR exception_two;
+		-- TODO make exception2 happen async???
+		exception_PC: entity work.REG PORT MAP(clk => clk, en => exception_flag, datain => PC_E_M, dataout => ExceptionPC);
+
 final_write_data_mux: entity work.MUX_1_2 generic map (n => 16) PORT MAP(In1 => ALU_res_E_M, In2 => Mem_res(31 DOWNTO 16), sel => MemToReg_E_M, out_data => final_write_data);
 MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 				clk=>clk, en=>'1',
