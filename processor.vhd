@@ -133,7 +133,7 @@ SIGNAL ExceptionPC: STD_LOGIC_VECTOR(31 DOWNTO 0);
 --signals from writeBack buffer 
 SIGNAL write_data:std_logic_vector(15 DOWNTO 0);
 SIGNAL inDataMuxOut1, inDataMuxOut2: std_logic_vector(15 downto 0);
-
+SIGNAL PC_or_RET: std_logic_vector(31 DOWNTO 0);
 SIGNAL CF,ZF,NF: std_logic;
 
 SIGNAL OUT_DATA, OUT_DATA_M_W: std_logic_vector( 15 downto 0);
@@ -142,6 +142,8 @@ SIGNAL exception_one, exception_two: std_logic;
 
 SIGNAL offset_or_register: std_logic;
 SIGNAL JZ,JN,JC,flush: std_logic;
+SIGNAL hlt: std_logic;
+SIGNAL change_PC: std_logic;
 BEGIN
 flush<=rst or jump_flag;
 --  ################### FETCH STAGE #####################
@@ -167,8 +169,14 @@ PC_EXCP_INTERR_mux: entity work.MUX_1_2 PORT MAP(In1 => new_PC, In2 => instructi
 -- mux to choose between exepcted PC value and jump address TODO:(replace '0' with jump flag)
 PC_JUMP_mux: entity work.MUX_1_2 PORT MAP(In1 => PC_withoutJump, IN2 => Jump_Addr, sel => jump_flag, out_data => final_PC);
 
+PC_or_RTI: entity work.MUX_1_2 PORT MAP(In1=> final_PC, In2=> Mem_res, sel => RET_flag_E_M, out_data=>PC_or_RET);
+--rst = 1, hlt = 0 => PC_en = 1
+-- rst = 1, hlt = 1 => PC_en = 1
+-- rst = 0, hlt = 0 => PC_en = 1
+-- rst = 0, hlt = 1 => PC_en = 0
+
 -- PC register
-PC_reg: entity work.REG PORT MAP(clk => clk, en => PC_en, datain => final_PC, dataout => PC);
+PC_reg: entity work.REG PORT MAP(clk => clk, en => PC_en, datain => PC_or_RET, dataout => PC);
 
 -- Instruction Memory
 instructionMem: entity work.instructionRam PORT MAP(address => INST_ADDR, dataout => instruction);
@@ -244,12 +252,13 @@ offset_or_register <= STD_flag_D_E or ALU_src_D_E;
 -- choose between selected src2 and offset in case of STD
 operand2Mux: entity work.MUX_1_2 generic map (n   => 16) PORT MAP(In1 => src2_selected, In2 => offset_D_E, sel => offset_or_register, out_data => ALU_op2);
 
+JMP: entity work.jmp_detect PORT MAP(Branch_flag_D_E,Call_flag_D_E,JMP_op_D_E,CF,ZF,NF,JC,JZ,JN,src1_D_E,Jump_Addr,jump_flag);
 
 -- ALU module instance
 -- TODO: rst flags on 'rst' signal
 ALU: entity work.alu PORT MAP(ALU_op1,ALU_op2,ALU_op_D_E,ALU_res,CF,ZF,NF,c_flag_en_D_E,z_flag_en_D_E,n_flag_en_D_E,ALU_en_D_E,rst,JZ,JN,JC);
 
-JMP: entity work.jmp_detect PORT MAP(Branch_flag_D_E,JMP_op_D_E,CF,ZF,NF,JC,JZ,JN,src1_D_E,Jump_Addr,jump_flag);
+
 -- Execute/Memory intermmediate buffer
 EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>'1', INDATA_E=>indata_D_E, INDATA_M=>indata_E_M, 
 				PC_E=>PC_D_E, PC_M=>PC_E_M, write32_E=>Write32_D_E, read32_E => Read32_D_E, src1_E=>src1_D_E,-- src2_E=>src2_D_E,
@@ -284,6 +293,7 @@ memoryStage: ENTITY work.MemoryStage PORT MAP(
 		exception_PC: entity work.REG PORT MAP(clk => clk, en => exception_flag, datain => PC_E_M, dataout => ExceptionPC);
 
 final_write_data_mux: entity work.MUX_1_2 generic map (n => 16) PORT MAP(In1 => ALU_res_E_M, In2 => Mem_res(31 DOWNTO 16), sel => MemToReg_E_M, out_data => final_write_data);
+
 MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 				clk=>clk, en=>'1',
 				INDATA_M=>indata_E_M, INDATA_W=>indata_M_WB, 

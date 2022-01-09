@@ -15,3 +15,5 @@ force -freeze sim:/processor/INPORT 16#0100
 run
 force -freeze sim:/processor/INPORT 16#0300
 run
+force -freeze sim:/processor/INPORT 16#0700
+run
