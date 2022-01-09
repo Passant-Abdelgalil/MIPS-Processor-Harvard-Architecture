@@ -145,13 +145,17 @@ BEGIN
 
     MR <= '1' WHEN
         opCode = opLDD OR
-        opCode = opPOP --?
+        opCode = opPOP OR
+        opCode = opRET OR
+        opCode = opRTI
         ELSE
         '0';
 
     MW <= '1' WHEN
         opCode = opSTD OR
-        opCode = opPUSH
+        opCode = opPUSH OR
+        opCode = opCALL OR
+        opCode = opINT
         ELSE
         '0';
 
