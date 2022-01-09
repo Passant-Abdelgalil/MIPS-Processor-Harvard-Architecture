@@ -149,7 +149,7 @@ SIGNAL hlt: std_logic;
 SIGNAL change_PC: std_logic;
 SIGNAL LOAD_USE_CASE_OUT:std_logic;
 
-SIGNAL hlt: std_logic;
+-- SIGNAL hlt: std_logic;
 
 -- REG_WB_EN_EXCEPTIONS
 SIGNAL REG_WB_EN_EXCEPTIONS: STD_LOGIC;
