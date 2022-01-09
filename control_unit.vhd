@@ -31,7 +31,9 @@ ENTITY control_unit IS
         write32, -- flag to write 32 bit into memory or 16
         read32, -- flag to read 32 bit into memory or 16
         RET_i, -- RET instruction @opRET
-        LDM_i : OUT STD_LOGIC;
+        LDM_i,
+        POP_i,
+        PUSH_i : OUT STD_LOGIC;
 
         ALU_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0); -- ALU operation bits 
         -- SETC: 111
@@ -42,7 +44,7 @@ ENTITY control_unit IS
         -- AND: 101
         -- MOV: 011
 
-	JMP_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
+        JMP_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
     );
 END ENTITY control_unit;
 
@@ -114,6 +116,14 @@ BEGIN
         '0';
     LDM_i <= '1' WHEN
         opCode = opLDM
+        ELSE
+        '0';
+    POP_i <= '1' WHEN
+        opCode = opPOP
+        ELSE
+        '0';
+    PUSH_i <= '1' WHEN
+        opCode = opPUSH
         ELSE
         '0';
     ALU_en <= '1' WHEN
@@ -273,7 +283,7 @@ BEGIN
         ELSE
         '0';
 
-	JMP_op <=
+    JMP_op <=
         JZ
         WHEN opCode = opJZ
         ELSE
@@ -287,7 +297,7 @@ BEGIN
         WHEN
         opCode = opJMP
         ELSE
-        (others=>'0');
+        (OTHERS => '0');
 
     MEM_REG <= '1' WHEN --???
         -- opCode = opLDM OR

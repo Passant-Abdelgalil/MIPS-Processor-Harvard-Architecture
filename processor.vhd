@@ -19,7 +19,7 @@ ARCHITECTURE processor1 OF processor IS
 -- wire to hold pc value
 SIGNAL PC: std_logic_vector(31 DOWNTO 0);
 -- wire to hold pc enable
-SIGNAL PC_en,pc_en_control,pc_en_stall: std_logic;
+SIGNAL PC_en,PC_en2, pc_en_control,pc_en_stall: std_logic;
 -- wire to hold new PC
 SIGNAL new_PC: std_logic_vector(31 DOWNTO 0);
 -- wire to hold instruction value
@@ -108,6 +108,9 @@ SIGNAL INT_flag, INT_flag_D_E, INT_flag_E_M,INT_flag_M_W: std_logic;
 SIGNAL Branch_flag, Branch_flag_D_E, Branch_flag_E_M: std_logic;
 -- wires to hold return  flag signal through stages [execute, memory]
 SIGNAL RTI_flag, RTI_flag_D_E, RTI_flag_E_M,RTI_flag_M_W: std_logic;
+--
+SIGNAL POP_flag,POP_flag_D_E,POP_flag_E_M:STD_LOGIC;
+SIGNAL PUSH_flag,PUSH_flag_D_E,PUSH_flag_E_M:STD_LOGIC;
 -- wires to hold RET flag signal through stages [execute, memory]
 SIGNAL RET_flag, RET_flag_D_E, RET_flag_E_M, RET_flag_M_W: STD_LOGIC;
 -- wires to hold ALU sources selectors
@@ -126,8 +129,6 @@ SIGNAL Jump_Addr: std_logic_vector(31 DOWNTO 0);
 SIGNAL jump_flag: std_logic;
 -- wire to hold exception flag
 SIGNAL exception_flag: std_logic;
--- wires to hold exception1 and exception2 flags
--- SIGNAL exception1_flag, exception2_flag: STD_LOGIC;
 -- value of instruction address where the exception happened
 SIGNAL ExceptionPC: STD_LOGIC_VECTOR(31 DOWNTO 0);
 --signals from writeBack buffer 
@@ -147,6 +148,12 @@ SIGNAL JZ,JN,JC,flush: std_logic;
 SIGNAL hlt: std_logic;
 SIGNAL change_PC: std_logic;
 SIGNAL LOAD_USE_CASE_OUT:std_logic;
+
+SIGNAL hlt: std_logic;
+
+-- REG_WB_EN_EXCEPTIONS
+SIGNAL REG_WB_EN_EXCEPTIONS: STD_LOGIC;
+
 ----------------flushing signals--------------------------------
 
 
@@ -154,19 +161,23 @@ SIGNAL LOAD_USE_CASE_OUT:std_logic;
 SIGNAL LDM_flag, LDM_flag_D_E:std_logic;
 SIGNAL temp_ALU_op1: STD_LOGIC_VECTOR(15 DOWNTO 0);
 
-SIGNAL D_E_flush: std_logic;
+SIGNAL F_D_flush, D_E_flush, D_E_flush2, E_M_flush: std_logic;
 BEGIN
-flush<=rst or jump_flag;
+flush<=rst or jump_flag or exception_one or exception_two;
+D_E_flush2 <= rst or D_E_flush or exception_one or exception_two; 
+E_M_flush <= rst or exception_one or exception_two; 
 --  ################### FETCH STAGE #####################
+hlt <= '1' WHEN instruction(31 DOWNTO 27) = "00001" ELSE '0';
+PC_en <= rst or not hlt or exception_one or exception_two  or jump_flag;
 
 -- mux to choose between exception 1 handler and interrupts
-exception1_interrupts_mux: entity work.MUX_1_2 PORT MAP(In1 => std_logic_vector(to_unsigned(2, 32)), In2 => interrupt_address, sel => exception_one, out_data => execption_one_or_interrupt);
+exception1_interrupts_mux: entity work.MUX_1_2 PORT MAP(In2 => std_logic_vector(to_unsigned(2, 32)), In1 => interrupt_address, sel => exception_one, out_data => execption_one_or_interrupt);
 
 -- mux to choose between exception 2 handler and exception1_interrupts_mux output
-exception2_interrupts_mux: entity work.MUX_1_2 PORT MAP(In1 => std_logic_vector(to_unsigned(4,32)), In2 => execption_one_or_interrupt, sel => exception_two, out_data => exception_interrupt_address);
+exception2_interrupts_mux: entity work.MUX_1_2 PORT MAP(In2 => std_logic_vector(to_unsigned(4,32)), In1 => execption_one_or_interrupt, sel => exception_two, out_data => exception_interrupt_address);
 
 -- set selector for pc_excp_interr_MUX TODO: replace '0' with commented line
-pc_excp_interr_MUX_sel <= '0'; --((exception_one or exception_two) or INT_flag);
+pc_excp_interr_MUX_sel <= rst OR exception_one or exception_two; -- or INT_flag);
 
 -- mux to choose between exception/interrupt address and PC value
 exception_interrupt_or_PC_mux: entity work.MUX_1_2 PORT MAP(In1 => PC, In2 => exception_interrupt_address, sel => pc_excp_interr_MUX_sel, out_data => pc_or_exception_interrupt);
@@ -175,7 +186,7 @@ exception_interrupt_or_PC_mux: entity work.MUX_1_2 PORT MAP(In1 => PC, In2 => ex
 instruction_address: entity work.MUX_1_2 PORT MAP(In1 => pc_or_exception_interrupt, In2 => (others=>'0'), sel => rst, out_data => INST_ADDR);
 
 -- mux to choose between new PC value and exception/interrupts handler address, TODO: replace selector with pc_excp_interr_MUX_sel
-PC_EXCP_INTERR_mux: entity work.MUX_1_2 PORT MAP(In1 => new_PC, In2 => instruction, sel => rst, out_data => PC_withoutJump);
+PC_EXCP_INTERR_mux: entity work.MUX_1_2 PORT MAP(In1 => new_PC, In2 => instruction, sel => pc_excp_interr_MUX_sel, out_data => PC_withoutJump);
 
 -- mux to choose between exepcted PC value and jump address TODO:(replace '0' with jump flag)
 PC_JUMP_mux: entity work.MUX_1_2 PORT MAP(In1 => PC_withoutJump, IN2 => Jump_Addr, sel => jump_flag, out_data => final_PC);
@@ -217,12 +228,13 @@ controlUnit: entity work.control_unit PORT MAP(opCode => Inst_F_D(31 DOWNTO 27),
 				SP_en => SP_en, SP_op => SP_op, PC_en => pc_en_control, ALU_src=>ALU_src, CF_en=>c_flag_en, ZF_en=>z_flag_en,NF_en=>n_flag_en,
 				STD_FLAG=>STD_flag, CALL_i=>Call_flag, INT_i=>INT_flag, BRANCH_i=>Branch_flag,
 
-				RTI_i=>RTI_flag, RET_i=>RET_flag, ALU_op=>ALU_op, LDM_i=> LDM_flag,JMP_op=>JMP_op
+				RTI_i=>RTI_flag, RET_i=>RET_flag, ALU_op=>ALU_op, LDM_i=> LDM_flag,JMP_op=>JMP_op,
+				POP_i=>POP_flag, PUSH_i=>PUSH_flag
 
 
 				);
 -- decode/execute intermmediate buffer
-DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA_D=>indata_F_D, INDATA_E=>indata_D_E, 
+DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>D_E_flush2, clk=>clk, en=>'1', INDATA_D=>indata_F_D, INDATA_E=>indata_D_E, 
 				PC_D=>PC_F_D, PC_E=>PC_D_E, src1_D=>src1, src2_D=>src2, write32_D => Write32,
 				src1_E=>src1_D_E, src2_E=>src2_D_E, offset_D=>Inst_F_D(15 DOWNTO 0), offset_E=>offset_D_E,
 				dst_D=>Inst_F_D(20 DOWNTO 18), dst_E=>dest_D_E, ALU_op_D=>ALU_op, ALU_op_E=>ALU_op_D_E, read32_D => Read32,
@@ -241,8 +253,8 @@ DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA
 				Branch_flag_D=>Branch_flag, Branch_flag_E=>Branch_flag_D_E, RTI_flag_D=>RTI_flag, RTI_flag_E=>RTI_flag_D_E,
 
 
-				RET_flag_D=>RET_flag, RET_flag_E=>RET_flag_D_E, LDM_flag_D=>LDM_flag, LDM_flag_E=>LDM_flag_D_E, JMP_op_D=>JMP_op, JMP_op_E=>JMP_op_D_E
-
+				RET_flag_D=>RET_flag, RET_flag_E=>RET_flag_D_E, LDM_flag_D=>LDM_flag, LDM_flag_E=>LDM_flag_D_E, JMP_op_D=>JMP_op, JMP_op_E=>JMP_op_D_E,
+				POP_flag_D=>POP_flag, POP_flag_E=>POP_flag_D_E,PUSH_flag_D=>PUSH_flag, PUSH_flag_E=>PUSH_flag_D_E
 				);
 -- forwarding unit module instance
 forwardUnit: entity work.ForwardingUnit PORT MAP(EXMem_WriteBack=>WriteBack_E_M, MemWB_WtiteBack=>WriteBack_M_W, EXMem_destAddress=>dest_E_M,
@@ -301,7 +313,9 @@ EX_Mem_buffer: entity work.EX_MEM_Reg PORT MAP(rst=>rst,  clk=>clk, en=>'1', IND
 				STD_flag_E=>STD_flag_D_E, STD_flag_M=>STD_flag_E_M, read32_M => Read32_E_M,
 				Call_flag_E=>Call_flag_D_E, Call_flag_M=>Call_flag_E_M, INT_flag_E=>INT_flag_D_E, INT_flag_M=>INT_flag_E_M,
 				RTI_flag_E=>RTI_flag_D_E, RTI_flag_M=>RTI_flag_E_M, --Branch_flag_E=>Branch_flag_D_E, Branch_flag_M=>Branch_flag_E_M
-				RET_flag_E=>RET_flag_D_E, RET_flag_M=>RET_flag_E_M
+				RET_flag_E=>RET_flag_D_E, RET_flag_M=>RET_flag_E_M,
+				POP_flag_E=>POP_flag_D_E, POP_flag_M=>POP_flag_E_M,PUSH_flag_E=>PUSH_flag_D_E, PUSH_flag_M=>PUSH_flag_E_M
+				
 				);
 
 -- Memory Stage
@@ -312,13 +326,14 @@ memoryStage: ENTITY work.MemoryStage PORT MAP(
 			RTI_i=>RTI_flag_E_M, SP_en=>SP_en_E_M, write32=>Write32_E_M, read32=>Read32_E_M,
 			MW=>MemWrite_E_M, MR=>MemRead_E_M,
 			Rsrc1=>src1_E_M, PC=>PC_E_M, ALU_res=>ALU_res_E_M,
-			exception1=>exception_one, exception2=>exception_two ,dataout=>Mem_res
+			exception1=>exception_one, exception2=>exception_two ,dataout=>Mem_res,
+			POP_i=>POP_flag_E_M, PUSH_i=>PUSH_flag_E_M
 		);
 		
 		exception_flag <= exception_one OR exception_two;
 		-- TODO make exception2 happen async???
 		exception_PC: entity work.REG PORT MAP(clk => clk, en => exception_flag, datain => PC_E_M, dataout => ExceptionPC);
-
+		REG_WB_EN_EXCEPTIONS<= WriteBack_E_M AND (NOT exception_flag);
 final_write_data_mux: entity work.MUX_1_2 generic map (n => 16) PORT MAP(In1 => ALU_res_E_M, In2 => Mem_res(31 DOWNTO 16), sel => MemToReg_E_M, out_data => final_write_data);
 
 MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
@@ -332,7 +347,7 @@ MEM_WB_buffer: entity work.M_W_Buffer PORT MAP(rst=>rst,
 				OUT_en_M=>OUT_en_E_M, OUT_en_W=>OUT_en_M_W,
 				MemRead_M=>MemRead_E_M, MemRead_W=>MemRead_M_W,
 				MemWrite_M=>MemWrite_E_M, MemWrite_W=>MemWrite_M_W,
-				WriteBack_M=>WriteBack_E_M, WriteBack_W=>WriteBack_M_W,
+				WriteBack_M=> REG_WB_EN_EXCEPTIONS, WriteBack_W=>WriteBack_M_W,
 				MemToReg_M=>MemToReg_E_M, MemToReg_W=>MemToReg_M_W,
 				SP_en_M=>SP_en_E_M, SP_en_W=>SP_en_M_W, 
 				SP_op_M=>SP_op_E_M, SP_op_W=>SP_op_M_W,
@@ -347,7 +362,7 @@ Out_Port: entity work.r_Register PORT MAP (clk,rst,OUT_en_M_W,final_write_data_W
 -----------------load use case
 load_use_case: entity work.LOAD_USE_CASE_DETECTOR port map (MemRead_D_E,Inst_F_D(26 DOWNTO 24),Inst_F_D(23 DOWNTO 21),dest_D_E,LOAD_USE_CASE_OUT);
 load_use_stall_flush: entity work.load_suse_case_flush_stalling port map(LOAD_USE_CASE_OUT,rst,clk,pc_en_stall, D_E_flush,F_D_en_stall, D_E_en_stall);
-check_pc_En: entity work.check port map( load_use_case_out,pc_en_control,pc_en_stall,pc_en);
+check_pc_En: entity work.check port map( load_use_case_out,pc_en_control,pc_en_stall,pc_en2);
 check_F_D_En: entity work.check port map( load_use_case_out,'1',F_D_en_stall,f_D_en);
 check_D_E_En: entity work.check port map( load_use_case_out,'1',D_E_en_stall,D_E_en);
 

@@ -6,6 +6,7 @@ add wave -position end  sim:/processor/INPORT
 add wave -position end  sim:/processor/OUTPORT
 add wave -position end  sim:/processor/PC
 add wave -position end  sim:/processor/instruction
+add wave -position end sim:/processor/memoryStage/SP_address_mux/SP/*
 add wave -position end  sim:/processor/offset_D_E
 add wave -position end  sim:/processor/offset_E_M
 add wave -position end  sim:/processor/offset_M_W
@@ -183,5 +184,5 @@ run
 force -freeze sim:/processor/INPORT x"f320" 0
 run
 #force -freeze sim:/processor/INPORT 0000000000010000 0
-force -freeze sim:/processor/INPORT x"0010" 0
+force -freeze sim:/processor/INPORT x"FD60" 0
 run
