@@ -9,7 +9,7 @@ port(
 		f : out std_logic_vector(n-1 downto 0);
 		c_flag,z_flag,n_flag : inout std_logic;
 		c_flag_en,z_flag_en,n_flag_en: in std_logic;
-		alu_en: in std_logic
+		alu_en,rst,jz,jn,jc: in std_logic
 );
 
 end entity;
@@ -39,20 +39,52 @@ port(
 end Component;
  
 Signal x1,x2:std_logic_vector(n-1 downto 0);
-Signal c1,c2,z1,z2,n1,n2:std_logic;
+Signal c1,z1,n1,c2,z2,n2:std_logic;
+Signal en1,en2,cen1,zen1,nen1,cen2,zen2,nen2:std_logic;
 begin
-u0:partA port map (a,op_code,x1,c1,z1,n1,c_flag_en,z_flag_en,n_flag_en,alu_en);
-u1:partB port map (a,b,op_code,x2,c2,z2,n2,c_flag_en,z_flag_en,n_flag_en,alu_en);
+u0:partA port map (a,op_code,x1,c1,z1,n1,cen1,zen1,nen1,en1);
+u1:partB port map (a,b,op_code,x2,c2,z2,n2,cen2,zen2,nen2,en2);
 
-f <= x1 WHEN (op_code(2)='0')
+en1<='1' WHEN (alu_en='1') and (op_code(2)='0')
+ELSE '0';
+
+en2<='1' WHEN (alu_en='1') and (op_code(2)='1')
+ELSE '0';
+
+cen1<='1' WHEN (c_flag_en='1') and (op_code(2)='0')
+ELSE '0';
+
+zen1<='1' WHEN (z_flag_en='1') and (op_code(2)='0')
+ELSE '0';
+
+nen1<='1' WHEN (n_flag_en='1') and (op_code(2)='0')
+ELSE '0';
+
+cen2<='1' WHEN (c_flag_en='1') and (op_code(2)='1')
+ELSE '0';
+
+zen2<='1' WHEN (z_flag_en='1') and (op_code(2)='1')
+ELSE '0';
+
+nen2<='1' WHEN (n_flag_en='1') and (op_code(2)='1')
+ELSE '0';
+
+f <= (others => '0') WHEN (rst='1') 
+ELSE x1 WHEN en1='1'
 ELSE x2;
 
-c_flag<=c1 WHEN (op_code(2)='0')
-ELSE c2;
+c_flag<= '0' WHEN (rst='1') or (jc='1')
+ELSE c1 WHEN (en1='1') and (cen1='1')
+ELSE c2 WHEN (en2='1') and (cen2='1')
+ELSE c_flag;
 
-z_flag<=z1 WHEN (op_code(2)='0')
-ELSE z2;
+z_flag<= '0' WHEN (rst='1') or (jz='1')
+ELSE z1 WHEN (en1='1') and (zen1='1')
+ELSE z2 WHEN (en2='1') and (zen2='1')
+ELSE z_flag;
 
-n_flag<=n1 WHEN (op_code(2)='0')
-ELSE n2;
+n_flag<='0' WHEN (rst='1') or (jn='1')
+ELSE n1 WHEN (en1='1') and (nen1='1')
+ELSE n2 WHEN (en2='1') and (nen2='1')
+ELSE n_flag;
 end Architecture;

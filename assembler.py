@@ -96,8 +96,10 @@ def parse_code_file(file):
             # check validty of line value
             line = line.strip()
 
+
             pattern = re.compile(r"^[0-9]+$")
             if pattern.search(line):
+                
 
                 #print("org line is ", line)
                 new_value = f'{int(line, 16):032b}'
@@ -281,7 +283,7 @@ if __name__ == "__main__":
     instruction_memory = read_instrcution_memory_file(
         filename='./instruction_memory.mem')
 
-    file = read_code_file(filename="./TwoOperand_code.txt")
+    file = read_code_file(filename="./branch.txt")
 
     parse_code_file(file)
 

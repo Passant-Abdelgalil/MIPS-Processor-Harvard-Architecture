@@ -142,6 +142,7 @@ SIGNAL exception_one, exception_two: std_logic;
 
 SIGNAL offset_or_register: std_logic;
 
+
 SIGNAL JZ,JN,JC,flush: std_logic;
 SIGNAL LOAD_USE_CASE_OUT:std_logic;
 ----------------flushing signals--------------------------------
@@ -150,8 +151,6 @@ SIGNAL LOAD_USE_CASE_OUT:std_logic;
 -- LDM
 SIGNAL LDM_flag, LDM_flag_D_E:std_logic;
 SIGNAL temp_ALU_op1: STD_LOGIC_VECTOR(15 DOWNTO 0);
-BEGIN
-
 
 SIGNAL D_E_flush: std_logic;
 BEGIN
@@ -212,6 +211,7 @@ controlUnit: entity work.control_unit PORT MAP(opCode => Inst_F_D(31 DOWNTO 27),
 
 				RTI_i=>RTI_flag, RET_i=>RET_flag, ALU_op=>ALU_op, LDM_i=> LDM_flag,JMP_op=>JMP_op
 
+
 				);
 -- decode/execute intermmediate buffer
 DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA_D=>indata_F_D, INDATA_E=>indata_D_E, 
@@ -231,6 +231,7 @@ DE_EX_buffer: entity work.DE_EX_Reg PORT MAP(rst=>rst, clk=>clk, en=>'1', INDATA
 				STD_flag_D=>STD_flag, STD_flag_E=>STD_flag_D_E,
 				Call_flag_D=>Call_flag, Call_flag_E=>Call_flag_D_E, INT_flag_D=>INT_flag, INT_flag_E=>INT_flag_D_E,
 				Branch_flag_D=>Branch_flag, Branch_flag_E=>Branch_flag_D_E, RTI_flag_D=>RTI_flag, RTI_flag_E=>RTI_flag_D_E,
+
 
 				RET_flag_D=>RET_flag, RET_flag_E=>RET_flag_D_E, LDM_flag_D=>LDM_flag, LDM_flag_E=>LDM_flag_D_E, JMP_op_D=>JMP_op, JMP_op_E=>JMP_op_D_E
 

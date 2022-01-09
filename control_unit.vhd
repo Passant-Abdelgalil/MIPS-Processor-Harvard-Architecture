@@ -33,7 +33,7 @@ ENTITY control_unit IS
         RET_i, -- RET instruction @opRET
         LDM_i : OUT STD_LOGIC;
 
-        ALU_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0) -- ALU operation bits 
+        ALU_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0); -- ALU operation bits 
         -- SETC: 111
         -- NOT: 001
         -- INC: 010
@@ -41,6 +41,8 @@ ENTITY control_unit IS
         -- SUB: 100
         -- AND: 101
         -- MOV: 011
+
+	JMP_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
     );
 END ENTITY control_unit;
 
@@ -86,6 +88,13 @@ ARCHITECTURE instance OF control_unit IS
     CONSTANT ALU_AND : STD_LOGIC_VECTOR(2 DOWNTO 0) := "101";
     CONSTANT ALU_MOV : STD_LOGIC_VECTOR(2 DOWNTO 0) := "011";
     CONSTANT ALU_NONE : STD_LOGIC_VECTOR(2 DOWNTO 0) := "000";
+
+    -- JMP operations
+
+    CONSTANT JZ : STD_LOGIC_VECTOR(2 DOWNTO 0) := "000";
+    CONSTANT JN : STD_LOGIC_VECTOR(2 DOWNTO 0) := "001";
+    CONSTANT JC : STD_LOGIC_VECTOR(2 DOWNTO 0) := "010";
+    CONSTANT JMP : STD_LOGIC_VECTOR(2 DOWNTO 0) := "011";
 
 BEGIN
     IN_en <= '1' WHEN opCode = opIN ELSE
@@ -263,6 +272,22 @@ BEGIN
         opCode = opJC
         ELSE
         '0';
+
+	JMP_op <=
+        JZ
+        WHEN opCode = opJZ
+        ELSE
+        JN
+        WHEN opCode = opJN
+        ELSE
+        JC
+        WHEN opCode = opJC
+        ELSE
+        JMP
+        WHEN
+        opCode = opJMP
+        ELSE
+        (others=>'0');
 
     MEM_REG <= '1' WHEN --???
         -- opCode = opLDM OR
