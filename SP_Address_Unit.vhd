@@ -35,8 +35,8 @@ BEGIN
 		 OR (unsigned(SP_output) = x"000fffff" AND (RET_i = '1' OR RTI_i = '1'))
 		) THEN
                 exception2 <= '1';
-                -- ELSE
-                      --'0'; -- once it is one, should stay?
+                ELSE
+                     exception2 <='0'; -- once it is one, should stay?
             END IF;
         END IF;
     END PROCESS;

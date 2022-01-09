@@ -19,7 +19,7 @@ ARCHITECTURE processor1 OF processor IS
 -- wire to hold pc value
 SIGNAL PC: std_logic_vector(31 DOWNTO 0);
 -- wire to hold pc enable
-SIGNAL PC_en,pc_en_control,pc_en_stall: std_logic;
+SIGNAL PC_en,PC_en2, pc_en_control,pc_en_stall: std_logic;
 -- wire to hold new PC
 SIGNAL new_PC: std_logic_vector(31 DOWNTO 0);
 -- wire to hold instruction value
@@ -147,6 +147,8 @@ SIGNAL offset_or_register: std_logic;
 SIGNAL JZ,JN,JC,flush: std_logic;
 SIGNAL LOAD_USE_CASE_OUT:std_logic;
 
+SIGNAL hlt: std_logic;
+
 -- REG_WB_EN_EXCEPTIONS
 SIGNAL REG_WB_EN_EXCEPTIONS: STD_LOGIC;
 
@@ -157,14 +159,17 @@ SIGNAL REG_WB_EN_EXCEPTIONS: STD_LOGIC;
 SIGNAL LDM_flag, LDM_flag_D_E:std_logic;
 SIGNAL temp_ALU_op1: STD_LOGIC_VECTOR(15 DOWNTO 0);
 
-SIGNAL F_D_flush, D_E_flush, D_E_flush2: std_logic;
+SIGNAL F_D_flush, D_E_flush, D_E_flush2, E_M_flush: std_logic;
 BEGIN
 flush<=rst or jump_flag or exception_one or exception_two;
 D_E_flush2 <= rst or D_E_flush or exception_one or exception_two; 
+E_M_flush <= rst or exception_one or exception_two; 
 --  ################### FETCH STAGE #####################
+hlt <= '1' WHEN instruction(31 DOWNTO 27) = "00001" ELSE '0';
+PC_en <= rst or not hlt or exception_one or exception_two  or jump_flag;
 
 -- mux to choose between exception 1 handler and interrupts
-exception1_interrupts_mux: entity work.MUX_1_2 PORT MAP(In1 => std_logic_vector(to_unsigned(2, 32)), In2 => interrupt_address, sel => exception_one, out_data => execption_one_or_interrupt);
+exception1_interrupts_mux: entity work.MUX_1_2 PORT MAP(In2 => std_logic_vector(to_unsigned(2, 32)), In1 => interrupt_address, sel => exception_one, out_data => execption_one_or_interrupt);
 
 -- mux to choose between exception 2 handler and exception1_interrupts_mux output
 exception2_interrupts_mux: entity work.MUX_1_2 PORT MAP(In2 => std_logic_vector(to_unsigned(4,32)), In1 => execption_one_or_interrupt, sel => exception_two, out_data => exception_interrupt_address);
@@ -347,7 +352,7 @@ Out_Port: entity work.r_Register PORT MAP (clk,rst,OUT_en_M_W,final_write_data_W
 -----------------load use case
 load_use_case: entity work.LOAD_USE_CASE_DETECTOR port map (MemRead_D_E,Inst_F_D(26 DOWNTO 24),Inst_F_D(23 DOWNTO 21),dest_D_E,LOAD_USE_CASE_OUT);
 load_use_stall_flush: entity work.load_suse_case_flush_stalling port map(LOAD_USE_CASE_OUT,rst,clk,pc_en_stall, D_E_flush,F_D_en_stall, D_E_en_stall);
-check_pc_En: entity work.check port map( load_use_case_out,pc_en_control,pc_en_stall,pc_en);
+check_pc_En: entity work.check port map( load_use_case_out,pc_en_control,pc_en_stall,pc_en2);
 check_F_D_En: entity work.check port map( load_use_case_out,'1',F_D_en_stall,f_D_en);
 check_D_E_En: entity work.check port map( load_use_case_out,'1',D_E_en_stall,D_E_en);
 

@@ -184,5 +184,5 @@ run
 force -freeze sim:/processor/INPORT x"f320" 0
 run
 #force -freeze sim:/processor/INPORT 0000000000010000 0
-force -freeze sim:/processor/INPORT x"0010" 0
+force -freeze sim:/processor/INPORT x"FD60" 0
 run
