@@ -1,0 +1,211 @@
+G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/M_W_Buffer.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/M_W_Buffer.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity M_W_Buffer
+-- Compiling architecture M_W_Buffer_Arch of M_W_Buffer
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/MUX_2_4.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/MUX_2_4.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity MUX_2_4
+-- Compiling architecture mux_2_4 of MUX_2_4
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/PC_increment.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/PC_increment.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity PC_INCREMENT
+-- Compiling architecture PC_increment of PC_INCREMENT
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/Decoder_Mux.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/Decoder_Mux.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity Decoder_Mux
+-- Compiling architecture Structure of Decoder_Mux
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/ram.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/ram.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity ram
+-- Compiling architecture syncrama of ram
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/adder.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/adder.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity adder
+-- Compiling architecture modelAdder of adder
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/register32.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/register32.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity REG
+-- Compiling architecture reg of REG
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/F_D_Buffer.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/F_D_Buffer.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity F_D_Buffer
+-- Compiling architecture F_D_Buffer_Arch of F_D_Buffer
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/SP.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/SP.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity SP_entity
+-- Compiling architecture SP_instance of SP_entity
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/ForwardingUnit.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/ForwardingUnit.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity ForwardingUnit
+-- Compiling architecture FUnit of ForwardingUnit
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/Memo_Address_mux.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/Memo_Address_mux.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity memo_address_mux
+-- Compiling architecture instance of memo_address_mux
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/MemoryStage.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/MemoryStage.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity MemoryStage
+-- Compiling architecture instance of MemoryStage
+-- Loading entity SP_Address_Unit
+-- Loading entity memo_data_mux
+-- Loading entity memo_address_mux
+-- Loading entity ram
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/n_adder.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/n_adder.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity n_adder
+-- Compiling architecture nAdder of n_adder
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/Register.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/Register.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity r_Register
+-- Compiling architecture Register_Structal of r_Register
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/RegisterFile.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/RegisterFile.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity Register_File
+-- Compiling architecture Register_File_Structal of Register_File
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/SP_Address_Unit.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/SP_Address_Unit.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity SP_Address_Unit
+-- Compiling architecture instance of SP_Address_Unit
+-- Loading entity SP_entity
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/load_use_case_detector.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/load_use_case_detector.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity LOAD_USE_CASE_DETECTOR
+-- Compiling architecture LOAD_USE_CASE_DETECTOR_STRUCTURE of LOAD_USE_CASE_DETECTOR
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/EX_MEM_Reg.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/EX_MEM_Reg.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity EX_MEM_Reg
+-- Compiling architecture ExMemReg of EX_MEM_Reg
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/Memo_data_mux.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/Memo_data_mux.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity memo_data_mux
+-- Compiling architecture instance of memo_data_mux
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/partA.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/partA.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity partA
+-- Compiling architecture partA_Arch of partA
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/instruction_ram.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/instruction_ram.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity instructionRam
+-- Compiling architecture instructionMem of instructionRam
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/partB.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/partB.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity partB
+-- Compiling architecture partB_Arch of partB
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/alu.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/alu.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity alu
+-- Compiling architecture alu_arch of alu
+
+} {} {}} G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/MUX_1_2.vhd {1 {vcom -work work -2002 -explicit -stats=none G:/CMP/CMP3/CA/Project/MIPS-Processor-Harvard-Architecture/MUX_1_2.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity MUX_1_2
+-- Compiling architecture mux_1_2 of MUX_1_2
+
+} {} {}}
