@@ -83,7 +83,7 @@ ELSE z1 WHEN (en1='1') and (zen1='1')
 ELSE z2 WHEN (en2='1') and (zen2='1')
 ELSE z_flag;
 
-n_flag<='0' WHEN (rst='1') or (jn='0')
+n_flag<='0' WHEN (rst='1') or (jn='1')
 ELSE n1 WHEN (en1='1') and (nen1='1')
 ELSE n2 WHEN (en2='1') and (nen2='1')
 ELSE n_flag;

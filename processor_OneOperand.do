@@ -20,7 +20,7 @@ run
 run
 force -freeze sim:/processor/INPORT 0000000000000101 0
 run
-force -freeze sim:/processor/INPORT 0000000000001010 0
+force -freeze sim:/processor/INPORT 0000000000010000 0
 run
 run
 run
