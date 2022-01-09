@@ -95,9 +95,10 @@ def parse_code_file(file):
 
             # check validty of line value
             line = line.strip()
-            pattern = re.compile(r"^\w+$")
-            if pattern.search(line) and not is_instruction(line):
-                
+
+            pattern = re.compile(r"^[0-9]+$")
+            if pattern.search(line):
+
                 #print("org line is ", line)
                 new_value = f'{int(line, 16):032b}'
                 replace_memory_cell_value(
