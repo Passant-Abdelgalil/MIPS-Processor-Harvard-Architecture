@@ -30,8 +30,8 @@ ENTITY control_unit IS
         RTI_i, -- RTI instruction @opRTI
         write32, -- flag to write 32 bit into memory or 16
         read32, -- flag to read 32 bit into memory or 16
-        RET_i -- RET instruction @opRET
-        : OUT STD_LOGIC;
+        RET_i, -- RET instruction @opRET
+        LDM_i : OUT STD_LOGIC;
 
         ALU_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0) -- ALU operation bits 
         -- SETC: 111
@@ -103,6 +103,10 @@ BEGIN
         opCode = opRTI
         ELSE
         '0';
+    LDM_i <= '1' WHEN
+        opCode = opLDM
+        ELSE
+        '0';
     ALU_en <= '1' WHEN
         opCode = opSETC OR
         opCode = opNOT OR
@@ -167,7 +171,7 @@ BEGIN
     ALU_src <= '1' WHEN
         opCode = opLDD OR
         opCode = opSTD OR
-	opCode = opIADD
+        opCode = opIADD
         ELSE
         '0';
 
@@ -261,7 +265,7 @@ BEGIN
         '0';
 
     MEM_REG <= '1' WHEN --???
-        opCode = opLDM OR
+        -- opCode = opLDM OR
         opCode = opLDD OR
         opCode = opPOP
         ELSE
