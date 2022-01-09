@@ -6,6 +6,7 @@ add wave -position end  sim:/processor/INPORT
 add wave -position end  sim:/processor/OUTPORT
 add wave -position end  sim:/processor/PC
 add wave -position end  sim:/processor/instruction
+add wave -position end sim:/processor/memoryStage/SP_address_mux/SP/*
 add wave -position end  sim:/processor/offset_D_E
 add wave -position end  sim:/processor/offset_E_M
 add wave -position end  sim:/processor/offset_M_W

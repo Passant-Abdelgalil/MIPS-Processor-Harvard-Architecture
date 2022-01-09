@@ -10,6 +10,8 @@ ENTITY MemoryStage IS
         RET_i,
         INT_i,
         RTI_i,
+        POP_i,
+        PUSH_i,
         SP_en,
         write32,
         read32,
@@ -31,10 +33,10 @@ ARCHITECTURE instance OF MemoryStage IS
     SIGNAL memo_datain : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL memo_address : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL temp_exception2 : STD_LOGIC;
-    SIGNAL PUSH_i, POP_i, STD_i : STD_LOGIC;
+    SIGNAL STD_i : STD_LOGIC;
 BEGIN
-    PUSH_i <= SP_en AND (NOT write32) AND MW;
-    POP_i <= SP_en AND (NOT read32) AND MR;
+    -- PUSH_i <= SP_en AND (NOT write32) AND MW;
+    -- POP_i <= SP_en AND (NOT read32) AND MR;
     STD_i <= MW AND (NOT write32) AND (NOT SP_en);
     SP_address_mux : ENTITY work.SP_Address_Unit PORT MAP(clk, rst, PUSH_i,
         POP_i, CALL_i, RET_i, INT_i, RTI_i, SP_used_Address,

@@ -29,8 +29,11 @@ BEGIN
     BEGIN
         IF rst = '1' THEN
             exception2 <= '0';
-        ELSIF rising_edge(clk) THEN -- TODO make async? (pop not 1 yet)
-            IF ((unsigned(SP_output) = x"000fffff" AND POP_i = '1') OR (((unsigned(SP_output) = x"000ffffe") OR (unsigned(SP_output) = x"000fffff")) AND (RET_i = '1' OR RTI_i = '1'))) THEN
+        ELSIF falling_edge(clk) THEN -- TODO make async? (pop not 1 yet)
+            IF ((unsigned(SP_output) = x"000fffff" AND POP_i = '1')
+		 OR (unsigned(SP_output) = x"000ffffe" AND (RET_i = '1' OR RTI_i = '1'))
+		 OR (unsigned(SP_output) = x"000fffff" AND (RET_i = '1' OR RTI_i = '1'))
+		) THEN
                 exception2 <= '1';
                 -- ELSE
                       --'0'; -- once it is one, should stay?

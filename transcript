@@ -1,2 +1,814 @@
-# Reading C:/intelFPGA/18.0/modelsim_ase/tcl/vsim/pref.tcl
-# OpenFile {D:/3rd 1semseter/MIPS-Processor-Harvard-Architecture/processor.vhd}
+do processor_Memory.do
+# vsim -gui work.processor 
+# Start time: 12:41:57 on Jan 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(processor1)
+# Loading work.mux_1_2(mux_1_2)
+# Loading work.reg(reg)
+# Loading work.instructionram(instructionmem)
+# Loading work.pc_increment(pc_increment)
+# Loading work.f_d_buffer(f_d_buffer_arch)
+# Loading work.decoder_mux(structure)
+# Loading work.register_file(register_file_structal)
+# Loading work.r_register(register_structal)
+# Loading work.control_unit(instance)
+# Loading work.de_ex_reg(deexreg)
+# Loading work.forwardingunit(funit)
+# Loading work.mux_2_4(mux_2_4)
+# Loading work.alu(alu_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.parta(parta_arch)
+# Loading work.partb(partb_arch)
+# Loading work.n_adder(nadder)
+# Loading work.adder(modeladder)
+# Loading work.jmp_detect(jmp_detect_arch)
+# Loading work.ex_mem_reg(exmemreg)
+# Loading work.memorystage(instance)
+# Loading work.sp_address_unit(instance)
+# Loading work.sp_entity(sp_instance)
+# Loading work.memo_data_mux(instance)
+# Loading work.memo_address_mux(instance)
+# Loading work.ram(syncrama)
+# Loading work.m_w_buffer(m_w_buffer_arch)
+# Loading work.load_use_case_detector(load_use_case_detector_structure)
+# Loading work.load_suse_case_flush_stalling(load_suse_case_flush_stalling_structure)
+# Loading work.check(check_structure)
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1 ns  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+quit -sim
+# End time: 13:05:51 on Jan 09,2022, Elapsed time: 0:23:54
+# Errors: 0, Warnings: 8
+# Compile of adder.vhd was successful.
+# Compile of alu.vhd was successful.
+# Compile of check.vhd was successful.
+# Compile of control_unit.vhd was successful.
+# Compile of Counter.vhd was successful.
+# Compile of DE_EX_Reg.vhd was successful.
+# Compile of Decoder_Mux.vhd was successful.
+# Compile of EX_MEM_Reg.vhd was successful.
+# Compile of F_D_Buffer.vhd was successful.
+# Compile of ForwardingUnit.vhd was successful.
+# Compile of instruction_ram.vhd was successful.
+# Compile of jmp_detect.vhd was successful.
+# Compile of jmp_detect2.vhd was successful.
+# Compile of load_use_case_detector.vhd was successful.
+# Compile of load_useCase_flush_stall .vhd was successful.
+# Compile of M_W_Buffer.vhd was successful.
+# Compile of Memo_Address_mux.vhd was successful.
+# Compile of Memo_data_mux.vhd was successful.
+# Compile of MemoryStage.vhd was successful.
+# Compile of MUX_1_2.vhd was successful.
+# Compile of MUX_2_4.vhd was successful.
+# Compile of n_adder.vhd was successful.
+# Compile of partA.vhd was successful.
+# Compile of partB.vhd was successful.
+# Compile of PC_increment.vhd was successful.
+# Compile of processor.vhd failed with 1 errors.
+# Compile of ram.vhd was successful.
+# Compile of Register.vhd was successful.
+# Compile of register32.vhd was successful.
+# Compile of RegisterFile.vhd was successful.
+# Compile of SP.vhd was successful.
+# Compile of SP_Address_Unit.vhd was successful.
+# 32 compiles, 1 failed with 1 error.
+# Compile of adder.vhd was successful.
+# Compile of alu.vhd was successful.
+# Compile of check.vhd was successful.
+# Compile of control_unit.vhd was successful.
+# Compile of Counter.vhd was successful.
+# Compile of DE_EX_Reg.vhd was successful.
+# Compile of Decoder_Mux.vhd was successful.
+# Compile of EX_MEM_Reg.vhd was successful.
+# Compile of F_D_Buffer.vhd was successful.
+# Compile of ForwardingUnit.vhd was successful.
+# Compile of instruction_ram.vhd was successful.
+# Compile of jmp_detect.vhd was successful.
+# Compile of jmp_detect2.vhd was successful.
+# Compile of load_use_case_detector.vhd was successful.
+# Compile of load_useCase_flush_stall .vhd was successful.
+# Compile of M_W_Buffer.vhd was successful.
+# Compile of Memo_Address_mux.vhd was successful.
+# Compile of Memo_data_mux.vhd was successful.
+# Compile of MemoryStage.vhd was successful.
+# Compile of MUX_1_2.vhd was successful.
+# Compile of MUX_2_4.vhd was successful.
+# Compile of n_adder.vhd was successful.
+# Compile of partA.vhd was successful.
+# Compile of partB.vhd was successful.
+# Compile of PC_increment.vhd was successful.
+# Compile of processor.vhd was successful.
+# Compile of ram.vhd was successful.
+# Compile of Register.vhd was successful.
+# Compile of register32.vhd was successful.
+# Compile of RegisterFile.vhd was successful.
+# Compile of SP.vhd was successful.
+# Compile of SP_Address_Unit.vhd was successful.
+# 32 compiles, 0 failed with no errors.
+do processor_Memory.do
+# vsim -gui work.processor 
+# Start time: 13:13:30 on Jan 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(processor1)
+# Loading work.mux_1_2(mux_1_2)
+# Loading work.reg(reg)
+# Loading work.instructionram(instructionmem)
+# Loading work.pc_increment(pc_increment)
+# Loading work.f_d_buffer(f_d_buffer_arch)
+# Loading work.decoder_mux(structure)
+# Loading work.register_file(register_file_structal)
+# Loading work.r_register(register_structal)
+# Loading work.control_unit(instance)
+# Loading work.de_ex_reg(deexreg)
+# Loading work.forwardingunit(funit)
+# Loading work.mux_2_4(mux_2_4)
+# Loading work.alu(alu_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.parta(parta_arch)
+# Loading work.partb(partb_arch)
+# Loading work.n_adder(nadder)
+# Loading work.adder(modeladder)
+# Loading work.jmp_detect(jmp_detect_arch)
+# Loading work.ex_mem_reg(exmemreg)
+# Loading work.memorystage(instance)
+# Loading work.sp_address_unit(instance)
+# Loading work.sp_entity(sp_instance)
+# Loading work.memo_data_mux(instance)
+# Loading work.memo_address_mux(instance)
+# Loading work.ram(syncrama)
+# Loading work.m_w_buffer(m_w_buffer_arch)
+# Loading work.load_use_case_detector(load_use_case_detector_structure)
+# Loading work.load_suse_case_flush_stalling(load_suse_case_flush_stalling_structure)
+# Loading work.check(check_structure)
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1 ns  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+add wave -position 3 sim:/processor/memoryStage/SP_address_mux/SP/*
+add log  \
+sim:/processor/memoryStage/SP_address_mux/SP/dataout
+quit -sim
+# End time: 13:20:22 on Jan 09,2022, Elapsed time: 0:06:52
+# Errors: 0, Warnings: 8
+do processor_Memory.do
+# vsim -gui work.processor 
+# Start time: 13:20:29 on Jan 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(processor1)
+# Loading work.mux_1_2(mux_1_2)
+# Loading work.reg(reg)
+# Loading work.instructionram(instructionmem)
+# Loading work.pc_increment(pc_increment)
+# Loading work.f_d_buffer(f_d_buffer_arch)
+# Loading work.decoder_mux(structure)
+# Loading work.register_file(register_file_structal)
+# Loading work.r_register(register_structal)
+# Loading work.control_unit(instance)
+# Loading work.de_ex_reg(deexreg)
+# Loading work.forwardingunit(funit)
+# Loading work.mux_2_4(mux_2_4)
+# Loading work.alu(alu_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.parta(parta_arch)
+# Loading work.partb(partb_arch)
+# Loading work.n_adder(nadder)
+# Loading work.adder(modeladder)
+# Loading work.jmp_detect(jmp_detect_arch)
+# Loading work.ex_mem_reg(exmemreg)
+# Loading work.memorystage(instance)
+# Loading work.sp_address_unit(instance)
+# Loading work.sp_entity(sp_instance)
+# Loading work.memo_data_mux(instance)
+# Loading work.memo_address_mux(instance)
+# Loading work.ram(syncrama)
+# Loading work.m_w_buffer(m_w_buffer_arch)
+# Loading work.load_use_case_detector(load_use_case_detector_structure)
+# Loading work.load_suse_case_flush_stalling(load_suse_case_flush_stalling_structure)
+# Loading work.check(check_structure)
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1 ns  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+quit -sim
+# End time: 13:51:59 on Jan 09,2022, Elapsed time: 0:31:30
+# Errors: 0, Warnings: 8
+# Compile of adder.vhd was successful.
+# Compile of alu.vhd was successful.
+# Compile of check.vhd was successful.
+# Compile of control_unit.vhd was successful.
+# Compile of Counter.vhd was successful.
+# Compile of DE_EX_Reg.vhd was successful.
+# Compile of Decoder_Mux.vhd was successful.
+# Compile of EX_MEM_Reg.vhd was successful.
+# Compile of F_D_Buffer.vhd was successful.
+# Compile of ForwardingUnit.vhd was successful.
+# Compile of instruction_ram.vhd was successful.
+# Compile of jmp_detect.vhd was successful.
+# Compile of jmp_detect2.vhd was successful.
+# Compile of load_use_case_detector.vhd was successful.
+# Compile of load_useCase_flush_stall .vhd was successful.
+# Compile of M_W_Buffer.vhd was successful.
+# Compile of Memo_Address_mux.vhd was successful.
+# Compile of Memo_data_mux.vhd was successful.
+# Compile of MemoryStage.vhd failed with 2 errors.
+# Compile of MUX_1_2.vhd was successful.
+# Compile of MUX_2_4.vhd was successful.
+# Compile of n_adder.vhd was successful.
+# Compile of partA.vhd was successful.
+# Compile of partB.vhd was successful.
+# Compile of PC_increment.vhd was successful.
+# Compile of processor.vhd was successful.
+# Compile of ram.vhd was successful.
+# Compile of Register.vhd was successful.
+# Compile of register32.vhd was successful.
+# Compile of RegisterFile.vhd was successful.
+# Compile of SP.vhd was successful.
+# Compile of SP_Address_Unit.vhd was successful.
+# 32 compiles, 1 failed with 2 errors.
+# Compile of adder.vhd was successful.
+# Compile of alu.vhd was successful.
+# Compile of check.vhd was successful.
+# Compile of control_unit.vhd was successful.
+# Compile of Counter.vhd was successful.
+# Compile of DE_EX_Reg.vhd was successful.
+# Compile of Decoder_Mux.vhd was successful.
+# Compile of EX_MEM_Reg.vhd was successful.
+# Compile of F_D_Buffer.vhd was successful.
+# Compile of ForwardingUnit.vhd was successful.
+# Compile of instruction_ram.vhd was successful.
+# Compile of jmp_detect.vhd was successful.
+# Compile of jmp_detect2.vhd was successful.
+# Compile of load_use_case_detector.vhd was successful.
+# Compile of load_useCase_flush_stall .vhd was successful.
+# Compile of M_W_Buffer.vhd was successful.
+# Compile of Memo_Address_mux.vhd was successful.
+# Compile of Memo_data_mux.vhd was successful.
+# Compile of MemoryStage.vhd was successful.
+# Compile of MUX_1_2.vhd was successful.
+# Compile of MUX_2_4.vhd was successful.
+# Compile of n_adder.vhd was successful.
+# Compile of partA.vhd was successful.
+# Compile of partB.vhd was successful.
+# Compile of PC_increment.vhd was successful.
+# Compile of processor.vhd was successful.
+# Compile of ram.vhd was successful.
+# Compile of Register.vhd was successful.
+# Compile of register32.vhd was successful.
+# Compile of RegisterFile.vhd was successful.
+# Compile of SP.vhd was successful.
+# Compile of SP_Address_Unit.vhd was successful.
+# 32 compiles, 0 failed with no errors.
+do processor_Memory.do
+# vsim -gui work.processor 
+# Start time: 13:53:39 on Jan 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(processor1)
+# Loading work.mux_1_2(mux_1_2)
+# Loading work.reg(reg)
+# Loading work.instructionram(instructionmem)
+# Loading work.pc_increment(pc_increment)
+# Loading work.f_d_buffer(f_d_buffer_arch)
+# Loading work.decoder_mux(structure)
+# Loading work.register_file(register_file_structal)
+# Loading work.r_register(register_structal)
+# Loading work.control_unit(instance)
+# Loading work.de_ex_reg(deexreg)
+# Loading work.forwardingunit(funit)
+# Loading work.mux_2_4(mux_2_4)
+# Loading work.alu(alu_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.parta(parta_arch)
+# Loading work.partb(partb_arch)
+# Loading work.n_adder(nadder)
+# Loading work.adder(modeladder)
+# Loading work.jmp_detect(jmp_detect_arch)
+# Loading work.ex_mem_reg(exmemreg)
+# Loading work.memorystage(instance)
+# Loading work.sp_address_unit(instance)
+# Loading work.sp_entity(sp_instance)
+# Loading work.memo_data_mux(instance)
+# Loading work.memo_address_mux(instance)
+# Loading work.ram(syncrama)
+# Loading work.m_w_buffer(m_w_buffer_arch)
+# Loading work.load_use_case_detector(load_use_case_detector_structure)
+# Loading work.load_suse_case_flush_stalling(load_suse_case_flush_stalling_structure)
+# Loading work.check(check_structure)
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1 ns  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+quit -sim
+# End time: 14:03:02 on Jan 09,2022, Elapsed time: 0:09:23
+# Errors: 0, Warnings: 8
+# Compile of adder.vhd was successful.
+# Compile of alu.vhd was successful.
+# Compile of check.vhd was successful.
+# Compile of control_unit.vhd was successful.
+# Compile of Counter.vhd was successful.
+# Compile of DE_EX_Reg.vhd was successful.
+# Compile of Decoder_Mux.vhd was successful.
+# Compile of EX_MEM_Reg.vhd was successful.
+# Compile of F_D_Buffer.vhd was successful.
+# Compile of ForwardingUnit.vhd was successful.
+# Compile of instruction_ram.vhd was successful.
+# Compile of jmp_detect.vhd was successful.
+# Compile of jmp_detect2.vhd was successful.
+# Compile of load_use_case_detector.vhd was successful.
+# Compile of load_useCase_flush_stall .vhd was successful.
+# Compile of M_W_Buffer.vhd was successful.
+# Compile of Memo_Address_mux.vhd was successful.
+# Compile of Memo_data_mux.vhd was successful.
+# Compile of MemoryStage.vhd was successful.
+# Compile of MUX_1_2.vhd was successful.
+# Compile of MUX_2_4.vhd was successful.
+# Compile of n_adder.vhd was successful.
+# Compile of partA.vhd was successful.
+# Compile of partB.vhd was successful.
+# Compile of PC_increment.vhd was successful.
+# Compile of processor.vhd was successful.
+# Compile of ram.vhd was successful.
+# Compile of Register.vhd was successful.
+# Compile of register32.vhd was successful.
+# Compile of RegisterFile.vhd was successful.
+# Compile of SP.vhd was successful.
+# Compile of SP_Address_Unit.vhd failed with 2 errors.
+# 32 compiles, 1 failed with 2 errors.
+# Compile of SP_Address_Unit.vhd was successful.
+do processor_Memory.do
+# vsim -gui work.processor 
+# Start time: 14:04:43 on Jan 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(processor1)
+# Loading work.mux_1_2(mux_1_2)
+# Loading work.reg(reg)
+# Loading work.instructionram(instructionmem)
+# Loading work.pc_increment(pc_increment)
+# Loading work.f_d_buffer(f_d_buffer_arch)
+# Loading work.decoder_mux(structure)
+# Loading work.register_file(register_file_structal)
+# Loading work.r_register(register_structal)
+# Loading work.control_unit(instance)
+# Loading work.de_ex_reg(deexreg)
+# Loading work.forwardingunit(funit)
+# Loading work.mux_2_4(mux_2_4)
+# Loading work.alu(alu_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.parta(parta_arch)
+# Loading work.partb(partb_arch)
+# Loading work.n_adder(nadder)
+# Loading work.adder(modeladder)
+# Loading work.jmp_detect(jmp_detect_arch)
+# Loading work.ex_mem_reg(exmemreg)
+# Loading work.memorystage(instance)
+# Loading work.sp_address_unit(instance)
+# Loading work.sp_entity(sp_instance)
+# Loading work.memo_data_mux(instance)
+# Loading work.memo_address_mux(instance)
+# Loading work.ram(syncrama)
+# Loading work.m_w_buffer(m_w_buffer_arch)
+# Loading work.load_use_case_detector(load_use_case_detector_structure)
+# Loading work.load_suse_case_flush_stalling(load_suse_case_flush_stalling_structure)
+# Loading work.check(check_structure)
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1 ns  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+quit -sim
+# End time: 14:09:14 on Jan 09,2022, Elapsed time: 0:04:31
+# Errors: 0, Warnings: 8
+# Compile of SP_Address_Unit.vhd was successful.
+# Compile of processor.vhd was successful.
+do processor_Memory.do
+# vsim -gui work.processor 
+# Start time: 14:09:32 on Jan 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(processor1)
+# Loading work.mux_1_2(mux_1_2)
+# Loading work.reg(reg)
+# Loading work.instructionram(instructionmem)
+# Loading work.pc_increment(pc_increment)
+# Loading work.f_d_buffer(f_d_buffer_arch)
+# Loading work.decoder_mux(structure)
+# Loading work.register_file(register_file_structal)
+# Loading work.r_register(register_structal)
+# Loading work.control_unit(instance)
+# Loading work.de_ex_reg(deexreg)
+# Loading work.forwardingunit(funit)
+# Loading work.mux_2_4(mux_2_4)
+# Loading work.alu(alu_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.parta(parta_arch)
+# Loading work.partb(partb_arch)
+# Loading work.n_adder(nadder)
+# Loading work.adder(modeladder)
+# Loading work.jmp_detect(jmp_detect_arch)
+# Loading work.ex_mem_reg(exmemreg)
+# Loading work.memorystage(instance)
+# Loading work.sp_address_unit(instance)
+# Loading work.sp_entity(sp_instance)
+# Loading work.memo_data_mux(instance)
+# Loading work.memo_address_mux(instance)
+# Loading work.ram(syncrama)
+# Loading work.m_w_buffer(m_w_buffer_arch)
+# Loading work.load_use_case_detector(load_use_case_detector_structure)
+# Loading work.load_suse_case_flush_stalling(load_suse_case_flush_stalling_structure)
+# Loading work.check(check_structure)
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1 ns  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+quit -sim
+# End time: 14:46:58 on Jan 09,2022, Elapsed time: 0:37:26
+# Errors: 0, Warnings: 8
+# Compile of processor.vhd was successful.
+do branch.do
+# vsim -gui work.processor 
+# Start time: 14:47:15 on Jan 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(processor1)
+# Loading work.mux_1_2(mux_1_2)
+# Loading work.reg(reg)
+# Loading work.instructionram(instructionmem)
+# Loading work.pc_increment(pc_increment)
+# Loading work.f_d_buffer(f_d_buffer_arch)
+# Loading work.decoder_mux(structure)
+# Loading work.register_file(register_file_structal)
+# Loading work.r_register(register_structal)
+# Loading work.control_unit(instance)
+# Loading work.de_ex_reg(deexreg)
+# Loading work.forwardingunit(funit)
+# Loading work.mux_2_4(mux_2_4)
+# Loading work.alu(alu_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.parta(parta_arch)
+# Loading work.partb(partb_arch)
+# Loading work.n_adder(nadder)
+# Loading work.adder(modeladder)
+# Loading work.jmp_detect(jmp_detect_arch)
+# Loading work.ex_mem_reg(exmemreg)
+# Loading work.memorystage(instance)
+# Loading work.sp_address_unit(instance)
+# Loading work.sp_entity(sp_instance)
+# Loading work.memo_data_mux(instance)
+# Loading work.memo_address_mux(instance)
+# Loading work.ram(syncrama)
+# Loading work.m_w_buffer(m_w_buffer_arch)
+# Loading work.load_use_case_detector(load_use_case_detector_structure)
+# Loading work.load_suse_case_flush_stalling(load_suse_case_flush_stalling_structure)
+# Loading work.check(check_structure)
+# ** UI-Msg: (vsim-7) Failed to open mem file "D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/instruction_memory2.mem" in read mode.
+# No such file or directory. (errno = ENOENT)
+# Error in macro ./branch.do line 2
+# ** UI-Msg: (vsim-7) Failed to open mem file "D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/instruction_memory2.mem" in read mode.
+# No such file or directory. (errno = ENOENT)
+#     while executing
+# "mem load -i {D:/Mariam/College/Computer Architecture/ProjectGit2/MIPS-Processor-Harvard-Architecture/instruction_memory2.mem} /processor/instructionMe..."
+quit -sim
+# End time: 14:47:48 on Jan 09,2022, Elapsed time: 0:00:33
+# Errors: 0, Warnings: 2
+do processor_Memory.do
+# vsim -gui work.processor 
+# Start time: 14:48:09 on Jan 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.processor(processor1)
+# Loading work.mux_1_2(mux_1_2)
+# Loading work.reg(reg)
+# Loading work.instructionram(instructionmem)
+# Loading work.pc_increment(pc_increment)
+# Loading work.f_d_buffer(f_d_buffer_arch)
+# Loading work.decoder_mux(structure)
+# Loading work.register_file(register_file_structal)
+# Loading work.r_register(register_structal)
+# Loading work.control_unit(instance)
+# Loading work.de_ex_reg(deexreg)
+# Loading work.forwardingunit(funit)
+# Loading work.mux_2_4(mux_2_4)
+# Loading work.alu(alu_arch)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.parta(parta_arch)
+# Loading work.partb(partb_arch)
+# Loading work.n_adder(nadder)
+# Loading work.adder(modeladder)
+# Loading work.jmp_detect(jmp_detect_arch)
+# Loading work.ex_mem_reg(exmemreg)
+# Loading work.memorystage(instance)
+# Loading work.sp_address_unit(instance)
+# Loading work.sp_entity(sp_instance)
+# Loading work.memo_data_mux(instance)
+# Loading work.memo_address_mux(instance)
+# Loading work.ram(syncrama)
+# Loading work.m_w_buffer(m_w_buffer_arch)
+# Loading work.load_use_case_detector(load_use_case_detector_structure)
+# Loading work.load_suse_case_flush_stalling(load_suse_case_flush_stalling_structure)
+# Loading work.check(check_structure)
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /processor/ALU/u1
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /processor/instructionMem
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1 ns  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 1200 ps  Iteration: 1  Instance: /processor/memoryStage/Memo_address_mux
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+quit -sim
+# End time: 14:51:47 on Jan 09,2022, Elapsed time: 0:03:38
+# Errors: 0, Warnings: 8

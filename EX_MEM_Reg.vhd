@@ -31,7 +31,9 @@ ENTITY EX_MEM_Reg IS
 		Call_flag_E, INT_flag_E,
 -- 		Branch_flag_E,
 		RTI_flag_E,
-		RET_flag_E : IN std_logic;
+		RET_flag_E,
+		POP_flag_E,
+		PUSH_flag_E : IN std_logic;
 	-- output data
 		INDATA_M: OUT std_logic_vector(15 DOWNTO 0);
 		PC_M: OUT std_logic_vector(31 DOWNTO 0);
@@ -54,7 +56,9 @@ ENTITY EX_MEM_Reg IS
 		Call_flag_M, INT_flag_M,
 --		Branch_flag_M,
 		RTI_flag_M,
-		RET_flag_M: OUT std_logic
+		RET_flag_M,
+		POP_flag_M,
+		PUSH_flag_M: OUT std_logic
 	);
 END EX_MEM_Reg;
 
@@ -94,6 +98,8 @@ BEGIN
 --			Branch_flag_M <= '0';
 			RTI_flag_M <= '0';
 			RET_flag_M <= '0';
+			POP_flag_M<='0';
+			PUSH_flag_M<='0';
 		ELSIF (rising_edge(clk) and en = '1') THEN
 			INDATA_M <= INDATA_E;
 			PC_M <= PC_E;
@@ -125,6 +131,8 @@ BEGIN
 --			Branch_flag_M <= Branch_flag_E;
 			RTI_flag_M <= RTI_flag_E;
 			RET_flag_M <= RET_flag_E;
+			POP_flag_M<=POP_flag_E;
+			PUSH_flag_M<=PUSH_flag_E;
 		END IF;
 
 	END PROCESS;
