@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 ENTITY JMP_DETECT IS
 PORT(
-branch_en:in std_logic;
+branch_en,call_en:in std_logic;
 op_code: in std_logic_vector(2 downto 0);
 c_flag,z_flag,n_flag: in std_logic;
 jc,jz,jn: out std_logic;
@@ -15,7 +15,7 @@ END ENTITY;
 ARCHITECTURE JMP_DETECT_ARCH OF JMP_DETECT IS
 BEGIN
 
-process(branch_en,op_code,address)
+process(branch_en, call_en,op_code,address)
 begin
 if(branch_en='1') then
 if(op_code="000") and (z_flag='1') then
@@ -39,6 +39,9 @@ jz<='0';
 jn<='0';
 jc<='0';
 end if;
+elsif (call_en='1') then
+jmp<='1';
+PC<="0000000000000000"&address;
 else
 jmp<='0';
 jz<='0';
