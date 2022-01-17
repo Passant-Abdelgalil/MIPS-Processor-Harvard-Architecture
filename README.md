@@ -4,9 +4,6 @@
 
  <img src="./images/cpu.png" align="left" width="200" style="padding-right:30px">
 
-  [![Star on GitHub](https://img.shields.io/github/stars/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture.svg?style=social)]("https://github.com/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture/stargazers")
-    [![Fork on GitHub](https://img.shields.io/github/forks/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture.svg?style=social)]("https://github.com/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture/network/members")
- [![Watch on GitHub](https://img.shields.io/github/watchers/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture?style=social)]("https://github.com/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture/watchers")
 
 <h4>A Simple 5-stage 32-bit pipelined processor with Harvard architecture and a RISC-like instruction set architecture. <br/>
  <br/>
