@@ -9,10 +9,11 @@
  [![Watch on GitHub](https://img.shields.io/github/watchers/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture?style=social)]("https://github.com/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture/watchers")
 
 <h4>A Simple 5-stage 32-bit pipelined processor with Harvard architecture and a RISC-like instruction set architecture. <br/>
+ <br/>
 In addition to an assembler to decode assembly code files to fill the instruction memory with the right data </h4>
 </div>
 
-<br><br><br><br><br><br>
+<br><br>
 
 ## ⚙ ISA Specifications
 
@@ -54,6 +55,9 @@ In addition to an assembler to decode assembly code files to fill the instructio
 |  IN Rdst |   - | -  |  INT index |
 | - |  - | -  |  RTI (for interrupt)|
 
+### Instruction
+| 5-bit Opcode | 3-bit src1 register address |  3-bit src2 register address |  3-bit dst register address | 1-bit for hlt |  1-bit (not yet used) | 16-bit offset|
+|---|---|---|---|---|---|---|
 
 ## 🎗 Features
 
@@ -91,6 +95,15 @@ In addition to an assembler to decode assembly code files to fill the instructio
 </ul>
 </div>
 
+## Run
+1. cd to where you want to clone the repo
+2. run `git clone https://github.com/Passant-Abdelgalil/MIPS-Processor-Harvard-Architecture.git`
+3. run `cd MIPS-Processor-Harvard-Architecture`
+4. to run the assembler with your file, run `python ./Assembler/assembler.py code_file="./Test_Cases/branch_code.asm"`
+5. Create a project in modelsim, [Tutorial](https://www.nandland.com/vhdl/tutorials/tutorial-modelsim-simulation-walkthrough.html)
+6. To run Do files, in the transcript window run `do ./Do_files/<do file name you want to run>`
+7. Or start your own simulation :)
+
  <h2> <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/military-medal_1f396-fe0f.png" width=45px  alt="" align="center"/> Contributors  
  </h2>
 
@@ -100,7 +113,7 @@ In addition to an assembler to decode assembly code files to fill the instructio
     <td align="center"><a href="https://github.com/mohamed99akram"><img src="https://avatars.githubusercontent.com/u/69890013?v=4" width="100px;" alt=""/><br /><sub><b>Mohamed Akram</b></sub></a><br/>
     </td>
     <td align="center"><a href="https://github.com/Passant-Abdelgalil"><img src="https://avatars.githubusercontent.com/u/69261710?v=4" width="100px;" alt=""/><br /><sub><b>Passant Abdelgalil</b></sub></a><br />
-    </td><td align="center"><a href="https://github.com/mariamashraf00"><img src="https://avatars.githubusercontent.com/u/80390555?v=4" width="100px;" alt=""/><br /><sub><b>Mariam Malak</b></sub></a><br />
+    </td><td align="center"><a href="https://github.com/mariamashraf00"><img src="https://avatars.githubusercontent.com/u/80390555?v=4" width="100px;" alt=""/><br /><sub><b>Mariam Ashraf</b></sub></a><br />
     </td><td align="center"><a href="https://github.com/esraagamal23"><img src="https://avatars.githubusercontent.com/u/69439108?v=4" width="100px;" alt=""/><br /><sub><b>Esraa Gamal</b></sub></a><br />
     </td>
     </tr>
